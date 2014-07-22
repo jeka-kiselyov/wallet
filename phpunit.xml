@@ -1,0 +1,27 @@
+<phpunit bootstrap="includes/init.php">
+	<testsuites>
+		<testsuite name="PHP Unit Tests">
+			<directory suffix="_test.php">app/tests/php</directory>
+		</testsuite>
+	</testsuites>
+	<php>
+		<const name="DO_NOT_DELEGATE" value="1"/>
+		<const name="PHPUNIT" value="1"/>
+	</php>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory>app</directory>
+			<exclude>
+				<directory>app/templates</directory>
+				<directory>app/public</directory>
+				<directory>app/tests</directory>
+			</exclude>
+		</whitelist>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory>includes</directory>
+			<exclude>
+				<directory>includes/libs</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+</phpunit>
