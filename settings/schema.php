@@ -22,8 +22,8 @@
 		'datetime'         => array('type'=>"INTEGER", 'key'=>true),
 	);
 
-	$schema['transactions_reccurences'] = array();
-	$schema['transactions_reccurences']['fields'] = array(
+	$schema['reccurences'] = array();
+	$schema['reccurences']['fields'] = array(
 		// ['id'] is implicit. It's always there, BIGINT, primaryKey, autoIncrement,
 		'transaction_id'           => array('type'=>"INTEGER", 'key'=>true),
 		'wallet_id'           => array('type'=>"INTEGER", 'key'=>true),

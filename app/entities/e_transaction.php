@@ -4,22 +4,34 @@
 	{	
 		public function makeReccurented($year = 0, $month = 0, $day = 0, $week = 0, $weekday = 0)
 		{
-			$reccurence = new transactions_reccurence;
+			$reccurence = new reccurence;
+			$reccurence->transaction_id = $this->id;
 			$reccurence->wallet_id = $this->wallet_id;
+
 			$reccurence->year = $year;
 			$reccurence->month = $month;
 			$reccurence->day = $day;
 			$reccurence->week = $week;
 			$reccurence->weekday = $weekday;
 
-			$reccurence->transaction_id = $this->id;
 			$reccurence->start = $this->datetime;
+
 			$next = $this->time_helper->findNextOccurenceDate($this->datetime, $year, $month, $day, $week, $weekday);
+
 			if ($next)
 				$reccurence->next = $next;
 			$reccurence->save();
 		}
 
+		public function moveToNext()
+		{
+			if ($this->subtype != 'scheduled')
+				throw new Exception('Transaction should have subtype sheduled to activate it');
+
+			$reccurence = $this->reccurences->get_by_transaction_id($this->original_transaction_id);
+
+			return $reccurence->moveToNext();
+		}
 
 		public function save()
 		{
@@ -75,7 +87,6 @@
 					array('field'=>'description', 'checker' => checker_rules::MAX_LENGTH(255), 'error_message' => 'Description is too long'),
 					array('field'=>'wallet_id', 'checker' => checker_rules::IS_INTEGER(), 'error_message' => 'wallet_id is not set'),
 					array('field'=>'user_id', 'checker' => checker_rules::IS_INTEGER(), 'error_message' => 'user_id is not set'),
-					array('field'=>'datetime', 'checker' => checker_rules::IS_INTEGER(), 'error_message' => 'datetime is not set'),
 					array('field'=>'datetime', 'checker' => checker_rules::IS_INTEGER(), 'error_message' => 'datetime is not set')
 			);
 		}

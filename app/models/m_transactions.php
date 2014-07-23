@@ -47,14 +47,14 @@
 				//echo $nfrom."   ".$nto."\n";
 				$week = date("W", $d) - date("W", strtotime( date("Y-m-01", $d) ) ) + 1;
 
-				$query = "SELECT transactions.* FROM transactions RIGHT JOIN transactions_reccurences ON transactions_reccurences.transaction_id = transactions.id WHERE 
+				$query = "SELECT transactions.* FROM transactions RIGHT JOIN reccurences ON reccurences.transaction_id = transactions.id WHERE 
 				transactions.wallet_id = '".$wallet_id."' AND 
-				transactions_reccurences.start <= ".$d." AND 
-				(transactions_reccurences.weekday = '0' OR transactions_reccurences.weekday = '".date("N",$d)."') AND 
-				(transactions_reccurences.week = '0' OR transactions_reccurences.week = '".$week."') AND 
-				(transactions_reccurences.day = '0' OR transactions_reccurences.day = '".date("j",$d)."') AND 
-				(transactions_reccurences.month = '0' OR transactions_reccurences.month = '".date("n",$d)."') AND 
-				(transactions_reccurences.year = '0' OR transactions_reccurences.year = '".date("Y",$d)."') ";
+				reccurences.start < ".$d." AND 
+				(reccurences.weekday = '0' OR reccurences.weekday = '".date("N",$d)."') AND 
+				(reccurences.week = '0' OR reccurences.week = '".$week."') AND 
+				(reccurences.day = '0' OR reccurences.day = '".date("j",$d)."') AND 
+				(reccurences.month = '0' OR reccurences.month = '".date("n",$d)."') AND 
+				(reccurences.year = '0' OR reccurences.year = '".date("Y",$d)."') ";
 				//echo $query."\n\n";
 				$arrays = $this->db->getall($query);
 				if (is_array($arrays))

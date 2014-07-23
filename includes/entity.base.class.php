@@ -199,7 +199,6 @@ abstract class entity_base implements ArrayAccess
 				return $this->joined_entities[$key];
 			}
 		}
-		
 		if ($this->id && strpos($key, $this->entity_name."_") === 0 && substr($key, strlen($key)-1, 1) == 's')
 		{
 			$model_name = substr($key, strlen($this->entity_name)+1); //$model_name = str_replace($this->entity_name."_", "", $key, 1); 

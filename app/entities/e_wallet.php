@@ -106,7 +106,7 @@
 		{
 			/// remove transactions
 			$this->db->delete('transactions', "wallet_id='".(int)$this->id."' ");		
-			$this->db->delete('transactions_reccurences', "wallet_id='".(int)$this->id."' ");			
+			$this->db->delete('reccurences', "wallet_id='".(int)$this->id."' ");			
 
 			return parent::delete();
 		}
