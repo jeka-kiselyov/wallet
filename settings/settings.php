@@ -21,6 +21,8 @@
  // i18n settings
  $settings['i18n_gather_strings'] = true;
 
+ $settings['openexchangerates_api_key'] = '594bfc01f1f44e919f12a7a94f525450';
+
  // FaceBook settings
  $settings['user_allow_facebook_registration'] = false;
  $settings['facebook_app_id'] = "*****";
