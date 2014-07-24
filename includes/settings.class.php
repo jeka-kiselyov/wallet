@@ -74,7 +74,7 @@
       { 
         if ($this->is_setting_rewritable($key))
         { 
-          $cache = cache::getInstance();
+          $cache = cache::getInstanceWithParams($this->vars['cache']);
           $cache->delete('system_settings');
           
           $this->vars[$key] = $var;

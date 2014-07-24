@@ -98,6 +98,7 @@
 		    	"name"=>$this->_("API"),
 		    	"icon"=>"cog",
 		    	"items"=>array(
+		    		array("name"=>$this->_("Openexchangerates"), "href"=>"api/openexchangerates"),
 		    		array("name"=>$this->_("VK"), "href"=>"api/vk"),
 		    		array("name"=>$this->_("Facebook"), "href"=>"api/facebook"),
 		    		array("name"=>$this->_("reCaptcha"), "href"=>"api/recaptcha")

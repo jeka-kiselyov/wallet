@@ -4,7 +4,7 @@
 
  // Site path
  if (ENVIRONMENT_SERVER == 'localhost')
-  $settings['site_path'] = "http://framework.com";
+  $settings['site_path'] = "http://wallet.com";
    else
     $settings['site_path'] = "";
 
@@ -21,7 +21,7 @@
  // i18n settings
  $settings['i18n_gather_strings'] = true;
 
- $settings['openexchangerates_api_key'] = '594bfc01f1f44e919f12a7a94f525450';
+ $settings['openexchangerates_api_key'] = '';
 
  // FaceBook settings
  $settings['user_allow_facebook_registration'] = false;
@@ -94,7 +94,7 @@
  $settings['rewritable_settings'] = array('site_title', 'contact_email', 'require_email_confirmation', 'user_allow_facebook_registration'
  	,'facebook_app_id','facebook_app_secret','user_allow_vk_registration','vk_app_id','vk_app_secret','mail_method','smtp_auth','smtp_host'
  	,'smtp_secure','smtp_port','smtp_username','smtp_password','mail_default_from_email','mail_default_from_name','sendmail_path'
- 	,'recaptcha_public_key', 'recaptcha_private_key');
+ 	,'recaptcha_public_key', 'recaptcha_private_key', 'openexchangerates_api_key');
 
  // Allow to create custom settings, but not defined in this file
  $settings['rewritable_creation_enabled'] = true;

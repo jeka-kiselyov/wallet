@@ -4,13 +4,31 @@ class controller_admin_api extends admin_controller
 {
   public function __construct($registry)
   {
-    parent::pre();
+    parent::__construct($registry);
     $this->select_menu('api');
   }
   
   function index()
   {
      $this->redirect("admin_index", "index");
+  }
+
+  function openexchangerates()
+  {
+    $form_checker = new checker;
+    if ($this->is_post() && $form_checker->check_security_token())
+    {
+      $form_checker->check_post('openexchangerates_api_key', checker_rules::MIN_LENGTH(3), $this->_("Openexchangerates API key is too short"));
+      $form_checker->check_post('openexchangerates_api_key', checker_rules::MAX_LENGTH(100), $this->_("Openexchangerates API key is too long"));
+
+      if ($form_checker->is_good())
+      {
+        $this->registry->settings->openexchangerates_api_key = $form_checker->post('openexchangerates_api_key');
+        $this->ta("saved","saved");
+      }
+    }
+
+    $this->ta("form_checker", $form_checker);
   }
 
   function recaptcha()
@@ -22,7 +40,7 @@ class controller_admin_api extends admin_controller
         $this->redirect("admin_index", "index");
       
       $form_checker->check_post('recaptcha_public_key', checker_rules::MIN_LENGTH(3), $this->_("reCaptcha public key is too short"));
-      $form_checker->check_post('recaptcha_public_key', checker_rules::MAX_LENGTH(100), $this->_("reCaptcha public keyis too long"));
+      $form_checker->check_post('recaptcha_public_key', checker_rules::MAX_LENGTH(100), $this->_("reCaptcha public key is too long"));
       $form_checker->check_post('recaptcha_private_key', checker_rules::MIN_LENGTH(3), $this->_("reCaptcha private key is too short"));
       $form_checker->check_post('recaptcha_private_key', checker_rules::MAX_LENGTH(100), $this->_("reCaptcha private key is too long"));
       
