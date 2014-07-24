@@ -93,9 +93,9 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         'read_control' => true,
         'read_control_type' => 'crc32',
         'hashed_directory_level' => 0,
-        'hashed_directory_umask' => 0700,
+        'hashed_directory_umask' => 0777,
         'file_name_prefix' => 'zend_cache',
-        'cache_file_umask' => 0600,
+        'cache_file_umask' => 0660,
         'metadatas_array_max_size' => 100
     );
 

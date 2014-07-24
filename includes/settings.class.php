@@ -23,7 +23,7 @@
         	$this->vars = include(SITE_PATH_SETTINGS."settings.php");
           $this->db = $registry->db;
 
-          $changed_items = array();
+          $changed_items = false;
           if ($this->vars['cache']['enable_system_cache'])
           {
             require_once(SITE_PATH_APP."classes/cache.php");
