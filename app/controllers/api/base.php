@@ -69,6 +69,12 @@
  		exit();
  	}
 
+ 	protected function require_signed_in()
+ 	{
+ 		if (!$this->user || !$this->user->id)
+ 			$this->has_no_rights();
+ 	}
+
  	protected function param($param_name)
  	{
  		if (isset($_POST[$param_name]))

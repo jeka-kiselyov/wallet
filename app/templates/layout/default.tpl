@@ -25,7 +25,9 @@
 	{add_js file="vendors/backbonejs/backbone-min" prepend=true}
 	{add_js file="scripts/app"}
 	{add_js file="scripts/app/models/user"}
+	{add_js file="scripts/app/models/wallet"}
 	{add_js file="scripts/app/collections/users"}
+	{add_js file="scripts/app/collections/wallets"}
 	{add_js file="scripts/app/views/header"}
 	{add_js file="scripts/app/views/dialogs/signin"}
 	{add_js file="scripts/app/settings"}
@@ -112,6 +114,7 @@
 
 {add_js_test name="framework_test"}
 {add_js_test name="model_user_test"}
+{add_js_test name="model_wallet_test"}
 
 {include_js_files}
 {include_css_files}

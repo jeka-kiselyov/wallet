@@ -9,6 +9,20 @@
 		return parent::save();
 	}
 
+	public function createWallet($name)
+	{
+	    $wallet = new Wallet();
+
+	    $wallet->name = $name;
+	    $wallet->user_id = $this->id;
+	    $wallet->total = 0;
+	    $wallet->type = 'default';
+
+	    $wallet->save();
+
+	    return $wallet;
+	}
+
 	public function to_array()
 	{
 		$array = $this->fields;
