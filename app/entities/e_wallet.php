@@ -49,14 +49,25 @@
 			return $this->addTransaction(-$amount, $description, 'expense', 'confirmed', $datetime);
 		}
 
-		public function addTransaction($amount, $description, $type, $subtype = false, $datetime = false, $user_id = false)
+		public function addTransaction($amount, $description, $type = false, $subtype = false, $datetime = false)
 		{
 	 		if (!$this->id)
 	 			return false;
 			if (!$datetime)
 				$datetime = time();
-			if (!$user_id)
-				$user_id = $this->user_id;
+			
+			$user_id = $this->user_id;
+
+			if (!$type)
+			{
+				if ($amount >= 0)
+					$type = 'profit';
+				else
+					$type = 'expense';
+			}
+
+			if (!$subtype)
+				$subtype = 'confirmed';
 
 			$transaction = new transaction;
 			$transaction->amount = $amount;

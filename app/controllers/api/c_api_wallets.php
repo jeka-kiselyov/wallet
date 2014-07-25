@@ -9,6 +9,95 @@ class controller_api_wallets extends api_controller
     $this->error_prefix.='2';
   }
 
+  protected function crud_transactions_list($id)
+  {
+    $this->require_signed_in();
+    // @todo add caching
+
+    $wallet = false;
+    if ($id)
+    {
+      $wallet = $this->wallets->get_by_id($id);
+      if ($wallet && $wallet->user_id = $this->user->id)
+      {
+        $transactions = $wallet->getTransactions();
+        $ret = array();
+        foreach ($transactions as $transaction) {
+          $ret[] = $transaction->to_array();
+        }
+        $this->data($ret);
+      }
+      else
+        $this->not_found();
+    }    
+  }
+
+  protected function crud_transactions_create($id)
+  {
+    $this->require_signed_in();
+    // @todo add caching
+
+    $wallet = false;
+    $data = $this->payload();
+    if ($id)
+    {
+      $wallet = $this->wallets->get_by_id($id);
+      if ($wallet && $wallet->user_id = $this->user->id)
+      {
+        $transaction = $wallet->addTransaction($data->amount, $data->description);
+        $this->data($transaction->to_array());
+      }
+      else
+        $this->not_found();
+    }    
+  }
+
+
+  protected function crud_transactions_read($wallet_id, $transaction_id)
+  {
+    $this->require_signed_in();
+
+    $wallet = false;
+    if ($wallet_id && $transaction_id)
+    {
+      $wallet = $this->wallets->get_by_id($wallet_id);
+      if ($wallet && $wallet->user_id = $this->user->id)
+      {
+        $transaction = $this->transactions->get_by_id($transaction_id);
+        if ($transaction && $transaction->wallet_id == $wallet->id)
+        {
+          $this->data($transaction->to_array());
+        } else
+          $this->not_found();
+      }
+      else
+        $this->not_found();
+    }    
+  }
+
+  protected function crud_transactions_delete($wallet_id, $transaction_id)
+  {
+    $this->require_signed_in();
+
+    $wallet = false;
+    if ($wallet_id && $transaction_id)
+    {
+      $wallet = $this->wallets->get_by_id($wallet_id);
+      if ($wallet && $wallet->user_id = $this->user->id)
+      {
+        $transaction = $this->transactions->get_by_id($transaction_id);
+        if ($transaction && $transaction->wallet_id == $wallet->id)
+        {
+          $transaction->delete();
+          $this->data(null);
+        } else
+          $this->not_found();
+      }
+      else
+        $this->not_found();
+    }    
+  }
+
   protected function crud_read($id)
   {
     $this->require_signed_in();

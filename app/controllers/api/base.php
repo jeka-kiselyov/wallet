@@ -16,16 +16,41 @@
 	public function index()
 	{
 		$id = (int)$this->gp(0,0);
+		$sub = $this->gp(1,'');
+		$sub_id = (int)$this->gp(2,0);
+
 		if ($id)
 		{
-			if ($this->request_method() == 'GET')
-				$this->crud_read($id);
-			elseif ($this->request_method() == 'PUT')
-				$this->crud_update($id);
-			elseif ($this->request_method() == 'DELETE')
-				$this->crud_delete($id);
-			else
-				$this->error(1, 'Use an URL without id to create new entity');
+			if ($sub)
+			{
+				if ($sub_id)
+				{
+					if ($this->request_method() == 'GET')
+						$this->{'crud_'.$sub.'_read'}($id, $sub_id);
+					elseif ($this->request_method() == 'PUT')
+						$this->{'crud_'.$sub.'_update'}($id, $sub_id);
+					elseif ($this->request_method() == 'DELETE')
+						$this->{'crud_'.$sub.'_delete'}($id, $sub_id);
+					else
+						$this->error(1, 'Use an URL without id to create new entity');
+				} else {
+					if ($this->request_method() == 'POST')
+					    $this->{'crud_'.$sub.'_create'}($id);
+					elseif ($this->request_method() == 'GET')
+						$this->{'crud_'.$sub.'_list'}($id);
+					else
+						$this->error(2, 'There is no entity id passed');	
+				}
+			} else {			
+				if ($this->request_method() == 'GET')
+					$this->crud_read($id);
+				elseif ($this->request_method() == 'PUT')
+					$this->crud_update($id);
+				elseif ($this->request_method() == 'DELETE')
+					$this->crud_delete($id);
+				else
+					$this->error(1, 'Use an URL without id to create new entity');
+			}
 		} else
 		{
 			if ($this->request_method() == 'POST')
