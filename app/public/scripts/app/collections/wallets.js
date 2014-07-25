@@ -1,4 +1,4 @@
-//users.js
+//wallets.js
 App.Collections.Wallets = Backbone.Collection.extend({
 	model: App.Models.Wallet,
     url: function() {
