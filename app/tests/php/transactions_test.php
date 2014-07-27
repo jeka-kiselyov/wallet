@@ -65,6 +65,71 @@
         $transaction->save();
     }
 
+    public function test_transaction_removing()
+    {
+        $transaction = $this->wallet->addProfit(100, 'Testing');
+
+        $this->assertEquals(100, $this->wallet->total);
+
+        $wallet_id = $this->wallet->id;
+        $transaction->delete();
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(0, $this->wallet->total);
+
+        $transaction1 = $this->wallet->addProfit(100, 'Testing');
+        $transaction2 = $this->wallet->addExpense(10, 'Testing');
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(90, $this->wallet->total);
+
+        $transaction2->delete();
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(100, $this->wallet->total);
+
+        $transaction1->delete();
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(0, $this->wallet->total);
+
+        $transaction2 = $this->wallet->addExpense(10, 'Testing');
+        $transaction1 = $this->wallet->addProfit(100, 'Testing');
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(90, $this->wallet->total);
+
+        $transaction2->delete();
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(100, $this->wallet->total);
+
+        $transaction1->delete();
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(0, $this->wallet->total);
+
+        /// now check setup. 
+        $transaction1 = $this->wallet->addProfit(100, 'Testing');
+        $transaction2 = $this->wallet->setTotalTo(150);
+
+        $this->assertEquals(150, $this->wallet->total);
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(150, $this->wallet->total);
+
+        $setup_transaction_id = $transaction2->id;
+        $check_setup_transaction = $this->transactions->get_by_id($setup_transaction_id);
+        $this->assertEquals(50, $check_setup_transaction->amount); /// diif from 150 to 100 (1st transaction amount)
+
+        $transaction1->delete(); /// should not affect wallet's total, as there's setup transaction after it
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(150, $this->wallet->total);
+
+        $check_setup_transaction = $this->transactions->get_by_id($setup_transaction_id);
+        $this->assertEquals(150, $check_setup_transaction->amount); /// Should be 150 now, as 1st transaction is removed
+
+
+        
+    }
+
 	public function tearDown()
 	{
         $this->wallet->delete();
