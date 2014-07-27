@@ -15,6 +15,7 @@ abstract class entity_base implements ArrayAccess
 	protected $collection_entity_is_part_of;
 	
 	protected $_changed_fields;
+	protected $_original_fields;
 	
 	private $_validation_errors;
 
@@ -42,6 +43,7 @@ abstract class entity_base implements ArrayAccess
 		if (isset($fields_array) && is_array($fields_array))
 		{
 			$this->fields = $fields_array;
+			$this->_original_fields = $fields_array;
 
 			if (isset($fields_array['id']))
 			{
@@ -51,6 +53,7 @@ abstract class entity_base implements ArrayAccess
 		} else {
 			$table_name = $this->table_name;
 			$this->fields = $this->$table_name->get_columns();
+			$this->_original_fields = $this->fields;
 			unset($this->fields['id']);	
 		}
 
@@ -164,6 +167,7 @@ abstract class entity_base implements ArrayAccess
 	{
 		if (array_key_exists($key, $this->fields))
 		{
+			$this->_original_fields[$key] = $this->fields[$key];
 			$this->fields[$key] = $var;
 			$this->_changed_fields[$key] = $var;
 			return true;

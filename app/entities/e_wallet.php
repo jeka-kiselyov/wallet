@@ -27,6 +27,7 @@
 		}
 
 
+
 		/**
 		 * Add profit transaction
 		 * @param [type]  $amount      [description]
@@ -55,7 +56,7 @@
 	 			return false;
 			if (!$datetime)
 				$datetime = time();
-			
+
 			$user_id = $this->user_id;
 
 			if (!$type)
@@ -84,11 +85,37 @@
 				if ($transaction->subtype == 'setup' || $transaction->subtype == 'confirmed')
 				{
 					$this->total = $this->total + $transaction->amount;
+					$this->_original_fields['total'] = $this->total;
 					$this->save();
 				}
 			}
 
 			return $transaction;
+		}
+
+		/**
+		 * Update wallet total, adding 'setup' transaction
+		 * @param  [type] $total          current total
+		 * @param  [type] $original_total previous total
+		 * @return [type]                 [description]
+		 */
+		private function fixTotalTo($total, $original_total)
+		{
+			$diff = $total - $original_total;
+			$type = 'profit';
+			if ($diff < 0)
+				$type = 'expense';
+
+			$transaction = new transaction;
+			$transaction->amount = $diff;
+			$transaction->description = '';
+			$transaction->type = $type;
+			$transaction->subtype = 'setup';
+			$transaction->datetime = time();
+			$transaction->user_id = $this->user_id;
+			$transaction->wallet_id = $this->id;
+
+			return $transaction->save();
 		}
 
 		protected function validation()
@@ -109,6 +136,12 @@
 
 			if (!$this->id && !$this->total)
 				$this->total = 0;
+
+			if ($this->id && $this->_original_fields['total'] != $this->total && ($this->_original_fields['total'] != 0 && $this->total != 0))
+			{
+				/// need to add setup transaction
+				$this->fixTotalTo($this->total, $this->_original_fields['total']);
+			}
 
 			return parent::save();
 		}

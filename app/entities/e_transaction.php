@@ -76,6 +76,39 @@
 	
 		public function delete()
 		{
+			if ($this->id)
+			{
+				//// need to update wallet total
+				if ($this->type == 'profit' || $this->type == 'expense')
+				{
+					/// 1st need to check if there's no 'setup' transaction after this transaction
+					$setup_transaction_id = $this->db->getone("SELECT id FROM transactions 
+						WHERE wallet_id = '".$this->wallet_id."' AND subtype = 'setup' AND datetime > '".$this->datetime."' ORDER BY datetime ASC LIMIT 1;");
+					/// if there's no - just update wallet total
+					if (!$setup_transaction_id)
+					{
+						$diff = -$this->amount;
+						$wallet = $this->wallets->get_by_id($this->wallet_id);
+						if ($wallet)
+						{
+							$wallet->total = $wallet->total + $diff;
+							$wallet->save();
+						}
+					} else {
+						/// if there's - need to update setup transaction, not wallet total
+						$diff = $this->amount;
+						$setup_transaction = $this->transactions->get_by_id($setup_transaction_id);
+						if ($setup_transaction)
+						{
+							$setup_transaction->amount = $setup_transaction->amount + $diff;
+							$setup_transaction->save();
+						}
+					}
+				}				
+			}
+			/// 
+			/// 	
+			$this->db->delete('reccurences', "transaction_id='".(int)$this->id."' ");		
 
 			return parent::delete();
 		}

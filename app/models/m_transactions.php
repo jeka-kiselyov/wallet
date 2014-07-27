@@ -61,6 +61,7 @@
 					foreach ($arrays as $data) 
 					{
 						$transaction = new transaction;
+						$transaction->id = false;
 						$transaction->type = $data['type'];
 						$transaction->subtype = 'scheduled';
 						$transaction->user_id = $data['user_id'];
