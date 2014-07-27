@@ -81,31 +81,62 @@
 				//// need to update wallet total
 				if ($this->type == 'profit' || $this->type == 'expense')
 				{
-					/// 1st need to check if there's no 'setup' transaction after this transaction
-					$setup_transaction_id = $this->db->getone("SELECT id FROM transactions 
-						WHERE wallet_id = '".(int)$this->wallet_id."' AND subtype = 'setup' AND datetime >= '".(int)$this->datetime."' AND id > '".(int)$this->id."' ORDER BY id ASC LIMIT 1;");
-
-					/// if there's no - just update wallet total 
-					if (!$setup_transaction_id)
+					if ($this->subtype == 'confirmed' || $this->subtype == 'setup')
 					{
-						$diff = -$this->amount;
-						$wallet = $this->wallets->get_by_id($this->wallet_id);
-						if ($wallet)
+						/// 1st need to check if there's no 'setup' transaction after this transaction
+						$setup_transaction_id = $this->db->getone("SELECT id FROM transactions 
+							WHERE wallet_id = '".(int)$this->wallet_id."' AND subtype = 'setup' AND datetime >= '".(int)$this->datetime."' AND id > '".(int)$this->id."' ORDER BY id ASC LIMIT 1;");
+
+						/// if there's no - just update wallet total 
+						if (!$setup_transaction_id)
 						{
-							/// can't dirrectly change as this will coall wallet->save(); logic. Update record with direct query.
-							$this->db->update('wallets', array('total'=>$wallet->total + $diff), 'id = ?', array($wallet->id));
-						}
-					} else {
-						/// if there's - need to update setup transaction, not wallet total
-						$diff = $this->amount;
-						$setup_transaction = $this->transactions->get_by_id($setup_transaction_id);
-						if ($setup_transaction)
-						{
-							$setup_transaction->amount = $setup_transaction->amount + $diff;
-							$setup_transaction->save();
+							$diff = -$this->amount;
+							$wallet = $this->wallets->get_by_id($this->wallet_id);
+							if ($wallet)
+							{
+								/// can't dirrectly change as this will coall wallet->save(); logic. Update record with direct query.
+								$this->db->update('wallets', array('total'=>$wallet->total + $diff), 'id = ?', array($wallet->id));
+							}
+						} else {
+							/// if there's - need to update setup transaction, not wallet total
+							$diff = $this->amount;
+							$setup_transaction = $this->transactions->get_by_id($setup_transaction_id);
+							if ($setup_transaction)
+							{
+								$setup_transaction->amount = $setup_transaction->amount + $diff;
+								$setup_transaction->save();
+							}
 						}
 					}
-				}				
+					// elseif ($this->subtype == 'setup')
+					// {
+					// 	/// 1st need to check if there's no 'setup' transaction after this transaction
+					// 	$setup_transaction_id = $this->db->getone("SELECT id FROM transactions 
+					// 		WHERE wallet_id = '".(int)$this->wallet_id."' AND subtype = 'setup' AND datetime >= '".(int)$this->datetime."' AND id > '".(int)$this->id."' ORDER BY id ASC LIMIT 1;");
+
+					// 	/// if there's no - just update wallet total 
+					// 	if (!$setup_transaction_id)
+					// 	{
+					// 		$diff = -$this->amount;
+					// 		$wallet = $this->wallets->get_by_id($this->wallet_id);
+					// 		if ($wallet)
+					// 		{
+					// 			/// can't dirrectly change as this will coall wallet->save(); logic. Update record with direct query.
+					// 			$this->db->update('wallets', array('total'=>$wallet->total + $diff), 'id = ?', array($wallet->id));
+					// 		}
+					// 	} else {
+					// 		/// if there's - need to update setup transaction, not wallet total
+					// 		$diff = $this->amount;
+					// 		$setup_transaction = $this->transactions->get_by_id($setup_transaction_id);
+					// 		if ($setup_transaction)
+					// 		{
+					// 			$setup_transaction->amount = $setup_transaction->amount + $diff;
+					// 			$setup_transaction->save();
+					// 		}
+					// 	}
+					// }	
+				}
+		
 			}
 			/// 
 			/// 	

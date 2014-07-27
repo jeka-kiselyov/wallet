@@ -126,8 +126,55 @@
         $check_setup_transaction = $this->transactions->get_by_id($setup_transaction_id);
         $this->assertEquals(150, $check_setup_transaction->amount); /// Should be 150 now, as 1st transaction is removed
 
-
+        $check_setup_transaction->delete();
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(0, $this->wallet->total);
         
+        //// now check two setup transactions
+           
+        $transaction1 = $this->wallet->addProfit(100, 'Testing');
+        $transaction2 = $this->wallet->addExpense(50, 'Testing expense');
+        $transaction_setup_1 = $this->wallet->setTotalTo(200);
+
+        $transaction3 = $this->wallet->addExpense(50, 'Testing expense');
+        $transaction4 = $this->wallet->addExpense(50, 'Testing expense');
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(100, $this->wallet->total);
+
+        $transaction_setup_2 = $this->wallet->setTotalTo(300);
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(300, $this->wallet->total);
+
+        $transaction5 = $this->wallet->addExpense(50, 'Testing expense');
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(250, $this->wallet->total);
+
+        $transaction2->delete();
+        $transaction_setup_1 = $this->transactions->get_by_id($transaction_setup_1->id);
+        $this->assertEquals(100, $transaction_setup_1->amount); // changed
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(250, $this->wallet->total);     // not changed
+
+        $transaction_setup_2 = $this->transactions->get_by_id($transaction_setup_2->id);
+        $this->assertEquals(200, $transaction_setup_2->amount);  /// not changed
+
+        $transaction_setup_1->delete();  
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(250, $this->wallet->total);     // not changed
+
+        $transaction_setup_2 = $this->transactions->get_by_id($transaction_setup_2->id);
+        $this->assertEquals(300, $transaction_setup_2->amount);  /// changed
+
+        $transaction_setup_2->delete();
+
+        $this->wallet = $this->wallets->get_by_id($wallet_id);
+        $this->assertEquals(-50, $this->wallet->total);     // there's no setup now. Just 100 - 50 - 50 - 50
+
     }
 
 	public function tearDown()
