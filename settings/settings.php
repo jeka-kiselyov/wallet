@@ -71,7 +71,7 @@
  $settings['minify_js_merge'] = false;
 
  // Testing settings
- $settings['tests']['jasmine']['enabled'] = true;
+ $settings['tests']['jasmine']['enabled'] = false;
 
  // Cache settings
  $settings['cache']['enable_smarty_cache'] = false;

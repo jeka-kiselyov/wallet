@@ -7,6 +7,21 @@ App.Models.User = Backbone.Model.extend({
         password: null,
         login: null,
     },
+    getWallets: function() {
+        if (typeof(this.wallets) === 'undefined')
+        {
+            this.wallets = new App.Collections.Wallets();
+            this.wallets.fetch();
+        }
+        return this.wallets;
+    },
+
+
+
+
+
+
+
     url: function() {
 		return App.settings.apiEntryPoint + 'users' + (typeof(this.id) === 'undefined' ? '' : '/'+this.id);
     },

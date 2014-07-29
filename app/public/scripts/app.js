@@ -10,20 +10,12 @@ window.App = {
 	header: null,
 	footer: null,
 	settings: null,
-	
-	apiEntryPoint: null,
 
 	currentUser: null,
 
 	init: function()
 	{
 		var that = this;
-
-		if (typeof(site_path) !== 'undefined')
-			this.apiEntryPoint = site_path+'/api/';
-		else
-			this.apiEntryPoint = '//'+document.domain+'/api/';
-
 
 		if(!this.currentUser)
 			this.setUser();
@@ -54,6 +46,7 @@ window.App = {
 		console.log('User info changed');
 		// You can also refresh the page here if you want to.
 		this.renderLayoutBlocks();
+		console.log(App.currentUser.getWallets());
 	},
 	renderLayoutBlocks: function()
 	{
