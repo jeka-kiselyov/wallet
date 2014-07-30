@@ -33,6 +33,7 @@
 	{add_js file="scripts/app/views/header"}
 	{add_js file="scripts/app/views/dialogs/signin"}
 	{add_js file="scripts/app/settings"}
+	{add_js file="scripts/app/router"}
 	{add_js file="scripts/setup"}
 
 	{include_js_files}

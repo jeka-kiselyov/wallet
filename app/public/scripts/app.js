@@ -5,6 +5,8 @@ window.App = {
 	Collections: {},
 	Views: {Dialogs: {}},
 
+	router: null,
+
 	dialog: null,
 
 	header: null,
@@ -32,7 +34,7 @@ window.App = {
 			return false;
 		});
 
-
+		Backbone.history.start();
 	},
 	setUser: function(data)
 	{
