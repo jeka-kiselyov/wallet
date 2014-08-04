@@ -8,7 +8,8 @@ RewriteRule . %1/%2 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteCond $1 !^(index\.php|images|css|scripts|vendors|uploads|min|jstests)
+RewriteCond $1 !^(index\.php|images|css|scripts|vendors|uploads|min|jstests|jstemplates)
 RewriteRule ^(.*)$ index.php?rt=$1 [L,QSA]
 RewriteRule ^(images|css|scripts|vendors|uploads|min)/(.*) app/public/$1/$2 [L]
 RewriteRule ^(jstests)/(.*) app/tests/js/$2 [L]
+RewriteRule ^(jstemplates)/(.*) app/templates/shared/$2.tpl [L]

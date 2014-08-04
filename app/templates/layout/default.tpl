@@ -19,6 +19,7 @@
 		var site_path = '{$settings->site_path}';
 	</script>
 	{add_js file="vendors/jquery/jquery-1.10.2.min" prepend=true} 
+	{add_js file="vendors/jsmarty/smart-2.10.min" prepend=true} 
 	{* Prepend - this scripts will be included first, even if you've added something in controller *}
 	{add_js file="vendors/bootstrap/js/bootstrap.min" prepend=true}
 	{add_js file="vendors/backbonejs/underscore-min" prepend=true}
@@ -34,6 +35,8 @@
 	{add_js file="scripts/app/views/dialogs/signin"}
 	{add_js file="scripts/app/settings"}
 	{add_js file="scripts/app/router"}
+	{add_js file="scripts/app/local_storage"}
+	{add_js file="scripts/app/template_manager"}
 	{add_js file="scripts/setup"}
 
 	{include_js_files}
