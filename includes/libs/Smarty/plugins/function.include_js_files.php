@@ -12,9 +12,15 @@ function smarty_function_include_js_files($params, $template)
     $already_included = 0;
     if (isset($template->smarty->tpl_vars['head_js_already_included']))
         $already_included = (int)$template->smarty->tpl_vars['head_js_already_included'];
+
     $site_path = '/';
     if (isset($template->smarty->tpl_vars['settings']) && $template->smarty->tpl_vars['settings']->value->site_path)
         $site_path = $template->smarty->tpl_vars['settings']->value->site_path;
+
+    $version = '';
+    if (isset($template->smarty->tpl_vars['settings']) && $template->smarty->tpl_vars['settings']->value->version)
+        $version = $template->smarty->tpl_vars['settings']->value->version;
+        
     $js_merge = false;
     if (isset($template->smarty->tpl_vars['settings']) && $template->smarty->tpl_vars['settings']->value->minify_js_merge)
         $js_merge = true;
@@ -24,7 +30,7 @@ function smarty_function_include_js_files($params, $template)
     {
         for ($i = $already_included; $i < count($template->smarty->tpl_vars['head_js']->value); $i++)
         {
-            $ret.="<script src=\"".$site_path."/".$template->smarty->tpl_vars['head_js']->value[$i].".js\" type=\"text/javascript\"></script>\n";
+            $ret.="<script src=\"".$site_path."/".$template->smarty->tpl_vars['head_js']->value[$i].".js".($version ? '?v='.$version : '')."\" type=\"text/javascript\"></script>\n";
         }
         $already_included = $i;
     } else {

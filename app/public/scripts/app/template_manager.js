@@ -30,6 +30,9 @@ App.templateManager = {
 	},
 	tryToLoadFromStorage: function(name)
 	{
+		if (!App.settings.enableTemplatesCache)
+			return false;
+		
 		if (!App.localStorage.isSupported())
 			return false;
 		

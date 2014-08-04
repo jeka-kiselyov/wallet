@@ -3,11 +3,12 @@ window.App = {
 
 	Models: {},
 	Collections: {},
-	Views: {Dialogs: {}},
+	Views: {Dialogs: {}, Pages: {}},
 
 	router: null,
 
 	dialog: null,
+	page: null,
 
 	header: null,
 	footer: null,
@@ -18,6 +19,10 @@ window.App = {
 	init: function()
 	{
 		var that = this;
+
+		App.localStorage.invalidate(App.settings.version);
+
+		App.router.init();
 
 		if(!this.currentUser)
 			this.setUser();
@@ -34,7 +39,17 @@ window.App = {
 			return false;
 		});
 
-		Backbone.history.start();
+	},
+	showDialog: function(dialogName) {
+
+	},
+	showPage: function(pageName) {
+		if (typeof(App.Views.Pages[pageName]) === 'undefined')
+			return false;
+		App.page = new App.Views.Pages[pageName]();
+		App.page.render();
+
+		return true;
 	},
 	setUser: function(data)
 	{
@@ -48,7 +63,6 @@ window.App = {
 		console.log('User info changed');
 		// You can also refresh the page here if you want to.
 		this.renderLayoutBlocks();
-		console.log(App.currentUser.getWallets());
 	},
 	renderLayoutBlocks: function()
 	{

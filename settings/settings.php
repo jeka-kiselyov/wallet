@@ -11,6 +11,7 @@
  // General settings
  $settings['site_title'] = "Framework";
  $settings['timezone'] = "UTC";
+ $settings['version'] = '1.12335';
 
  // MVC settings
  $settings['mvc']['enable_magic_entities_and_models'] = true;

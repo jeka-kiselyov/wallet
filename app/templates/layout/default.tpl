@@ -17,6 +17,7 @@
 
 	<script type="text/javascript">
 		var site_path = '{$settings->site_path}';
+		var app_version = '{$settings->version}';
 	</script>
 	{add_js file="vendors/jquery/jquery-1.10.2.min" prepend=true} 
 	{add_js file="vendors/jsmarty/smart-2.10.min" prepend=true} 
@@ -33,6 +34,8 @@
 	{add_js file="scripts/app/collections/transactions"}
 	{add_js file="scripts/app/views/header"}
 	{add_js file="scripts/app/views/dialogs/signin"}
+	{add_js file="scripts/app/views/pages/wallets"}
+	{add_js file="scripts/app/views/pages/index"}
 	{add_js file="scripts/app/settings"}
 	{add_js file="scripts/app/router"}
 	{add_js file="scripts/app/local_storage"}
@@ -101,8 +104,11 @@
 	</nav>
 
 
-	<div class="container">
-		{include file="pages/{$page_tpl}.tpl"}
+	<div class="container" id="container">
+		<div class="page_holder" id="page_holder_1">
+			{include file="pages/{$page_tpl}.tpl"}
+		</div>
+		<div class="page_holder" id="page_holder_2"></div>
 	</div>
 
 
