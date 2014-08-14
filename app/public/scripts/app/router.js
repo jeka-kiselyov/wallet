@@ -6,10 +6,15 @@ App.router = new (Backbone.Router.extend({
     "help": "help",// #help
     "wallets(/)": "wallets",// #wallets
     "wallets/:id": "wallet",// #wallets/4
+    "static/view/:id": "static",// #wallets/4
   },
 
   index: function() {
     App.showPage('Index');
+  },
+
+  static: function(id) {
+    App.showPage('Static', {slug: id});
   },
 
   help: function() {

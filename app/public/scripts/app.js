@@ -43,11 +43,17 @@ window.App = {
 	showDialog: function(dialogName) {
 
 	},
-	showPage: function(pageName) {
-		if (typeof(App.Views.Pages[pageName]) === 'undefined')
+	showPage: function(pageName, params) {
+
+		console.log('Showing page: '+pageName);
+
+		if (typeof(App.Views.Pages[pageName]) === 'undefined') /// this page is already current
 			return false;
-		App.page = new App.Views.Pages[pageName]();
-		App.page.render();
+
+		if (typeof(App.page) !== 'undefined' && App.page) /// undelegate events from previous page
+			App.page.undelegateEvents();
+
+		App.page = new App.Views.Pages[pageName](params);
 
 		return true;
 	},

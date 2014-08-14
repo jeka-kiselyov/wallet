@@ -1,0 +1,11 @@
+
+.page_holder {
+}
+
+.page {
+}
+
+.page_loading {
+	background: url('../../images/loading.gif') center center no-repeat;
+	min-height: 200px;
+}

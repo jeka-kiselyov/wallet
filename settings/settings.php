@@ -9,7 +9,7 @@
     $settings['site_path'] = "";
 
  // General settings
- $settings['site_title'] = "Framework";
+ $settings['site_title'] = "Wallet";
  $settings['timezone'] = "UTC";
  $settings['version'] = '1.12335';
 

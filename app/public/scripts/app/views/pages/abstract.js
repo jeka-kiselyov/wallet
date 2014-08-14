@@ -30,6 +30,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		var holderToFadeOut = (holderToRenderTo == 1) ? 2 : 1;
 
 		$("#page_holder_"+holderToFadeOut).hide();
+		$("#page_holder_"+holderToFadeOut).html('');
 		$("#page_holder_"+holderToRenderTo).show();
 
 		this.setElement($("#page_holder_"+holderToRenderTo));

@@ -29,6 +29,7 @@
 	{add_js file="scripts/app/models/user"}
 	{add_js file="scripts/app/models/wallet"}
 	{add_js file="scripts/app/models/transaction"}
+	{add_js file="scripts/app/models/static_page"}
 	{add_js file="scripts/app/collections/users"}
 	{add_js file="scripts/app/collections/wallets"}
 	{add_js file="scripts/app/collections/transactions"}
@@ -37,6 +38,7 @@
 	{add_js file="scripts/app/views/pages/abstract"}
 	{add_js file="scripts/app/views/pages/wallets"}
 	{add_js file="scripts/app/views/pages/index"}
+	{add_js file="scripts/app/views/pages/static"}
 	{add_js file="scripts/app/settings"}
 	{add_js file="scripts/app/router"}
 	{add_js file="scripts/app/local_storage"}
