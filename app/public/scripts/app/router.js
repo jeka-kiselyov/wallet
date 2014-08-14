@@ -4,7 +4,7 @@ App.router = new (Backbone.Router.extend({
   routes: {
     "": "index",// root
     "help": "help",// #help
-    "wallets": "wallets",// #wallets
+    "wallets(/)": "wallets",// #wallets
     "wallets/:id": "wallet",// #wallets/4
   },
 
@@ -41,18 +41,18 @@ App.router = new (Backbone.Router.extend({
         var protocol = this.protocol + "//";
         href = href.split(App.settings.sitePath).join('');
         href = href.slice(-1) == '/' ? href.slice(0, -1) : href;
-        console.log(href);
+        href = href.slice(0,1) == '/' ? href.slice(1) : href;
+
         // Ensure the protocol is not part of URL, meaning its relative.
         if (href.slice(protocol.length) !== protocol && Backbone.history.isRoutingURL(href))
         {
-        console.log(href);
+          console.log('Navigating to "'+href+'"');
           evt.preventDefault();
           App.router.navigate(href, {trigger: true});
 
           return false;
         }
 
-        console.log('should go');
         return true;
       });
     }

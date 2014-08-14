@@ -31,11 +31,17 @@ App.templateManager = {
 	tryToLoadFromStorage: function(name)
 	{
 		if (!App.settings.enableTemplatesCache)
+		{
+			console.log('Templates cache is disabled');
 			return false;
-		
+		}
+
 		if (!App.localStorage.isSupported())
+		{
+			console.log('Local storage is disabled');
 			return false;
-		
+		}
+
 		var data = App.localStorage.get('app_temapltes_'+name);
 		if (data)
 		{
@@ -51,7 +57,8 @@ App.templateManager = {
 	loadFromServer: function(name, callback) {
 		var that = this;
 		var templateName = name;
-		$.get(App.settings.templatePath + name, function( data ) {
+		var process = function(data)
+		{
 			if (data)
 			{
 				App.localStorage.set('app_temapltes_'+templateName, data);
@@ -62,6 +69,17 @@ App.templateManager = {
 				if (typeof(callback) === 'function')
 					callback(that._templates[templateName]);
 			}
+		};
+
+		var use_cache = true;
+		if (!App.settings.enableTemplatesCache)
+			use_cache = false;
+
+		$.ajax({
+			url: App.settings.templatePath + name,
+			data: {},
+			success: process,
+			cache: use_cache
 		});
 	}
 

@@ -34,6 +34,7 @@
 	{add_js file="scripts/app/collections/transactions"}
 	{add_js file="scripts/app/views/header"}
 	{add_js file="scripts/app/views/dialogs/signin"}
+	{add_js file="scripts/app/views/pages/abstract"}
 	{add_js file="scripts/app/views/pages/wallets"}
 	{add_js file="scripts/app/views/pages/index"}
 	{add_js file="scripts/app/settings"}
