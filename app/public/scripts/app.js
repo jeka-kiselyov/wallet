@@ -29,8 +29,7 @@ window.App = {
 
 		$('.signin_caller').on('click', function() {
 			console.log('signin_caller click handler');
-			App.dialog = new App.Views.Dialogs.Signin();
-			App.dialog.show();
+			that.showDialog('Signin');
 			return false;
 		});
 		$('.signout_caller').on('click', function() {
@@ -40,8 +39,13 @@ window.App = {
 		});
 
 	},
-	showDialog: function(dialogName) {
+	showDialog: function(dialogName, params) {
+		if (typeof(App.Views.Dialogs[dialogName]) === 'undefined') /// this page is already current
+			return false;
 
+		App.page = new App.Views.Dialogs[dialogName](params);
+
+		return true;
 	},
 	showPage: function(pageName, params) {
 

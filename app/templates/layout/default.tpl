@@ -17,8 +17,6 @@
 
 {include file="layout/parts/footer.tpl"}
 
-{include file="dialogs/signin.tpl" caching=true cache_lifetime=60}
-
 {add_js_test name="framework_test"}
 {add_js_test name="model_user_test"}
 {add_js_test name="model_wallet_test"}

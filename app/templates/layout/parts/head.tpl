@@ -32,6 +32,7 @@
 	{add_js file="scripts/app/collections/wallets"}
 	{add_js file="scripts/app/collections/transactions"}
 	{add_js file="scripts/app/views/header"}
+	{add_js file="scripts/app/views/dialogs/abstract"}
 	{add_js file="scripts/app/views/dialogs/signin"}
 	{add_js file="scripts/app/views/pages/abstract"}
 	{add_js file="scripts/app/views/pages/wallets"}

@@ -1,27 +1,14 @@
 // signin.js
-App.Views.Dialogs.Signin = Backbone.View.extend({
+App.Views.Dialogs.Signin = App.Views.Abstract.Dialog.extend({
 
-	template: function() { return _.template( $("#templates_dialogs_signin").html() ); },
-
-	el: $("#dialog_wrapper"),
+	dialogName: 'signin',
 	events: {
 		"submit #signin_modal_form": "onSubmit",
 		"shown.bs.modal": "onShown",
 		"hidden.bs.modal": "onHidden"
 	},
-	render: function() {
-		if (!$("#dialog_wrapper").length)
-			$('body').append("<div id='dialog_wrapper'></div>");
-
-		$("#dialog_wrapper").append(this.template());
-		this.setElement($("#dialog_signin"));
-		return this;
-	},
-	show: function(callback) {
-		if (typeof(callback) === 'function')
-			this.onFinished = callback;
-		this.render();
-		this.$el.modal();
+	initialize: function() {
+		this.show();
 	},
 	onShown: function() {
 		console.log('Sign In dialog is shown');
@@ -29,11 +16,7 @@ App.Views.Dialogs.Signin = Backbone.View.extend({
 	},
 	onHidden: function() {
 		console.log('Sign In dialog is hidden');
-		this.remove();
-
-		// Call callback when dialog is closed
-		if (typeof(this.onFinished) == 'function')
-			this.onFinished();
+		this.hide();
 	},
 	onSubmit: function() {
 		var that = this;
@@ -53,8 +36,8 @@ App.Views.Dialogs.Signin = Backbone.View.extend({
 		var that = this;
 		if (user.isSignedIn())
 		{
-			this.$el.modal('hide');
 			this.$('#signin_modal_form_submit').button('reset');
+			this.hide();
 		} else {
 			this.$('#signin_invalid_password_alert').slideDown();
 			this.$('#signin_modal_form_submit').button('reset');
