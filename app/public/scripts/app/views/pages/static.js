@@ -1,4 +1,4 @@
-// index.js
+// static.js
 App.Views.Pages.Static = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/static/view',
@@ -13,7 +13,9 @@ App.Views.Pages.Static = App.Views.Abstract.Page.extend({
 		this.model.set('slug', params.slug);
 		
 		this.listenTo(this.model, 'change', this.render);
-		this.model.fetch();
+		this.model.fetch({error: function(){
+			App.showPage('NotFound');
+		}});
 	}
 
 });
