@@ -19,6 +19,7 @@ window.App = {
 	init: function()
 	{
 		var that = this;
+		
 
 		App.localStorage.invalidate(App.settings.version);
 
