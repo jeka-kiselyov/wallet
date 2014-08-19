@@ -26,9 +26,8 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 	},
 	hide: function()
 	{
-		this.$el.modal('hide');
-		this.undelegateEvents();
-		this.remove();
+		console.log("Hide dialog");
+		this.$el.children().modal('hide');
 	}
 
 });

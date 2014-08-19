@@ -38,17 +38,15 @@ App.Models.User = Backbone.Model.extend({
 	},
 
     signInWithData: function(data) {
-		var tmpSignedIn = this.signedIn;
-		if (typeof(data) !== 'undefined' && typeof(data.auth_code) !== 'undefined' && data.auth_code)
-			this.signedIn = true;
-		else
-			this.signedIn = false;
-
 		if (typeof(data) !== 'undefined')
-			this.set(data);
-
-		if (tmpSignedIn != this.signedIn)
+		{
+			this.signedIn = true;
 			this.trigger('signedInStatusChanged');
+			this.set(data);
+		} else {
+			this.signedIn = false;
+			this.trigger('signedInStatusChanged');
+		}
     },
 	signIn: function(callback) {
 		var that = this;

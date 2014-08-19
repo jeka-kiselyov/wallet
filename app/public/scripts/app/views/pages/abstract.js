@@ -10,6 +10,11 @@ App.Views.Abstract.Page = Backbone.View.extend({
 			else if (typeof(this.title) === 'string')
 				title = this.title;
 		}
+		
+		if (typeof(App.settings.title) == 'function')
+			title = App.settings.title(title);
+
+		console.log("Document title changed to '"+title+"'");
 		$(document).attr('title', title);
 	},
 	renderHTML: function(data) {

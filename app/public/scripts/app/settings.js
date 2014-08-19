@@ -5,6 +5,9 @@ App.settings = {
 	apiEntryPoint: this.site_path+'/api/',
 	templatePath: this.site_path+'/jstemplates/',
 	version: (typeof(app_version) !== 'undefined') ? app_version : '',
+	title: function(title) {
+		return title+' | '+'Wallet';
+	},
 
 	enableTemplatesCache: false
 

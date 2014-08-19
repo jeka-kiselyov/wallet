@@ -9,6 +9,7 @@
         $this->user = $this->sessions->get_user();
         $this->ta("user", $this->user);
 
+
   //       if ($this->user && $this->user->language_id)
   //       {
   //       	try {

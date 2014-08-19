@@ -44,7 +44,7 @@ window.App = {
 		if (typeof(App.Views.Dialogs[dialogName]) === 'undefined') /// this page is already current
 			return false;
 
-		App.page = new App.Views.Dialogs[dialogName](params);
+		App.dialog = new App.Views.Dialogs[dialogName](params);
 
 		return true;
 	},
