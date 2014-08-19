@@ -2,6 +2,9 @@
 App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/index/index',
+	title: function() {
+		return 'Homepage';
+	},
 	render: function() {
 		this.renderHTML({});
 	},

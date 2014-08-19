@@ -2,6 +2,7 @@
 App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 
 	templateName: 'wallets',
+	title: 'Walletsssss',
 	render: function() {
 		var that = this;
 		//that.renderHTML({});

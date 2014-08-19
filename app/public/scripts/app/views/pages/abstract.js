@@ -1,6 +1,17 @@
 // abstract.js
 App.Views.Abstract.Page = Backbone.View.extend({
 
+	setTitle: function(title) {
+		if (typeof(title) === 'undefined')
+		{
+			var title = '';
+			if (typeof(this.title) === 'function')
+				title = this.title();
+			else if (typeof(this.title) === 'string')
+				title = this.title;
+		}
+		$(document).attr('title', title);
+	},
 	renderHTML: function(data) {
 
 		if (typeof(this.templateName) === 'undefined' || !this.templateName)
@@ -16,6 +27,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 			that.$el.html('<div class="page">'+html+'</div>');
 			$('.page', "#page_holder_"+App.currentHolder).removeClass('page_loading');
 		});
+		this.setTitle();
 
 		return this;
 	},
@@ -46,6 +58,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.switchBuffers();
 
 		this.$el.html('<div class="page page_loading"></div>');
+		this.setTitle();
 		console.log('Displaying loading');
 	}
 

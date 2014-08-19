@@ -15,7 +15,7 @@ class controller_user extends userside_controller
     if ($this->is_post())
     { 
       $user = $this->users->signin($form_checker->post('username'), $form_checker->post('password'));
-
+      
       if ($user)
       {
         $this->sessions->set_user($user);
