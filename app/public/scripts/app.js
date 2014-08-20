@@ -52,8 +52,11 @@ window.App = {
 
 		console.log('Showing page: '+pageName);
 
-		if (typeof(App.Views.Pages[pageName]) === 'undefined') /// this page is already current
+		if (typeof(App.Views.Pages[pageName]) === 'undefined')
+		{
+			console.error("There is no view defined");
 			return false;
+		}
 
 		if (typeof(App.page) !== 'undefined' && App.page) /// undelegate events from previous page
 			App.page.undelegateEvents();

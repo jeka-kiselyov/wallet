@@ -7,6 +7,8 @@ App.router = new (Backbone.Router.extend({
     "wallets(/)": "wallets",// #wallets
     "wallets/:id": "wallet",// #wallets/4
     "static/view/:id": "static",// #wallets/4
+    "news/recent(/)": "newsItems",// #news/recent
+    "news/recent/:page(/)": "newsItems",// #news/recent
   },
 
   index: function() {
@@ -27,6 +29,12 @@ App.router = new (Backbone.Router.extend({
 
   wallets: function() {
     App.showPage('Wallets');
+  },
+
+  newsItems: function(page) {
+    if (typeof(page) === 'undefined') 
+      page = 1;
+    App.showPage('NewsItems', {page: page});
   },
 
   init: function() {

@@ -8,6 +8,14 @@
 	max-width: 100%;
 }
 
+.text_format img[style*="float: left"] {
+	margin: 0 10px 5px 0;
+}
+
+.text_format img {
+
+}
+
 .text_format hr {
 	margin-top: 10px;
 	margin-bottom: 10px;

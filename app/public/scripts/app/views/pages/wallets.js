@@ -6,7 +6,7 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 	render: function() {
 		var that = this;
 		//that.renderHTML({});
-		setTimeout(function(){ that.renderHTML({}); }, 3000);
+		setTimeout(function(){ that.renderHTML({}); }, 500);
 	},
 	initialize: function() {
 		this.renderLoading();

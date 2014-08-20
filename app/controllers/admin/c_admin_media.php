@@ -72,6 +72,11 @@ class controller_admin_media extends admin_controller
 
 
       $path = SITE_PATH."/app/public/uploads/images/".$sub_directory; 
+      $images_path = SITE_PATH."/app/public/uploads/images/";
+
+      if (!is_dir($images_path))
+        @mkdir($images_path);
+
       if (!is_dir($path))
       {
         if (!@mkdir($path))
