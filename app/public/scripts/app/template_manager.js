@@ -5,7 +5,18 @@ App.templateManager = {
 	_templates: {},
 	_loadingStates: {},
 
+	commonData: function()
+	{
+		return {
+			settings: {
+				site_path: App.settings.sitePath
+			}
+		};
+	},
 	fetch: function(name, data, success) {
+
+		var data = _.extend(data, this.commonData());
+
 		if (typeof(this._templates[name]) !== 'undefined' || this.tryToLoadFromStorage(name))
 		{
 			var res = this._templates[name].fetch(data);
