@@ -18,14 +18,15 @@
 		var app_version = '{$settings->version}';
 	</script>
 	{add_js file="vendors/jquery/jquery-1.10.2.min" prepend=true} 
-	{add_js file="vendors/jsmarty/jsmart" prepend=true} 
 	{* Prepend - this scripts will be included first, even if you've added something in controller *}
 	{add_js file="vendors/bootstrap/js/bootstrap.min" prepend=true}
 	{add_js file="vendors/backbonejs/underscore-min" prepend=true}
 	{add_js file="vendors/backbonejs/backbone-min" prepend=true}
 	{add_js file="vendors/backbonejs/backbone.paginator" prepend=true}
 
-	{add_js file="vendors/phpjs/strftime"}
+	{add_js file="vendors/strftime/strftime"}
+	{add_js file="vendors/jsmarty/jsmart"} 
+	{add_js file="vendors/jsmarty/jsmart_date_format"} 
 
 	{add_js file="scripts/app"}
 	{add_js file="scripts/app/settings"}
