@@ -34,47 +34,6 @@ class controller_api_news_items extends api_controller
       $this->not_found();
   }
 
-  protected function crud_create()
-  {
-    $this->require_signed_in();
-
-    $data = $this->payload();
-
-    $wallet = $this->user->createWallet($data->name);
-    $wallet = $this->wallets->get_by_id($wallet->id);
-    $this->data($this->entity_to_result($wallet));
-  }
-
-  protected function crud_update($id)
-  {
-    $this->require_signed_in();
-
-    $data = $this->payload();
-    if ($id == $data->id)
-    {
-      $wallet = $this->wallets->get_by_id($id);
-      if ($wallet->user_id != $this->user->id)
-        $this->has_no_rights();
-      //@todo: apply changes
-      
-      $wallet->save();
-    }
-    $this->data($this->entity_to_result($wallet));
-  }
-
-  protected function crud_delete($id)
-  {
-    $this->require_signed_in();
-
-    $data = $this->payload();
-    $wallet = $this->wallets->get_by_id($id);
-    if ($wallet->user_id != $this->user->id)
-      $this->has_no_rights();
-      
-    $wallet->delete();
-    $this->data(null);
-  }
-
   protected function crud_list()
   {
     $page = 1; if (isset($_GET['page'])) $page = (int)$_GET['page']; if ($page < 1) $page = 1;
