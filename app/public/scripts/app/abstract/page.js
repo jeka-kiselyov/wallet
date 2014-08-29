@@ -1,4 +1,4 @@
-// abstract.js
+// page.js
 App.Views.Abstract.Page = Backbone.View.extend({
 
 	setTitle: function(title) {

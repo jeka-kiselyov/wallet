@@ -1,4 +1,4 @@
-// abstract.js
+// dialog.js
 App.Views.Abstract.Dialog = Backbone.View.extend({
 
 	el: $("#dialog_wrapper"),

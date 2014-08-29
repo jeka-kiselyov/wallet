@@ -18,6 +18,9 @@
 						<li class="active">
 							<a href="{$settings->site_path}">Home</a>
 						</li>
+						<li>
+							<a href="{$settings->site_path}/news/recent">News</a>
+						</li>
 						<li class="header_is_not_signed_in" {if $user && $user.id}style="display: none;"{/if}>
 							<a href="{$settings->site_path}/user/registration">Register</a>
 						</li>

@@ -31,26 +31,16 @@
 
 	{add_js file="scripts/app"}
 	{add_js file="scripts/app/settings"}
-	{add_js file="scripts/app/models/user"}
-	{add_js file="scripts/app/models/wallet"}
-	{add_js file="scripts/app/models/transaction"}
-	{add_js file="scripts/app/models/static_page"}
-	{add_js file="scripts/app/models/news_item"}
-	{add_js file="scripts/app/collections/users"}
-	{add_js file="scripts/app/collections/wallets"}
-	{add_js file="scripts/app/collections/transactions"}
-	{add_js file="scripts/app/collections/news_items"}
+
+	{add_js_folder path="scripts/app/abstract/"}
+	{add_js_folder path="scripts/app/models/"}
+	{add_js_folder path="scripts/app/collections/"}
+	{add_js_folder path="scripts/app/views/dialogs/"}
+	{add_js_folder path="scripts/app/views/widgets/"}
+	{add_js_folder path="scripts/app/views/pages/"}
+
 	{add_js file="scripts/app/views/header"}
-	{add_js file="scripts/app/views/dialogs/abstract"}
-	{add_js file="scripts/app/views/dialogs/signin"}
-	{add_js file="scripts/app/views/widgets/disqus"}
-	{add_js file="scripts/app/views/pages/abstract"}
-	{add_js file="scripts/app/views/pages/wallets"}
-	{add_js file="scripts/app/views/pages/index"}
-	{add_js file="scripts/app/views/pages/static"}
-	{add_js file="scripts/app/views/pages/404"}
-	{add_js file="scripts/app/views/pages/news_items"}
-	{add_js file="scripts/app/views/pages/news_item"}
+
 	{add_js file="scripts/app/router"}
 	{add_js file="scripts/app/local_storage"}
 	{add_js file="scripts/app/template_manager"}
