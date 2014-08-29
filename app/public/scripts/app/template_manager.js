@@ -4,7 +4,22 @@ App.templateManager = {
 	_cache: {},
 	_templates: {},
 	_loadingStates: {},
+	_initialized: false,
 
+	initialize: function()
+	{
+	    jSmart.prototype.getTemplate = function(name)
+	    {
+	    	if (typeof(App.templateManager._templates[name]) !== 'undefined')
+	    	{
+	    		return App.templateManager._cache[name];
+	    	} else {
+		        throw new Error('Template ' + name + ' is not yet loaded');	    		
+	    	}
+	    }
+
+	    this._initialized = true;
+	},
 	commonData: function()
 	{
 		return {
@@ -14,6 +29,9 @@ App.templateManager = {
 		};
 	},
 	fetch: function(name, data, success) {
+
+		if (!this._initialized)
+			this.initialize();
 
 		var data = _.extend(data, this.commonData());
 

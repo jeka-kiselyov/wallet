@@ -1,14 +1,19 @@
 // router.js
 App.router = new (Backbone.Router.extend({
 
+  setUrl: function(path) {
+    this.navigate(path);
+  },
+
   routes: {
     "": "index",// root
     "help": "help",// #help
     "wallets(/)": "wallets",// #wallets
     "wallets/:id": "wallet",// #wallets/4
     "static/view/:id": "static",// #wallets/4
+    "news/recent/:page(/)": "newsItems",// #news/recent/3
     "news/recent(/)": "newsItems",// #news/recent
-    "news/recent/:page(/)": "newsItems",// #news/recent
+    "news/view/:slug.html": "newsItem",// #news/view/someslug.html
   },
 
   index: function() {
@@ -35,6 +40,10 @@ App.router = new (Backbone.Router.extend({
     if (typeof(page) === 'undefined') 
       page = 1;
     App.showPage('NewsItems', {page: page});
+  },
+
+  newsItem: function(slug) {
+    App.showPage('NewsItem', {slug: slug});
   },
 
   init: function() {

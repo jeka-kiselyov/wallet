@@ -2,5 +2,4 @@
 
 <div class="text_format">
     {$item->body}
-    {add_css file="css/text_format"}
 </div>

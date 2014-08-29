@@ -48,6 +48,7 @@
 	{add_js file="scripts/app/views/pages/static"}
 	{add_js file="scripts/app/views/pages/404"}
 	{add_js file="scripts/app/views/pages/news_items"}
+	{add_js file="scripts/app/views/pages/news_item"}
 	{add_js file="scripts/app/router"}
 	{add_js file="scripts/app/local_storage"}
 	{add_js file="scripts/app/template_manager"}

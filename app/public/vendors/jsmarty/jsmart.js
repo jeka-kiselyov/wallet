@@ -201,7 +201,7 @@
                 {
                     with (data)
                     {
-                        try { console.log(__code);
+                        try {
                             return eval(__code);
                         }
                         catch(e)

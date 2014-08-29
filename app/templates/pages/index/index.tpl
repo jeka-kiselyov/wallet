@@ -7,3 +7,4 @@
 
 <a href="/wallets">Wallets</a><br>
 <a href="/static/view/vodka">Static</a><br>
+<a href="/news/recent">News</a><br>
