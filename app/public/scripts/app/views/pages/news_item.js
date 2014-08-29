@@ -9,8 +9,7 @@ App.Views.Pages.NewsItem = App.Views.Abstract.Page.extend({
 	},
 	render: function() {
 		this.renderHTML({item: this.model.attributes});
-		this.disqus.setIdentifier(this.model.get('slug'));
-		this.disqus.reset();
+		this.disqus.render('news_item_'+this.model.get('slug'), this.model.get('title'));
 	},
 	initialize: function(params) {
 
@@ -23,7 +22,6 @@ App.Views.Pages.NewsItem = App.Views.Abstract.Page.extend({
 		this.renderLoading();
 
 		this.disqus = new App.Views.Widgets.Disqus;
-		this.disqus.setURL().setShortName('wasabiventuresacademy');
 		
 		this.model.fetch({error: function(){
 			App.showPage('NotFound');

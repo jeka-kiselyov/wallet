@@ -4,4 +4,4 @@
     {$item->body}
 </div>
 
-<div id="disqus_thread"></div>
+<div id="comments_container"></div>

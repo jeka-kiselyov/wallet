@@ -36,15 +36,18 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 	},
 	render: function() {
 		console.log("Rendering news items");
-		if (this.items.length == 0)
-		{
-			console.log('No more items');
-			// No more items. 
-			this.$('#go_to_next').parent().addClass('disabled');
-		} else {
-			this.$('#go_to_next').parent().removeClass('disabled');
-		}
 		this.renderHTML({items: this.items.toJSON(), page: this.page, perPage: this.perPage});
+		
+		if (!this.items.hasNextPage())
+			this.$('#go_to_next').parent().addClass('disabled');
+		else
+			this.$('#go_to_next').parent().removeClass('disabled');
+		
+		if (!this.items.hasPreviousPage())
+			this.$('#go_to_prev').parent().addClass('disabled');
+		else
+			this.$('#go_to_prev').parent().removeClass('disabled');
+
 	},
 	initialize: function(params) {
 

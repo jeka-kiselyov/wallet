@@ -81,6 +81,7 @@ class controller_api_news_items extends api_controller
     $per_page = 25; if (isset($_GET['per_page'])) $per_page = (int)$_GET['per_page']; if ($per_page < 1) $per_page = 1;
 
     $items = $this->news_items->get_all();
+    $total = $this->news_items->get_count();
     $items->set_order_by('time_created', 'DESC');
     $items->set_limit($per_page*($page - 1), $per_page);
 
@@ -88,7 +89,7 @@ class controller_api_news_items extends api_controller
     foreach ($items as $item) 
       $data[] = $this->entity_to_result($item);
 
-    $this->data($data);
+    $this->data(array(array('total_entries'=>$total), $data));
   }
 
   private function entity_to_result($item, $merge = false)

@@ -8,6 +8,8 @@ App.settings = {
 	title: function(title) {
 		return title+' | '+'Wallet';
 	},
+	disqusShortname: 'wasabiventuresacademy',
+	disqusLanguage: 'ru',
 
 	enableTemplatesCache: false
 
