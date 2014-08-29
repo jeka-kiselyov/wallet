@@ -17,11 +17,18 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 
 		this.page = this.page - 1;
 		this.getUpdatedPage();
+
+		return false;
 	},
 	nextPage: function() {
+		if (this.items.length < this.perPage)
+			return false;
+		
 		console.log("Navigating to next page");
 		this.page = this.page + 1;
 		this.getUpdatedPage();
+
+		return false;
 	},
 	getUpdatedPage: function() {
 		this.items.getPage(this.page);
@@ -34,7 +41,6 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 			console.log('No more items');
 			// No more items. 
 			this.$('#go_to_next').parent().addClass('disabled');
-			return;
 		} else {
 			this.$('#go_to_next').parent().removeClass('disabled');
 		}

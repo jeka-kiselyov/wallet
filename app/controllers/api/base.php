@@ -132,15 +132,15 @@
 		header("Content-type: application/json; charset=utf-8");
 		if ($this->status == 'success')
 		{
-			echo json_encode($this->data);
+			echo json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 		} else {
 			if (isset($this->data['code']) && $this->data['code'] == 404)
 			{
 				header('HTTP/1.0 404 Not Found', true, 404);
-				echo json_encode($this->data);
+				echo json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 			} else {
 				header('HTTP/1.0 400 Bad Request', true, 400);
-				echo json_encode($this->data);
+				echo json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 			}
 		}
 

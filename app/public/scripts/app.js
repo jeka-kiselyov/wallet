@@ -3,7 +3,7 @@ window.App = {
 
 	Models: {},
 	Collections: {},
-	Views: {Abstract: {}, Dialogs: {}, Pages: {}},
+	Views: {Abstract: {}, Dialogs: {}, Pages: {}, Widgets: {}},
 
 	router: null,
 
