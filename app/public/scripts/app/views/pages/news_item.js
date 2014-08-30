@@ -8,11 +8,13 @@ App.Views.Pages.NewsItem = App.Views.Abstract.Page.extend({
 			return this.model.get('title');
 	},
 	render: function() {
-		var that = this;
-		this.renderHTML({item: this.model.attributes}, function() {
-			that.disqus.render('news_item_'+that.model.get('slug'), that.model.get('title'));
-		});
 		console.log('Renedring news item');
+
+		this.on('render', function() {
+			this.disqus.render('news_item_'+this.model.get('slug'), this.model.get('title'));
+		}, this);
+		
+		this.renderHTML({item: this.model.attributes});
 	},
 	initialize: function(params) {
 

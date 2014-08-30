@@ -17,7 +17,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		console.log("Document title changed to '"+title+"'");
 		$(document).attr('title', title);
 	},
-	renderHTML: function(data, onReady) {
+	renderHTML: function(data) {
 
 		if (typeof(this.templateName) === 'undefined' || !this.templateName)
 			throw 'templateName is undefined';
@@ -32,8 +32,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 			that.$el.html('<div class="page">'+html+'</div>');
 			$('.page', "#page_holder_"+App.currentHolder).removeClass('page_loading');
 
-			if (typeof(onReady) === 'function')
-				onReady();
+			that.trigger('render');
 		});
 		this.setTitle();
 
@@ -68,6 +67,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.$el.html('<div class="page page_loading"></div>');
 		this.setTitle();
 		console.log('Displaying loading');
+		this.trigger('loading');
 	}
 
 });
