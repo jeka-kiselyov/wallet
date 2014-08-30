@@ -7,13 +7,17 @@ App.Views.Pages.NewsItem = App.Views.Abstract.Page.extend({
 		if (typeof(this.model) != 'undefined' && this.model.get('title'))
 			return this.model.get('title');
 	},
+	url: function() {
+		if (typeof(this.model) != 'undefined' && this.model.get('slug'))
+			return 'news/view/'+this.model.get('slug')+'.html';
+	},
 	render: function() {
 		console.log('Renedring news item');
 
 		this.on('render', function() {
 			this.disqus.render('news_item_'+this.model.get('slug'), this.model.get('title'));
 		}, this);
-		
+
 		this.renderHTML({item: this.model.attributes});
 	},
 	initialize: function(params) {

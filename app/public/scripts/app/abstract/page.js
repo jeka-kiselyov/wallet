@@ -1,6 +1,19 @@
 // page.js
 App.Views.Abstract.Page = Backbone.View.extend({
 
+	setURL: function(url) {
+		if (typeof(url) === 'undefined')
+		{
+			var url = '';
+			if (typeof(this.url) === 'function')
+				url = this.url();
+			else if (typeof(this.url) === 'string')
+				url = this.url;
+		}
+
+		if (url)
+			App.router.setUrl(url);
+	},
 	setTitle: function(title) {
 		if (typeof(title) === 'undefined')
 		{
@@ -35,6 +48,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 			that.trigger('render');
 		});
 		this.setTitle();
+		this.setURL();
 
 		return this;
 	},
@@ -65,7 +79,10 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.switchBuffers();
 
 		this.$el.html('<div class="page page_loading"></div>');
+		
 		this.setTitle();
+		this.setURL();
+
 		console.log('Displaying loading');
 		this.trigger('loading');
 	}

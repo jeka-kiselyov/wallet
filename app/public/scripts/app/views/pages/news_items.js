@@ -21,7 +21,7 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 		if (!item)
 			return true;
 
-		App.router.setUrl('news/view/'+item.get('slug')+'.html');
+		//App.router.setUrl('news/view/'+item.get('slug')+'.html');
 		App.showPage('NewsItem', {item: item});
 
 		return false;
