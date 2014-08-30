@@ -27,8 +27,7 @@ App.Views.Widgets.Disqus = Backbone.View.extend({
 				console.log('Disqus is ready');
 			}];
 		};
-if ($('#disqus_thread').length == 0)
-			console.error('22 #comments_container is required to initialize comments');
+		
 		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 		dsq.src = '//' + this.shortname + '.disqus.com/embed.js';
 		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);

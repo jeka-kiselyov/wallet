@@ -17,7 +17,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		console.log("Document title changed to '"+title+"'");
 		$(document).attr('title', title);
 	},
-	renderHTML: function(data) {
+	renderHTML: function(data, onReady) {
 
 		if (typeof(this.templateName) === 'undefined' || !this.templateName)
 			throw 'templateName is undefined';
@@ -31,6 +31,9 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		App.templateManager.fetch(this.templateName, data, function(html) {
 			that.$el.html('<div class="page">'+html+'</div>');
 			$('.page', "#page_holder_"+App.currentHolder).removeClass('page_loading');
+
+			if (typeof(onReady) === 'function')
+				onReady();
 		});
 		this.setTitle();
 
