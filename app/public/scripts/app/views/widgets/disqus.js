@@ -27,7 +27,8 @@ App.Views.Widgets.Disqus = Backbone.View.extend({
 				console.log('Disqus is ready');
 			}];
 		};
-
+if ($('#disqus_thread').length == 0)
+			console.error('22 #comments_container is required to initialize comments');
 		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 		dsq.src = '//' + this.shortname + '.disqus.com/embed.js';
 		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
@@ -42,8 +43,10 @@ App.Views.Widgets.Disqus = Backbone.View.extend({
 
 		this.el = $("#comments_container");
 
-		if (this.$('#disqus_thread').length == 0)
-			this.el.html('<div id="disqus_thread"></div>');
+		if ($('#disqus_thread').length == 0 && $('#comments_container').length > 0)
+			$("#comments_container").html('<div id="disqus_thread"></div>');
+		else if ($('#comments_container').length == 0)
+			console.error('#comments_container is required to initialize comments');
 
 		if (typeof(DISQUS) !== 'undefined')
 		{

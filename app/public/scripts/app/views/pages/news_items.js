@@ -7,7 +7,24 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 	title: function() { return 'News, page: '+this.page; },
 	events: {
 		"click #go_to_prev": "prevPage",
-		"click #go_to_next": "nextPage"
+		"click #go_to_next": "nextPage",
+		"click .to_news_item": "toNewsItem"
+	},
+	toNewsItem: function(ev) {
+		var data = $(ev.currentTarget).data();
+		if (typeof(data.newsItemId) === 'undefined')
+			return true;
+
+		var newsItemId = parseInt(data.newsItemId, 10);
+		var item = this.items.get(newsItemId);
+
+		if (!item)
+			return true;
+
+		App.router.setUrl('news/view/'+item.get('slug')+'.html');
+		App.showPage('NewsItem', {item: item});
+
+		return false;
 	},
 	prevPage: function() {
 		if (this.page == 1)

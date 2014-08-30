@@ -3,15 +3,15 @@
 {else}
 {foreach from=$items item=i}
 <div class="media">
-  <a class="pull-left" href="{$settings->site_path}/news/view/{$i->slug}.html">
+  <a class="pull-left to_news_item" href="{$settings->site_path}/news/view/{$i->slug}.html" data-news-item-id="{$i->id}">
     <img class="media-object img-thumbnail" src="{$settings->site_path}/uploads/images/{$i->preview_image}" style="max-width: 117px;">
   </a>
   <div class="media-body">
-    <h4 class="media-heading"><a href="{$settings->site_path}/news/view/{$i->slug}.html">{$i.title|escape:'html'}</a></h4>
+    <h4 class="media-heading"><a href="{$settings->site_path}/news/view/{$i->slug}.html" class="to_news_item" data-news-item-id="{$i->id}">{$i.title|escape:'html'}</a></h4>
     <p>{$i->description}</p>
 
     <p class="text-muted">posted on {$i->time_created|date_format:'%b %d, %Y'}</p>
-    <a href="{$settings->site_path}/news/view/{$i->slug}.html" class="btn btn-default btn-xs" role="button">Read More</a>
+    <a href="{$settings->site_path}/news/view/{$i->slug}.html" class="btn btn-default btn-xs to_news_item" role="button" data-news-item-id="{$i->id}">Read More</a>
   </div>
 </div>
 {/foreach}
