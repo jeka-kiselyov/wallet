@@ -78,11 +78,18 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 		}
 
 		this.renderLoading();		
-		this.listenTo(this.items, 'add', this.render);
-		this.listenTo(this.items, 'reset', this.render);
-		this.listenTo(this.items, 'remove', this.render);
+		// this.listenTo(this.items, 'add', this.render);
+		// this.listenTo(this.items, 'reset', this.render);
+		// this.listenTo(this.items, 'remove', this.render);
 
-		this.items.getPage(this.page);
+		var that = this;
+		this.items.getPage(this.page).done(function(){
+			that.render();
+
+			that.listenTo(that.items, 'add', that.render);
+			that.listenTo(that.items, 'reset', that.render);
+			that.listenTo(that.items, 'remove', that.render);
+		});
 	}
 
 });
