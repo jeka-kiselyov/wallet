@@ -44,7 +44,17 @@ window.App = {
 		if (typeof(App.Views.Dialogs[dialogName]) === 'undefined') /// this page is already current
 			return false;
 
-		App.dialog = new App.Views.Dialogs[dialogName](params);
+		if (App.dialog && App.dialog.isVisible)
+		{
+			App.dialog.once('hidden', function() {
+				console.log('Ready to show another dialog');
+				App.dialog = new App.Views.Dialogs[dialogName](params);	
+			}, this);
+			App.dialog.hide();
+		} else {
+			App.dialog = new App.Views.Dialogs[dialogName](params);			
+		}
+
 
 		return true;
 	},
