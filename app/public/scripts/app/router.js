@@ -60,6 +60,8 @@ App.router = new (Backbone.Router.extend({
       return false;
     };
 
+    var that = this;
+
     if (Backbone.history && Backbone.history._hasPushState) {
       $(document).on("click", "a", function(evt){
         if (typeof(evt.ctrlKey) !== 'undefined' && evt.ctrlKey)
@@ -73,11 +75,22 @@ App.router = new (Backbone.Router.extend({
         // Ensure the protocol is not part of URL, meaning its relative.
         if (href.slice(protocol.length) !== protocol && Backbone.history.isRoutingURL(href))
         {
-          console.log('Navigating to "'+href+'"');
+          console.log('Navigating to "'+href+'" from document click event');
           evt.preventDefault();
           App.router.navigate(href, {trigger: true});
 
           return false;
+        }
+        else {
+          /// trying to find dialog
+          for (var k in that.dialogs)
+            if (k == href)
+            {
+              console.log('Showing "'+that.dialogs[k]+'" dialog from document click event');
+              App.showDialog(that.dialogs[k]);
+
+              return false;
+            }
         }
 
         return true;

@@ -4,12 +4,7 @@ App.Views.Dialogs.Signin = App.Views.Abstract.Dialog.extend({
 	dialogName: 'signin',
 	events: {
 		"submit #signin_modal_form": "onSubmit",
-		"shown.bs.modal": "onShown",
-		"click .to_registration": "showRegistrationDialog"
-	},
-	showRegistrationDialog: function() {
-		App.showDialog('Registration');
-		return false;
+		"shown.bs.modal": "onShown"
 	},
 	initialize: function() {
 		this.show();

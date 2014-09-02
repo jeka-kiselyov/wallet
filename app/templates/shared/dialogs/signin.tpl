@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a href="{$settings->site_path}/user/registration" class="btn btn-info to_registration">Register</a>
+        <a href="{$settings->site_path}/user/registration" class="btn btn-info">Register</a>
         <a href="{$settings->site_path}/user/restore" class="btn btn-info">Restore your password</a>
         <input type="submit" class="btn btn-primary pull-left" value="Sign In" data-loading-text="Signing in..." id="signin_modal_form_submit">
       </div>

@@ -31,6 +31,8 @@
 
 	{add_js file="scripts/app"}
 	{add_js file="scripts/app/settings"}
+	{add_js file="scripts/app/local_storage"}
+	{add_js file="scripts/app/template_manager"}
 
 	{add_js_folder path="scripts/app/abstract/"}
 	{add_js_folder path="scripts/app/models/"}
@@ -42,8 +44,6 @@
 	{add_js file="scripts/app/views/header"}
 
 	{add_js file="scripts/app/router"}
-	{add_js file="scripts/app/local_storage"}
-	{add_js file="scripts/app/template_manager"}
 	{add_js file="scripts/setup"}
 
 	{include_js_files}
