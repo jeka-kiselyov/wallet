@@ -16,6 +16,11 @@ App.router = new (Backbone.Router.extend({
     "news/view/:slug.html": "newsItem",// #news/view/someslug.html
   },
 
+  dialogs: {
+    "user/signin": "Signin",
+    "user/registration": "Registration"
+  },
+
   index: function() {
     App.showPage('Index');
   },
@@ -46,7 +51,7 @@ App.router = new (Backbone.Router.extend({
     App.showPage('NewsItem', {slug: slug});
   },
 
-  init: function() {
+  initialize: function() {
     Backbone.history.start({pushState: true});
     Backbone.history.isRoutingURL = function(fragment) {
       for (var k in this.handlers)

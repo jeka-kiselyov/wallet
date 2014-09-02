@@ -20,10 +20,7 @@ window.App = {
 	{
 		var that = this;
 		
-
 		App.localStorage.invalidate(App.settings.version);
-
-		App.router.init();
 
 		if(!this.currentUser)
 			this.setUser();
