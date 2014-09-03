@@ -2,6 +2,8 @@
 
  abstract class api_controller  extends controller_base
  {
+ 	private $payload = null;
+
  	public function __construct($registry)
  	{
  		parent::__construct($registry);
@@ -11,6 +13,24 @@
 		$this->error_prefix = '0';
 		$this->data = null;
 		$this->status = 'success';
+
+
+ 		$this->payload = array();
+ 		$data = @file_get_contents("php://input");
+ 		if ($data)
+ 			$this->payload = @json_decode($data);
+ 	}
+
+
+ 	protected function payload($param = false, $default = false)
+ 	{
+ 		if ($param === false)
+ 			return $this->payload;
+
+ 		if (isset($this->payload->$param))
+ 			return $this->payload->$param;
+ 		else
+ 			return $default;
  	}
 
 	public function index()
@@ -108,15 +128,6 @@
 			return $_GET[$param_name];
 		else
  			return null;
- 	}
-
- 	protected function payload()
- 	{
- 		$payload = array();
- 		$data = @file_get_contents("php://input");
- 		if ($data)
- 			$payload = @json_decode($data);
- 		return $payload;
  	}
 
  	protected function request_method()

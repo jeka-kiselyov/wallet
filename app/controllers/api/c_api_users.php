@@ -24,13 +24,24 @@ class controller_api_users extends api_controller
 
   protected function crud_create()
   {
-    $data = $this->payload();
-    $user = new User();
-    $user->login = $data->login;
-    $user->save();
+    $login = $this->payload('login','');
+    $type = $this->payload('type', 'default');
+    $password = $this->payload('password', '');
+    $email = $this->payload('email', '');
 
-    $user = $this->users->get_by_id($user->id);
-    $this->data($this->entity_to_result($user));
+    try {
+      $user = $this->users->register($type, $login, $password, $email);
+      if (!$user->confirmation_code)
+      {
+        /// can sign in now
+        $auth_code = $this->sessions->set_user($user);
+        $this->data($this->entity_to_result($user, array('auth_code'=>$auth_code)));
+      } else {
+        $this->data($this->entity_to_result($user));        
+      }
+    } catch (entityvalidation_exception $e) {
+      $this->error(1, $e->get_error_messages());
+    }
   }
 
   protected function crud_update($id)

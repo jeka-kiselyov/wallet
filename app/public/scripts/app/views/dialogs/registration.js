@@ -3,44 +3,44 @@ App.Views.Dialogs.Registration = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'registration',
 	events: {
-		"submit #signin_modal_form": "onSubmit",
+		"submit form": "onSubmit",
 		"shown.bs.modal": "onShown"
 	},
 	initialize: function() {
 		this.show();
 	},
 	onShown: function() {
-		console.log('Sign In dialog is shown');
-		this.$('#input_username').focus();
+		console.log('Registration dialog is shown');
+		this.$('#input_login').focus();
 	},
 	onSubmit: function() {
 		var that = this;
 
-		this.$('#signin_modal_form_submit').button('loading');
+		this.$('.btn-primary').button('loading');
 
-		var username = this.$('#input_username').val();
+		var login = this.$('#input_login').val();
 		var password = this.$('#input_password').val();
+		var email = this.$('#input_email').val();
 
-		App.currentUser.set('login', username);
-		App.currentUser.set('password', password);
-		App.currentUser.signIn(function(user) { return that.onResponse(user); });
+		App.currentUser.clear();
+		App.currentUser.on("invalid", function(){
+			var html = ""; for (var k in App.currentUser.validationError) html+=App.currentUser.validationError[k].msg+"<br>";
+			that.$('.errors-container').html(html);
+			that.$('.errors-container').slideDown();
 
-		return false;
-	},
-	onResponse: function(user) {
-		var that = this;
-		if (user.isSignedIn())
-		{
-			this.$('#signin_modal_form_submit').button('reset');
-			this.hide();
-		} else {
-			this.$('#signin_invalid_password_alert').slideDown();
-			this.$('#signin_modal_form_submit').button('reset');
-			this.$('#input_username').focus();
+			that.$('#input_login').focus();	/// @todo: focus to input with error
+			that.$('.btn-primary').button('reset');
 
 			setTimeout(function() {
-				that.$('#signin_invalid_password_alert').slideUp();
-			}, 1000);
-		}
+				that.$('.errors-container').slideUp();
+			}, 2000);
+		});
+		App.currentUser.on("signedInStatusChanged", function(){
+			App.userChanged();
+			that.hide();
+		});
+		App.currentUser.register(login, email, password);
+
+		return false;
 	}
 });

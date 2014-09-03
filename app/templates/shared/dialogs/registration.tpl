@@ -9,8 +9,8 @@
       <form method="post" action="{$settings->site_path}/user/signin" role="form" id="registration_modal_form">
       <fieldset>
         <div class="form-group">
-          <label class="sr-only" for="input_username">Username</label>
-          <input type="text" name="username" class="form-control" id="input_username" placeholder="Username">
+          <label class="sr-only" for="input_login">Username</label>
+          <input type="text" name="login" class="form-control" id="input_login" placeholder="Username">
         </div>
         
         <div class="form-group">
@@ -23,7 +23,7 @@
           <input type="password" name="password" class="form-control" id="input_password" placeholder="Password">
         </div>
 
-        <div class="alert alert-danger" id="registration_invalid_password_alert" style="display: none;">
+        <div class="alert alert-danger errors-container" id="registration_invalid_password_alert" style="display: none;">
           Invalid username or password
         </div>
 

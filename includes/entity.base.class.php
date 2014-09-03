@@ -79,6 +79,15 @@ abstract class entity_base implements ArrayAccess
 	{
 	    return array();
 	}
+
+	protected function throwValidationException($msg)
+	{
+		$e = new entityvalidation_exception($msg);
+		$this->_validation_errors[] = $msg;
+		$e->set_error_messages($this->_validation_errors);
+
+		throw $e;		
+	}
 	
 	protected function validate()
 	{

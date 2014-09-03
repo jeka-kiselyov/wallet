@@ -24,6 +24,7 @@
 	{add_js file="vendors/backbonejs/underscore-min" prepend=true}
 	{add_js file="vendors/backbonejs/backbone-min" prepend=true}
 	{add_js file="vendors/backbonejs/backbone.paginator" prepend=true}
+	{add_js file="vendors/j911helpers/j911helpers" prepend=true} 
 
 	{add_js file="vendors/strftime/strftime"}
 	{add_js file="vendors/jsmarty/jsmart"} 

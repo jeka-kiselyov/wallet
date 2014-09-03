@@ -24,18 +24,6 @@ window.App = {
 
 		if(!this.currentUser)
 			this.setUser();
-
-		// $('.signin_caller').on('click', function() {
-		// 	console.log('signin_caller click handler');
-		// 	that.showDialog('Signin');
-		// 	return false;
-		// });
-		$('.signout_caller').on('click', function() {
-			console.log('signout_caller click handler');
-			App.currentUser.signOut();
-			return false;
-		});
-
 	},
 	showDialog: function(dialogName, params) {
 		if (typeof(App.Views.Dialogs[dialogName]) === 'undefined') /// this page is already current

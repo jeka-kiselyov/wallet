@@ -16,7 +16,7 @@
           <label class="sr-only" for="input_password">Password</label>
           <input type="password" name="password" class="form-control" id="input_password" placeholder="Password">
         </div>
-        <div class="alert alert-danger" id="signin_invalid_password_alert" style="display: none;">
+        <div class="alert alert-danger errors-container" id="signin_invalid_password_alert" style="display: none;">
           Invalid username or password
         </div>
 

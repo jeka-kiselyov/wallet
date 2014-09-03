@@ -1,6 +1,25 @@
 // user.js
 App.Models.User = Backbone.Model.extend({
 
+	validate: function(attrs, options) {
+		var errors = [];
+
+	    if (typeof(this.get('email')) !== 'string' || !isEmail(this.get('email')))
+			errors.push({msg: 'Invalid email', attr: 'email'});
+		else if (this.get('email').length > 255)
+			errors.push({msg: 'Email is too long', attr: 'email'});
+
+	    if (typeof(this.get('login')) !== 'string' || this.get('login').length < 2)
+			errors.push({msg: 'Username is too short', attr: 'login'});
+		else if (this.get('login').length > 255)
+			errors.push({msg: 'Username is too long', attr: 'login'});
+
+	    if (typeof(this.get('password')) !== 'string' || this.get('password').length < 6)
+			errors.push({msg: 'Password is too short', attr: 'password'});
+
+		if (errors.length)
+			return errors;
+	},
 	defaults: {
         auth_code: null,
         email: null,
@@ -48,61 +67,78 @@ App.Models.User = Backbone.Model.extend({
 			this.trigger('signedInStatusChanged');
 		}
     },
-	signIn: function(callback) {
+    register: function(login, email, password) {
 		var that = this;
-		var username = '';
+
+		this.set('login', login);
+		this.set('email', email);
+		this.set('password', password);
+
+		return this.save(null, {success: function(model, data){
+			if (typeof(data.id) !== 'undefined')
+			{
+				console.log("Server side registration success");
+				that.set('password', '');
+				that.trigger('registered');
+				if (typeof(data.auth_code) !== 'undefined')
+				{
+					// And signed in
+					that.signedIn = true;
+					that.trigger('signedInStatusChanged');
+					console.log("Server side registration - signed in");
+				}
+			}
+		}, error: function(model, response){
+			console.log("Server side registration error");
+			if (typeof(response.responseJSON) !== 'undefined' && typeof(response.responseJSON.message) !== 'undefined')
+			{
+				if (!(that.validationError instanceof Array))
+					that.validationError = [];
+				for (var k in response.responseJSON.message)
+					that.validationError.push({msg: response.responseJSON.message[k]});
+			}
+			that.trigger('invalid');
+		}});
+    },
+	signIn: function(username, password) {
+
+		var that = this;
+
 		var url = App.settings.apiEntryPoint+'users/signin';
-
-		if (this.isSignedIn())
-		{
-			if (typeof(callback) === 'function')
-				callback(that);
-			return false;
-		}
-
-		if ((this.get('email') === null && this.get('login') === null) || this.get('password') === null) {
-			throw ("Can't sign in without parameters");
-		}
-
-		if (this.get('login'))
-			username = this.get('login');
-		else if (this.get('email'))
-			username = this.get('username');
 
 		$.ajax({
             url: url,
             type: 'POST',
             dataType: "json",
-            data: {username: username, password: this.get('password')},
+            data: {username: username, password: password},
             success: function (data) {
 				if (typeof(data.auth_code) != 'undefined' && data.auth_code)
 				{
 					console.log('Logged in successfully');
+					that.trigger('signedin');
 					that.signInWithData(data);
-					if (typeof(callback) === 'function')
-						callback(that);
 				}
             },
             error: function(data) {
 				console.log('Cannot log in');
 				that.signInWithData();
+				if (!(that.validationError instanceof Array))
+					that.validationError = [];
 				if (typeof(data.responseJSON) != 'undefined' && typeof(data.responseJSON.code) != 'undefined' && typeof(data.responseJSON.message) != 'undefined')
-					that.signInError = data.responseJSON.message;
-				if (typeof(callback) === 'function')
-					callback(that);
+					for (var k in data.responseJSON.message)
+						that.validationError.push({msg: data.responseJSON.message[k]});
+				that.trigger('invalid');
             }
         });
 
         return true;
 	},
-	signOut: function(callback) {
+	signOut: function() {
 		var that = this;
 		var url = App.settings.apiEntryPoint+'users/signout';
 
 		if (!this.isSignedIn())
 		{
-			if (typeof(callback) === 'function')
-				callback(that);
 			return false;
 		}
 
@@ -112,14 +148,11 @@ App.Models.User = Backbone.Model.extend({
             dataType: "json",
             success: function (data) {
 				console.log('Signed out');
+				that.trigger('signedout');
 				that.signInWithData();
-				if (typeof(callback) === 'function')
-					callback(that);
             },
             error: function(data) {
 				console.error('Error signing out');
-				if (typeof(callback) === 'function')
-					callback(that);
             }
         });
 
