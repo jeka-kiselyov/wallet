@@ -17,7 +17,7 @@
  $settings['mvc']['enable_magic_entities_and_models'] = true;
 
  // Registration settings
- $settings['require_email_confirmation'] = false;
+ $settings['require_email_confirmation'] = true;
 
  // i18n settings
  $settings['i18n_gather_strings'] = true;

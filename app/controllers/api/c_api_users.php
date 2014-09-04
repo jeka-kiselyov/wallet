@@ -86,6 +86,38 @@ class controller_api_users extends api_controller
     $this->data($data);
   }
 
+  public function newpassword()
+  {
+    $password = $this->param('password');
+    $code = $this->param('code');
+    $hash = $this->param('hash');
+
+    if (!$this->users->is_good_restore_hash($code, $hash))
+      $this->error(4, "Invalid password restore code");
+    else
+    {
+      $this->users->create_new_password($code, $hash, $password);
+      $this->data(array('success'=>'success'));      
+    }
+  }
+
+  public function restore()
+  {
+    $email = $this->param('email');
+    $user = $this->users->get_by_email($email);
+    if (!$user)
+    {
+      $this->error(2, "Can't find user with this email");
+    } else
+    {
+      $success = $this->users->restore_password($user->email);
+      if ($success)
+        $this->data(array('success'=>'success'));
+      else
+        $this->error(3, "Something is wrong");
+    }
+  }
+
   public function signin()
   {
     $username = $this->param('username');

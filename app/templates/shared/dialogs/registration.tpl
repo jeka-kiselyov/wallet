@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="dialog_label">Registration</h4>
       </div>
-      <div class="modal-body" style="padding-bottom: 0;">
+      <div class="modal-body modal-body-default" style="padding-bottom: 0;">
 
       <form method="post" action="{$settings->site_path}/user/signin" role="form" id="registration_modal_form">
       <fieldset>
@@ -34,6 +34,9 @@
       </fieldset>
       </form>
 
+      </div>
+      <div class="modal-body modal-body-success" style="display: none;">
+        <div class="alert alert-info" role="alert">Thank you! Please check your email inbox for confirmation link.</div>
       </div>
       <div class="modal-footer">
         <div class="pull-right">

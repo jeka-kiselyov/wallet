@@ -100,6 +100,75 @@ App.Models.User = Backbone.Model.extend({
 			that.trigger('invalid');
 		}});
     },
+    newPassword: function(code, hash, password)
+    {
+		var that = this;
+
+		var url = App.settings.apiEntryPoint+'users/newpassword';
+
+		this.clear();
+		$.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: {code: code, hash: hash, password: password},
+            success: function (data) {
+				console.log('Success setting new password');
+				that.trigger('newpassword:success');
+            },
+            error: function(data) {
+				console.log('Error setting new password');
+
+				that.validationError = [];
+				if (typeof(data.responseJSON) != 'undefined' && typeof(data.responseJSON.code) != 'undefined' && typeof(data.responseJSON.message) != 'undefined')
+					if (data.responseJSON.message instanceof Array)
+					{
+						for (var k in data.responseJSON.message)
+							that.validationError.push({msg: data.responseJSON.message[k]});
+					} else {
+						that.validationError.push({msg: data.responseJSON.message});
+					}
+
+				that.trigger('newpassword:error');
+            }
+        });
+
+        return true;
+    },
+    restorePassword: function(email) {
+		var that = this;
+
+		var url = App.settings.apiEntryPoint+'users/restore';
+
+		this.clear();
+		$.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: {email: email},
+            success: function (data) {
+				console.log('Success restoring password');
+				that.trigger('restore:success');
+            },
+            error: function(data) {
+				console.log('Error restoring password');
+
+				that.validationError = [];
+				if (typeof(data.responseJSON) != 'undefined' && typeof(data.responseJSON.code) != 'undefined' && typeof(data.responseJSON.message) != 'undefined')
+					if (data.responseJSON.message instanceof Array)
+					{
+						for (var k in data.responseJSON.message)
+							that.validationError.push({msg: data.responseJSON.message[k]});
+					} else {
+						that.validationError.push({msg: data.responseJSON.message});
+					}
+
+				that.trigger('restore:error');
+            }
+        });
+
+        return true;
+    },
 	signIn: function(username, password) {
 
 		var that = this;

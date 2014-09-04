@@ -14,8 +14,6 @@ App.Views.Dialogs.Signin = App.Views.Abstract.Dialog.extend({
 		this.$('#input_username').focus();
 	},
 	onSubmit: function() {
-		var that = this;
-
 		this.$('.btn-primary').button('loading');
 
 		var username = this.$('#input_username').val();
@@ -23,19 +21,31 @@ App.Views.Dialogs.Signin = App.Views.Abstract.Dialog.extend({
 
 		App.currentUser.set('login', username);
 		App.currentUser.set('password', password);
-		App.currentUser.on('signedin', function(){
-			that.$('.btn-primary').button('reset');
-			that.hide();
+		this.listenTo(App.currentUser, 'signedin', function(){
+			this.$('.btn-primary').button('reset');
+			this.hide();
 		});
-		App.currentUser.on('invalid', function(){
-			that.$('.btn-primary').button('reset');
-			that.$('.errors-container').slideDown();
-			that.$('#input_username').focus();
-			
+		this.listenTo(App.currentUser, 'invalid', function(){
+			this.$('.btn-primary').button('reset');
+			this.$('.errors-container').slideDown();
+			this.$('#input_username').focus();
+			var that = this;
 			setTimeout(function() {
 				that.$('.errors-container').slideUp();
 			}, 2000);
 		});
+
+		// App.currentUser.on('signedin', function(){
+		// });
+		// App.currentUser.on('invalid', function(){
+		// 	that.$('.btn-primary').button('reset');
+		// 	that.$('.errors-container').slideDown();
+		// 	that.$('#input_username').focus();
+
+		// 	setTimeout(function() {
+		// 		that.$('.errors-container').slideUp();
+		// 	}, 2000);
+		// });
 		App.currentUser.signIn(username, password);
 
 		return false;

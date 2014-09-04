@@ -109,31 +109,42 @@ class controller_user extends userside_controller
   {
     $code = $this->gp(0,"");
     $hash = $this->gp(1, "");
+    // if (!$this->users->is_good_restore_hash($code, $hash))
+    // {
 
-    $form_checker = new checker();
+    // } else {
+      
+    // }
+    $this->ta('code', $code);
+    $this->ta('hash', $hash);
 
     if (!$this->users->is_good_restore_hash($code, $hash))
-    {
-      $form_checker->add_error('Invalid restore password link');
-    } else
-    if (isset($_POST['password']) && isset($_POST['repeat_password']))
-    {
-      $password = $_POST['password']; 
-      $repeat_password = $_POST['repeat_password'];
+      $this->ta("invalid_code", true);
 
-      if ($password != $repeat_password)
-        $form_checker->add_error('Please check password');
-    }
+    // $form_checker = new checker();
 
-    if (!$form_checker->is_good())
-    {
-      $this->ta('form_checker', $form_checker);
-    } else 
-    if (isset($_POST['password']) && isset($_POST['repeat_password']))
-    {
-      $password_changed = $this->users->create_new_password($code, $hash, $password);
-      $this->ta('password_changed', $password_changed);
-    }
+    // if (!$this->users->is_good_restore_hash($code, $hash))
+    // {
+    //   $form_checker->add_error('Invalid restore password link');
+    // } else
+    // if (isset($_POST['password']) && isset($_POST['repeat_password']))
+    // {
+    //   $password = $_POST['password']; 
+    //   $repeat_password = $_POST['repeat_password'];
+
+    //   if ($password != $repeat_password)
+    //     $form_checker->add_error('Please check password');
+    // }
+
+    // if (!$form_checker->is_good())
+    // {
+    //   $this->ta('form_checker', $form_checker);
+    // } else 
+    // if (isset($_POST['password']) && isset($_POST['repeat_password']))
+    // {
+    //   $password_changed = $this->users->create_new_password($code, $hash, $password);
+    //   $this->ta('password_changed', $password_changed);
+    // }
   }
 
   function restore()

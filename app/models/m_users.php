@@ -72,7 +72,7 @@
       $user->password_restore_code = $restore_code;
       $user->save();
 
-      return $this->mailer->send_to_user_id($user->id, 
+      $this->mailer->send_to_user_id($user->id, 
                                      "user_restore_password", 
                                      array("restore_code"=>$restore_code, "restore_hash"=>$restore_hash)
                                     );

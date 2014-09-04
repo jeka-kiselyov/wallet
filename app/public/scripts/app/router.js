@@ -19,6 +19,8 @@ App.router = new (Backbone.Router.extend({
   dialogs: {
     "user/signin": "Signin",
     "user/registration": "Registration",
+    "user/restore": "Restore",
+    "user/newpassword": "NewPassword",
     "user/logout": "Logout"
   },
 

@@ -23,22 +23,30 @@ App.Views.Dialogs.Registration = App.Views.Abstract.Dialog.extend({
 		var email = this.$('#input_email').val();
 
 		App.currentUser.clear();
-		App.currentUser.on("invalid", function(){
+		
+		this.listenTo(App.currentUser, 'signedInStatusChanged', function(){
+			App.userChanged();
+			this.hide();
+		});
+
+		this.listenTo(App.currentUser, 'registered', function(){
+			this.$('.modal-body-default').slideUp();
+			this.$('.modal-body-success').slideDown();
+		});
+		
+		this.listenTo(App.currentUser, 'invalid', function(){
 			var html = ""; for (var k in App.currentUser.validationError) html+=App.currentUser.validationError[k].msg+"<br>";
-			that.$('.errors-container').html(html);
-			that.$('.errors-container').slideDown();
+			this.$('.errors-container').html(html);
+			this.$('.errors-container').slideDown();
 
-			that.$('#input_login').focus();	/// @todo: focus to input with error
-			that.$('.btn-primary').button('reset');
-
+			this.$('#input_login').focus();	/// @todo: focus to input with error
+			this.$('.btn-primary').button('reset');
+			var that = this;
 			setTimeout(function() {
 				that.$('.errors-container').slideUp();
 			}, 2000);
 		});
-		App.currentUser.on("signedInStatusChanged", function(){
-			App.userChanged();
-			that.hide();
-		});
+
 		App.currentUser.register(login, email, password);
 
 		return false;
