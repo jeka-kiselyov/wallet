@@ -2,9 +2,15 @@
 App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 
 	page: 1,
-	perPage: 25,
+	perPage: 1,
 	templateName: 'pages/news/recent',
 	title: function() { return 'News, page: '+this.page; },
+	url: function() {
+		if (this.page == 1)
+			return 'news/recent';
+		else
+			return 'news/recent/'+this.page;
+	},
 	events: {
 		"click #go_to_prev": "prevPage",
 		"click #go_to_next": "nextPage",
@@ -38,7 +44,7 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 		return false;
 	},
 	nextPage: function() {
-		if (this.items.length < this.perPage)
+		if (!this.items.hasNextPage())
 			return false;
 		
 		console.log("Navigating to next page");
@@ -48,8 +54,9 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 		return false;
 	},
 	getUpdatedPage: function() {
-		this.items.getPage(this.page);
-		App.router.setUrl('news/recent/'+this.page);
+		App.showPage('NewsItems', {page: this.page});
+		// this.items.getPage(this.page);
+		// App.router.setUrl('news/recent/'+this.page);
 	},
 	render: function() {
 		console.log("Rendering news items");

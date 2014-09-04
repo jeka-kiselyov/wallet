@@ -54,7 +54,7 @@ App.router = new (Backbone.Router.extend({
     App.showPage('NewsItem', {slug: slug});
   },
 
-  initialize: function() {
+  init: function() {
     Backbone.history.start({pushState: true});
     Backbone.history.isRoutingURL = function(fragment) {
       for (var k in this.handlers)

@@ -20,10 +20,11 @@ window.App = {
 	{
 		var that = this;
 		
-		App.localStorage.invalidate(App.settings.version);
-
 		if(!this.currentUser)
 			this.setUser();
+
+		App.localStorage.invalidate(App.settings.version);
+		App.router.init();
 	},
 	showDialog: function(dialogName, params) {
 		if (typeof(App.Views.Dialogs[dialogName]) === 'undefined') /// this page is already current
