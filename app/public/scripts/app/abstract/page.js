@@ -30,6 +30,10 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		console.log("Document title changed to '"+title+"'");
 		$(document).attr('title', title);
 	},
+	wakeUp: function() {
+		this.holderReady = false;
+		this.render();
+	},
 	renderHTML: function(data) {
 
 		if (typeof(this.templateName) === 'undefined' || !this.templateName)

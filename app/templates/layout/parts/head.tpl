@@ -31,6 +31,7 @@
 	{add_js file="vendors/jsmarty/jsmart_date_format"} 
 
 	{add_js file="scripts/app"}
+	{add_js file="scripts/app/view_stack"}
 	{add_js file="scripts/app/settings"}
 	{add_js file="scripts/app/local_storage"}
 	{add_js file="scripts/app/template_manager"}

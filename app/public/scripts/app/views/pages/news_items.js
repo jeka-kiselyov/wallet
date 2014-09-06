@@ -37,10 +37,7 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 			return false;
 
 		console.log("Navigating to prev page");
-
-		this.page = this.page - 1;
-		this.getUpdatedPage();
-
+		App.showPage('NewsItems', {page: this.page - 1});
 		return false;
 	},
 	nextPage: function() {
@@ -48,15 +45,8 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 			return false;
 		
 		console.log("Navigating to next page");
-		this.page = this.page + 1;
-		this.getUpdatedPage();
-
+		App.showPage('NewsItems', {page: this.page + 1});
 		return false;
-	},
-	getUpdatedPage: function() {
-		App.showPage('NewsItems', {page: this.page});
-		// this.items.getPage(this.page);
-		// App.router.setUrl('news/recent/'+this.page);
 	},
 	render: function() {
 		console.log("Rendering news items");
@@ -74,7 +64,7 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 
 	},
 	initialize: function(params) {
-
+		console.log('news_items.js | initialize');
 		/// initialize models, collections etc. Request fetching from storage
 		this.items = new App.Collections.NewsItems();
 		this.items.setPageSize(this.perPage);

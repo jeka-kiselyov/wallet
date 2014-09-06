@@ -48,16 +48,45 @@ window.App = {
 
 		console.log('Showing page: '+pageName);
 
+		/// Compile page hash. So we can cache it
+		var hash = pageName;
+		if (typeof(params) !== 'undefined')
+			for (var k in params)
+			{
+				if (typeof(params[k].id) !== 'undefined')
+					hash += '-'+k+'_id'+params[k].id;
+				else
+					hash += '-'+k+'_'+params[k];
+			}
+
+		App.currentPageHash = hash;
+		console.log('Showing page hash: '+hash);
+
 		if (typeof(App.Views.Pages[pageName]) === 'undefined')
 		{
-			console.error("There is no view defined");
+			console.error("There is no view class defined");
 			return false;
 		}
 
 		if (typeof(App.page) !== 'undefined' && App.page) /// undelegate events from previous page
+		{
 			App.page.undelegateEvents();
+		}
 
-		App.page = new App.Views.Pages[pageName](params);
+		/// Trying to get view from stack
+		var fromStack = this.viewStack.getView(hash);
+
+		if (fromStack !== false)
+		{
+			/// Console log wake up page from stack
+			console.log('Showing page from stack');
+			App.page = fromStack;
+			App.page.wakeUp();
+		} else {
+			/// or create new one
+			App.page = new App.Views.Pages[pageName](params);
+			this.viewStack.addView(hash, App.page);
+		}
 
 		return true;
 	},
