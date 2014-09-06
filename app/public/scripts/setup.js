@@ -2,6 +2,7 @@
 $(function() {
 
   App.init();
+  $("#preloader").fadeOut('slow');
 
 });
 
