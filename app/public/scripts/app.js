@@ -48,19 +48,8 @@ window.App = {
 
 		console.log('Showing page: '+pageName);
 
-		/// Compile page hash. So we can cache it
-		var hash = pageName;
-		if (typeof(params) !== 'undefined')
-			for (var k in params)
-			{
-				if (typeof(params[k].id) !== 'undefined')
-					hash += '-'+k+'_id'+params[k].id;
-				else
-					hash += '-'+k+'_'+params[k];
-			}
-
-		App.currentPageHash = hash;
-		console.log('Showing page hash: '+hash);
+		if (typeof(params) === 'undefined')
+			params = {};
 
 		if (typeof(App.Views.Pages[pageName]) === 'undefined')
 		{
@@ -74,7 +63,7 @@ window.App = {
 		}
 
 		/// Trying to get view from stack
-		var fromStack = this.viewStack.getView(hash);
+		var fromStack = this.viewStack.getView(pageName, params);
 
 		if (fromStack !== false)
 		{
@@ -85,7 +74,7 @@ window.App = {
 		} else {
 			/// or create new one
 			App.page = new App.Views.Pages[pageName](params);
-			this.viewStack.addView(hash, App.page);
+			this.viewStack.addView(pageName, params, App.page);
 		}
 
 		return true;
