@@ -23,8 +23,9 @@ window.App = {
 		if(!this.currentUser)
 			this.setUser();
 
-		App.localStorage.invalidate(App.settings.version);
-		App.router.init();
+		this.localStorage.invalidate(this.settings.version);
+		this.router.init();
+		this.loadingStatus(false);
 	},
 	showDialog: function(dialogName, params) {
 		if (typeof(App.Views.Dialogs[dialogName]) === 'undefined') /// this page is already current
@@ -41,7 +42,6 @@ window.App = {
 			App.dialog = new App.Views.Dialogs[dialogName](params);			
 		}
 
-
 		return true;
 	},
 	showPage: function(pageName, params) {
@@ -57,27 +57,47 @@ window.App = {
 			return false;
 		}
 
-		if (typeof(App.page) !== 'undefined' && App.page) /// undelegate events from previous page
+		if (typeof(this.page) !== 'undefined' && this.page) /// undelegate events from previous page
 		{
-			App.page.undelegateEvents();
+			this.page.undelegateEvents();
 		}
 
 		/// Trying to get view from stack
 		var fromStack = this.viewStack.getView(pageName, params);
 
+
 		if (fromStack !== false)
 		{
 			/// Console log wake up page from stack
 			console.log('Showing page from stack');
-			App.page = fromStack;
-			App.page.wakeUp();
+			this.page = fromStack;
+			this.page.wakeUp();
 		} else {
 			/// or create new one
-			App.page = new App.Views.Pages[pageName](params);
-			this.viewStack.addView(pageName, params, App.page);
+			this.page = new App.Views.Pages[pageName](params);
+			this.loadingStatus(true);
+			this.page.on('loaded', function(){ this.loadingStatus(false); }, this);
+			if (this.page.isReady)
+				this.loadingStatus(false);
+			// this.listenTo(this.page, 'loaded', function(){ this.loadingStatus(false); });
+			// this.listenTo(this.page, 'loading', function(){ this.loadingStatus(true); });
+
+			this.viewStack.addView(pageName, params, this.page);
 		}
 
+
 		return true;
+	},
+	loadingStatus: function(status)
+	{
+		if (status)
+		{
+			this.isLoading = true;
+			$('#preloader').stop().show();
+		} else {
+			this.isLoading = false;
+			$('#preloader').stop().fadeOut('slow');
+		}
 	},
 	setUser: function(data)
 	{

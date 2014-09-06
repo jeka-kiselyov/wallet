@@ -1,6 +1,7 @@
 // page.js
 App.Views.Abstract.Page = Backbone.View.extend({
 
+	isReady: false,
 	setURL: function(url) {
 		if (typeof(url) === 'undefined')
 		{
@@ -50,9 +51,11 @@ App.Views.Abstract.Page = Backbone.View.extend({
 			$('.page', "#page_holder_"+App.currentHolder).removeClass('page_loading');
 
 			that.trigger('render');
+			that.trigger('loaded');
 		});
 		this.setTitle();
 		this.setURL();
+		this.isReady = true;
 
 		return this;
 	},
