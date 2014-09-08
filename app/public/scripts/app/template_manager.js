@@ -16,7 +16,7 @@ App.templateManager = {
 	    		var widgetName = name.split('shared/widgets/').join('').split('.tpl').join('');
 	    		console.log('template_manager.js | Including widget "'+widgetName+'"');
 
-	    		return '<div class="client-side-widget client-side-widget-'+widgetName+'" id="widget_'+(Math.random()+'').split('0.').join('')+'" data-widget-name="'+widgetName+'"></div>';
+	    		return '<div class="widget client-side-widget client-side-widget-'+widgetName+'" id="widget_'+(Math.random()+'').split('0.').join('')+'" data-widget-name="'+widgetName+'"></div>';
 	    	}
 
 	    	if (typeof(App.templateManager._templates[name]) !== 'undefined')

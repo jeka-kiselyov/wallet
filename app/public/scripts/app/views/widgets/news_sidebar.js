@@ -3,6 +3,7 @@
 App.Views.Widgets.news_sidebar = Backbone.View.extend({
 
 	templateName: 'news_sidebar',
+	cacheTime: 10,
 	initialize: function() {
 		console.log('Initializing news_sidebar widget');
 
@@ -21,8 +22,31 @@ App.Views.Widgets.news_sidebar = Backbone.View.extend({
 			that.trigger('loaded');
 		});		
 	},
+	tryToGetCachedData: function() {
+		var inCache = App.localStorage.get('widget-data-'+this.templateName);
+		if (inCache && typeof(inCache.added) !== 'undefined' && typeof(inCache.data) !== 'undefined' && inCache.added > (new Date().getTime() / 1000) - this.cacheTime)
+			return inCache.data;
+		return false;
+	},
+	setDataToCache: function(data) {
+		App.localStorage.set('widget-data-'+this.templateName, {added: (new Date().getTime() / 1000), data: data});
+	},
 	render: function() {
-		this.$el.html('SIDEBAR');
-		this.renderHTML();
+		this.renderLoading();
+		var data = this.tryToGetCachedData();
+		if (data)
+		{
+			/// has data in cache
+			this.renderHTML(data);
+		} else {
+			this.categories = new App.Collections.NewsCategories();
+			var that = this;
+			$.when( this.categories.fetch() ).done(function( a1 ) {
+				var data = {categories: that.categories.toJSON()};
+				that.setDataToCache(data);
+				that.renderHTML(data);
+			});
+
+		}
 	}
 });
