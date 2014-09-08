@@ -4,6 +4,7 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 	page: 1,
 	perPage: 1,
 	templateName: 'pages/news/recent',
+	widgets: [],
 	title: function() { return 'News, page: '+this.page; },
 	url: function() {
 		if (this.page == 1)
@@ -61,7 +62,6 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 			this.$('#go_to_prev').parent().addClass('disabled');
 		else
 			this.$('#go_to_prev').parent().removeClass('disabled');
-
 	},
 	initialize: function(params) {
 		console.log('news_items.js | initialize');

@@ -10,6 +10,15 @@ App.templateManager = {
 	{
 	    jSmart.prototype.getTemplate = function(name)
 	    {
+	    	if (name.indexOf('shared/widgets/') === 0)
+	    	{
+	    		/// It's a widget!
+	    		var widgetName = name.split('shared/widgets/').join('').split('.tpl').join('');
+	    		console.log('template_manager.js | Including widget "'+widgetName+'"');
+
+	    		return '<div class="client-side-widget client-side-widget-'+widgetName+'" id="widget_'+(Math.random()+'').split('0.').join('')+'" data-widget-name="'+widgetName+'"></div>';
+	    	}
+
 	    	if (typeof(App.templateManager._templates[name]) !== 'undefined')
 	    	{
 	    		return App.templateManager._cache[name];
@@ -24,7 +33,8 @@ App.templateManager = {
 	{
 		return {
 			settings: {
-				site_path: App.settings.sitePath
+				site_path: App.settings.sitePath,
+				client_side: true
 			}
 		};
 	},

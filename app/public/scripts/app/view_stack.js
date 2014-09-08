@@ -57,5 +57,6 @@ App.viewStack = {
 		sort.sort(function(a, b) { return a.added - b.added; });
 		console.log("Removing "+sort[0].hash+" from pages stack");
 		delete this.stack[sort[0].hash];
+		this.inStackCount--;
 	}
 };

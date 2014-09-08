@@ -2,6 +2,7 @@
 App.Views.Abstract.Page = Backbone.View.extend({
 
 	isReady: false,
+	widgets: [],
 	setURL: function(url) {
 		if (typeof(url) === 'undefined')
 		{
@@ -35,6 +36,26 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.holderReady = false;
 		this.render();
 	},
+	proccessWidgets: function() {
+		var that = this;
+		this.$('.client-side-widget').each(function(){
+			var data = $(this).data();
+			if (typeof(data.widgetName) === 'undefined' || !data.widgetName)
+				return false;
+
+			if (typeof(App.Views.Widgets[data.widgetName]) === 'undefined')
+			{
+				console.error('Widget class for '+data.widgetName+' is not defined');
+				return false;
+			}
+
+			var widgetView = new App.Views.Widgets[data.widgetName]({  
+			  el: $(this)
+			});
+
+			that.widgets.push(widgetView);
+		});
+	},
 	renderHTML: function(data) {
 
 		if (typeof(this.templateName) === 'undefined' || !this.templateName)
@@ -57,6 +78,11 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.setURL();
 		this.isReady = true;
 
+		var that = this;
+		setTimeout(function(){
+			that.proccessWidgets();
+		}, 10);
+		
 		return this;
 	},
 	switchBuffers: function() {
