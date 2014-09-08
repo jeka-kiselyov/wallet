@@ -2,15 +2,27 @@
 App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 
 	page: 1,
+	newsCategoryId: false,
 	perPage: 1,
 	templateName: 'pages/news/recent',
 	widgets: [],
 	title: function() { return 'News, page: '+this.page; },
 	url: function() {
-		if (this.page == 1)
-			return 'news/recent';
+		if (this.newsCategoryId == false)
+		{
+			if (this.page == 1)
+				return 'news/recent';
+			else
+				return 'news/recent/'+this.page;
+		}
 		else
-			return 'news/recent/'+this.page;
+		{
+
+			if (this.page == 1)
+				return 'news/category/'+this.newsCategoryId;
+			else
+				return 'news/category/'+this.newsCategoryId+'/'+this.page;			
+		}
 	},
 	events: {
 		"click #go_to_prev": "prevPage",
@@ -38,7 +50,7 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 			return false;
 
 		console.log("Navigating to prev page");
-		App.showPage('NewsItems', {page: this.page - 1});
+		App.showPage('NewsItems', {page: this.page - 1, newsCategoryId: this.newsCategoryId});
 		return false;
 	},
 	nextPage: function() {
@@ -46,12 +58,12 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 			return false;
 		
 		console.log("Navigating to next page");
-		App.showPage('NewsItems', {page: this.page + 1});
+		App.showPage('NewsItems', {page: this.page + 1, newsCategoryId: this.newsCategoryId});
 		return false;
 	},
 	render: function() {
 		console.log("Rendering news items");
-		this.renderHTML({items: this.items.toJSON(), page: this.page, perPage: this.perPage});
+		this.renderHTML({items: this.items.toJSON(), page: this.page, perPage: this.perPage, news_category_id: this.newsCategoryId});
 		
 		if (!this.items.hasNextPage())
 			this.$('#go_to_next').parent().addClass('disabled');
@@ -65,14 +77,18 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 	},
 	initialize: function(params) {
 		console.log('news_items.js | initialize');
-		/// initialize models, collections etc. Request fetching from storage
-		this.items = new App.Collections.NewsItems();
-		this.items.setPageSize(this.perPage);
 
 		if (typeof(params.page) !== 'undefined')
-		{
 			this.page = parseInt(params.page, 10);
-		}
+
+		if (typeof(params.newsCategoryId) !== 'undefined' && params.newsCategoryId)
+			this.newsCategoryId = parseInt(params.newsCategoryId, 10);
+		else
+			this.newsCategoryId = false;
+
+		/// initialize models, collections etc. Request fetching from storage
+		this.items = new App.Collections.NewsItems([], {newsCategoryId: this.newsCategoryId});
+		this.items.setPageSize(this.perPage);
 
 		this.renderLoading();		
 		// this.listenTo(this.items, 'add', this.render);

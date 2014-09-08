@@ -13,6 +13,8 @@ App.router = new (Backbone.Router.extend({
     "static/view/:id": "static",// #wallets/4
     "news/recent/:page(/)": "newsItems",// #news/recent/3
     "news/recent(/)": "newsItems",// #news/recent
+    "news/category/:id/:page(/)": "newsCategory",// #news/category/1/2
+    "news/category/:id(/)": "newsCategory",// #news/category/1
     "news/view/:slug.html": "newsItem",// #news/view/someslug.html
   },
 
@@ -48,6 +50,13 @@ App.router = new (Backbone.Router.extend({
     if (typeof(page) === 'undefined') 
       page = 1;
     App.showPage('NewsItems', {page: page});
+  },
+
+  newsCategory: function(newsCategoryId, page) {
+    if (typeof(page) === 'undefined') 
+      page = 1;
+
+    App.showPage('NewsItems', {page: page, newsCategoryId: newsCategoryId});    
   },
 
   newsItem: function(slug) {
