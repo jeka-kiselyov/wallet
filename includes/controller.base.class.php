@@ -198,6 +198,13 @@
       $this->tpl->assign("head_css",$this->head_css);
       $this->tpl->assign("head_js",$this->head_js);
 
+      $tokens = array();
+      $checker = new checker;
+      for ($i = 0; $i < 20; $i++)
+        $tokens[] = $checker->generate_security_token();
+
+      $this->tpl->assign("tokens", $tokens);
+
       if ($this->registry->settings['cache']['enable_smarty_cache'])
       {
         if (is_null($this->view_cache_id))

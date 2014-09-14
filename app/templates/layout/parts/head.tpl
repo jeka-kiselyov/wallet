@@ -54,6 +54,9 @@
 	{if isset($user) && $user}
 		window.App.setUser({$user->to_array()|@json_encode});
 	{/if}
+	{if isset($tokens) && $tokens}
+		window.App.csfrProtector.addToken({$tokens|@json_encode});
+	{/if}
 	</script>
 
 	{add_css file="vendors/bootstrap/css/bootstrap.min" prepend=true}
