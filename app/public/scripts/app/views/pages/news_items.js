@@ -3,7 +3,7 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 
 	page: 1,
 	newsCategoryId: false,
-	perPage: 1,
+	perPage: 25,
 	templateName: 'pages/news/recent',
 	widgets: [],
 	title: function() { return 'News, page: '+this.page; },
@@ -88,21 +88,25 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 
 		/// initialize models, collections etc. Request fetching from storage
 		this.items = new App.Collections.NewsItems([], {newsCategoryId: this.newsCategoryId});
-		this.items.setPageSize(this.perPage);
+		this.items.state.pageSize = this.perPage; //setPageSize(this.perPage);
 
 		this.renderLoading();		
 		// this.listenTo(this.items, 'add', this.render);
 		// this.listenTo(this.items, 'reset', this.render);
 		// this.listenTo(this.items, 'remove', this.render);
+		try {
+			var that = this;
+			this.items.getPage(this.page).done(function(){
+				that.render();
 
-		var that = this;
-		this.items.getPage(this.page).done(function(){
-			that.render();
-
-			that.listenTo(that.items, 'add', that.render);
-			that.listenTo(that.items, 'reset', that.render);
-			that.listenTo(that.items, 'remove', that.render);
-		});
+				that.listenTo(that.items, 'add', that.render);
+				that.listenTo(that.items, 'reset', that.render);
+				that.listenTo(that.items, 'remove', that.render);
+			});
+		} catch(err) {
+			console.error('RRR');
+			//this.render();
+		}
 	}
 
 });

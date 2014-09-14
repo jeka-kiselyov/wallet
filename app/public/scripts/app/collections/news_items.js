@@ -11,7 +11,17 @@ App.Collections.NewsItems = Backbone.PageableCollection.extend({
 			return App.settings.apiEntryPoint+"news_categories/"+this.newsCategoryId+"/news_items";
 		else
 			return App.settings.apiEntryPoint+"news_items";
-	}
+	},
+	parse: function (resp, options) {
+      var newState = this.parseState(resp, _.clone(this.queryParams), _.clone(this.state), options);
+      try {
+	      if (newState) this.state = this._checkState(_extend({}, this.state, newState));
+	  } catch (error)
+	  {
+	  	this.trigger('error');
+	  }
+      return this.parseRecords(resp, options);
+    },
 
 });
 

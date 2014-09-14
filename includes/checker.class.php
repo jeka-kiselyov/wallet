@@ -89,7 +89,7 @@
 			return $random_token;
 		}
 
-		function is_good_security_token($token)
+		function is_good_security_token($token, $do_not_unset = false)
 		{
 			if (!session_id()) session_start();  // Initialize session' array of security tokens
 			if (!isset($_SESSION['security_tokens']) || !is_array($_SESSION['security_tokens']))
@@ -102,7 +102,8 @@
 			{
 				if ($md5_token == md5($token.__FILE__))
 				{
-					unset($md5_token);
+					if (!$do_not_unset)
+						unset($md5_token);
 					return true;
 				}
 			}

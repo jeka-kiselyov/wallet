@@ -1,3 +1,4 @@
+<div class="row">
 <div class="col-xs-12 col-sm-12 col-md-9">
 
   {if $items|count == 0}
@@ -27,4 +28,5 @@
 </div>
 <div class="col-xs-12 col-sm-12 col-md-3">
   {include file="shared/widgets/news_sidebar.tpl"}
+</div>
 </div>
