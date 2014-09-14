@@ -64,7 +64,7 @@ App.router = new (Backbone.Router.extend({
   },
 
   init: function() {
-    Backbone.history.start({pushState: true});
+    Backbone.history.start({pushState: App.settings.history.pushState, silent: App.settings.history.startSilent});
     Backbone.history.isRoutingURL = function(fragment) {
       for (var k in this.handlers)
         if (this.handlers[k].route.test(fragment))

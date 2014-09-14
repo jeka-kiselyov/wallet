@@ -35,7 +35,6 @@
 	{add_js file="scripts/app/settings"}
 	{add_js file="scripts/app/local_storage"}
 	{add_js file="scripts/app/template_manager"}
-	{add_js file="scripts/app/csfr_protector"}
 
 	{add_js_folder path="scripts/app/abstract/"}
 	{add_js_folder path="scripts/app/models/"}
@@ -53,9 +52,6 @@
 	<script>
 	{if isset($user) && $user}
 		window.App.setUser({$user->to_array()|@json_encode});
-	{/if}
-	{if isset($tokens) && $tokens}
-		window.App.csfrProtector.addToken({$tokens|@json_encode});
 	{/if}
 	</script>
 

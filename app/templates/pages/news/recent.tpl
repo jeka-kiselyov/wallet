@@ -21,8 +21,13 @@
   {/if}
 
   <ul class="pager">
-    <li class="previous {if $items|count < $perPage}disabled{/if}"><a href="#" id="go_to_next">&larr; Older</a></li>
-    <li class="next {if $page <= 1}disabled{/if}"><a href="#" id="go_to_prev">Newer &rarr;</a></li>
+  {if $news_category_id|default:0 == 0}
+    <li class="previous {if $items|count < $perPage}disabled{/if}"><a href="{$settings->site_path}/news/recent/{$currentPage+1}" id="go_to_next">&larr; Older</a></li>
+    <li class="next {if $currentPage <= 1}disabled{/if}"><a href="{$settings->site_path}/news/recent/{$currentPage-1}" id="go_to_prev">Newer &rarr;</a></li>
+  {else}
+    <li class="previous {if $items|count < $perPage}disabled{/if}"><a href="{$settings->site_path}/news/category/{$news_category_id}/{$currentPage+1}" id="go_to_next">&larr; Older</a></li>
+    <li class="next {if $currentPage <= 1}disabled{/if}"><a href="{$settings->site_path}/news/category/{$news_category_id}/{$currentPage-1}" id="go_to_prev">Newer &rarr;</a></li>
+  {/if}
   </ul>
 
 </div>

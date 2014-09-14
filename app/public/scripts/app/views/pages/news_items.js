@@ -63,7 +63,7 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 	},
 	render: function() {
 		console.log("Rendering news items");
-		this.renderHTML({items: this.items.toJSON(), page: this.page, perPage: this.perPage, news_category_id: this.newsCategoryId});
+		this.renderHTML({items: this.items.toJSON(), currentPage: this.page, perPage: this.perPage, news_category_id: this.newsCategoryId});
 		
 		if (!this.items.hasNextPage())
 			this.$('#go_to_next').parent().addClass('disabled');

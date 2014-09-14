@@ -13,6 +13,11 @@ App.settings = {
 
 	enableTemplatesCache: false,
 	enablePagesStack: true,
-	pagesStackMaxLength: 25
+	pagesStackMaxLength: 25,
+
+	history: {
+		pushState: true,
+		startSilent: true
+	}
 
 };

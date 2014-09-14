@@ -197,13 +197,14 @@
       $this->tpl->assign("title",$this->registry->title);
       $this->tpl->assign("head_css",$this->head_css);
       $this->tpl->assign("head_js",$this->head_js);
+      $this->tpl->assign("client_side", false);
 
-      $tokens = array();
-      $checker = new checker;
-      for ($i = 0; $i < 10; $i++)
-        $tokens[] = $checker->generate_security_token();
+      // $tokens = array();
+      // $checker = new checker;
+      // for ($i = 0; $i < 10; $i++)
+      //   $tokens[] = $checker->generate_security_token();
 
-      $this->tpl->assign("tokens", $tokens);
+      // $this->tpl->assign("tokens", $tokens);
 
       if ($this->registry->settings['cache']['enable_smarty_cache'])
       {

@@ -2,7 +2,7 @@
 
 class controller_news extends userside_controller
 {
-	private $items_per_page = 10;
+	private $items_per_page = 25;
 
 	function index()
 	{
@@ -11,8 +11,8 @@ class controller_news extends userside_controller
 
  	function recent()
  	{
- 		$page = (int)$this->gp(0,0);
- 		if ($page < 0) $page = 0;
+ 		$page = (int)$this->gp(0,1);
+ 		if ($page < 1) $page = 1;
  		
  		$items = $this->news_items->get_all();
 
@@ -20,13 +20,39 @@ class controller_news extends userside_controller
  		$total_pages = floor($total / $this->items_per_page);
 
  		$items->set_order_by('time_created', 'DESC');
- 		$items->set_limit($page*$this->items_per_page, $this->items_per_page); // pagination here
+ 		$items->set_limit(($page-1)*$this->items_per_page, $this->items_per_page); // pagination here
 
  		$this->ta('items', $items);
- 		$this->ta('current_page', $page);
+ 		$this->ta('currentPage', $page);
+ 		$this->ta('perPage', $this->items_per_page);
  		$this->ta('total_pages', $total_pages);
 
- 		$this->ta('page_url_format', $this->registry->settings->site_path.'/news/recent/%d');
+ 		$this->ta('categories', $this->news_categories->get_all());
+ 	}
+
+ 	function category()
+ 	{
+ 		$category_id = (int)$this->gp(0,0);
+
+ 		$page = (int)$this->gp(1,1);
+ 		if ($page < 1) $page = 1;
+ 		
+ 		$items = $this->news_items->find_by_news_category_id($category_id);
+
+ 		$total = $this->news_items->get_count();
+ 		$total_pages = floor($total / $this->items_per_page);
+
+ 		$items->set_order_by('time_created', 'DESC');
+ 		$items->set_limit(($page-1)*$this->items_per_page, $this->items_per_page); // pagination here
+
+ 		$this->ta('items', $items);
+ 		$this->ta('currentPage', $page);
+ 		$this->ta('perPage', $this->items_per_page);
+ 		$this->ta('total_pages', $total_pages);
+
+ 		$this->ta('news_category_id', $category_id);
+ 		$this->ta('categories', $this->news_categories->get_all());
+ 		$this->ta('page_tpl', 'news/recent');
  	}
 
 	function view()
