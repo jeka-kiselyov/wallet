@@ -200,7 +200,7 @@
 
       $tokens = array();
       $checker = new checker;
-      for ($i = 0; $i < 20; $i++)
+      for ($i = 0; $i < 10; $i++)
         $tokens[] = $checker->generate_security_token();
 
       $this->tpl->assign("tokens", $tokens);

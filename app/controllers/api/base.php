@@ -21,7 +21,6 @@
  			$this->payload = @json_decode($data);
  	}
 
-
  	protected function payload($param = false, $default = false)
  	{
  		if ($param === false)
@@ -114,10 +113,32 @@
  		exit();
  	}
 
+ 	protected function csfr()
+ 	{
+ 		$this->status = 'error';
+ 		$this->data = array('code'=>'999', 'message'=>'Invalid X-CSRF-Token header');
+ 		exit();
+ 	}
+
  	protected function require_signed_in()
  	{
  		if (!$this->user || !$this->user->id)
  			$this->has_no_rights();
+ 		
+ 		return true;
+ 	}
+
+ 	protected function require_csfr_protection()
+ 	{
+ 		$token = ''; if (isset($_SERVER['HTTP_X_CSRF_TOKEN'])) $token = trim($_SERVER['HTTP_X_CSRF_TOKEN']);
+ 		if (!$token)
+ 			$this->csfr();
+
+ 		$checker = new checker;
+ 		if (!$checker->is_good_security_token($token))
+ 			$this->csfr();
+
+ 		return true;
  	}
 
  	protected function param($param_name)

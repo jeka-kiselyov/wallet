@@ -11,6 +11,7 @@ class controller_api_tokens extends api_controller
 
   protected function crud_list()
   {
+    $this->require_csfr_protection();
     $checker = new checker;
     for ($i = 0; $i < 10; $i++)
       $data[] = $checker->generate_security_token();
