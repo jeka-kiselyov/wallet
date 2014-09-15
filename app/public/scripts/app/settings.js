@@ -17,7 +17,7 @@ App.settings = {
 
 	history: {
 		pushState: true,
-		startSilent: true
+		startSilent: false
 	}
 
 };

@@ -23,7 +23,9 @@ App.router = new (Backbone.Router.extend({
     "user/registration": "Registration",
     "user/restore": "Restore",
     "user/newpassword": "NewPassword",
-    "user/logout": "Logout"
+    "user/logout": "Logout",
+
+    "wallets/add": "AddWallet"
   },
 
   index: function() {
@@ -84,6 +86,16 @@ App.router = new (Backbone.Router.extend({
         href = href.slice(-1) == '/' ? href.slice(0, -1) : href;
         href = href.slice(0,1) == '/' ? href.slice(1) : href;
 
+        /// trying to find dialog
+        for (var k in that.dialogs)
+          if (k == href)
+          {
+            console.log('Showing "'+that.dialogs[k]+'" dialog from document click event');
+            App.showDialog(that.dialogs[k]);
+
+            return false;
+          }
+            
         // Ensure the protocol is not part of URL, meaning its relative.
         if (href.slice(protocol.length) !== protocol && Backbone.history.isRoutingURL(href))
         {
@@ -92,17 +104,6 @@ App.router = new (Backbone.Router.extend({
           App.router.navigate(href, {trigger: true});
 
           return false;
-        }
-        else {
-          /// trying to find dialog
-          for (var k in that.dialogs)
-            if (k == href)
-            {
-              console.log('Showing "'+that.dialogs[k]+'" dialog from document click event');
-              App.showDialog(that.dialogs[k]);
-
-              return false;
-            }
         }
 
         return true;

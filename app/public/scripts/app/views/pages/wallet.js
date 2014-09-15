@@ -1,5 +1,5 @@
-// wallets.js
-App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
+// wallet.js
+App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/wallets/index',
 	title: 'Your Wallets',
