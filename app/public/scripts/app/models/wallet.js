@@ -4,6 +4,7 @@ App.Models.Wallet = Backbone.Model.extend({
 	defaults: {
         name: null,
         type: null,
+        status: 'active',
         total: null
     },
     getTotal: function() {

@@ -134,7 +134,15 @@ class controller_api_wallets extends api_controller
       $wallet = $this->wallets->get_by_id($id);
       if ($wallet->user_id != $this->user->id)
         $this->has_no_rights();
-      //@todo: apply changes
+
+
+      $name = $this->payload('name','');
+      $status = $this->payload('status','');
+      $type = $this->payload('type','');
+
+      if ($name) $wallet->name = $name;
+      if ($status) $wallet->status = $status;
+      if ($type) $wallet->type = $type;
       
       $wallet->save();
     }
