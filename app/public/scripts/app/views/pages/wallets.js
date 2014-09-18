@@ -10,6 +10,7 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		"mouseleave .item": "lessWalletDetails",
 		"click .item_button_remove": "removeItem",
 		"click .item_button_edit": "editItem",
+		"click .item_button_restore": "restoreItem",
 		"click .filter_menu": "filter"
 	},
 	filter: function(ev) {
@@ -24,14 +25,27 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		return false;
 	},
 	moreWalletDetails: function(ev) {
-		$(ev.currentTarget).find(".item_buttons").stop().slideDown('slow');
+		$(ev.currentTarget).find(".item_buttons").show();
+		$(ev.currentTarget).find(".item_information").hide();
 	},
 	lessWalletDetails: function(ev) {
-		$(ev.currentTarget).find(".item_buttons").stop().slideUp('slow');
+		$(ev.currentTarget).find(".item_buttons").hide();
+		$(ev.currentTarget).find(".item_information").show();
 	},
 	removeItem: function(ev) {
 		var id = $(ev.currentTarget).parents('.item').data('id');
 		App.showDialog('HideWallet', {item: this.items.get(id)});
+
+		return false;
+	},
+	restoreItem: function(ev) {
+		var id = $(ev.currentTarget).parents('.item').data('id');
+		var item = this.items.get(id);
+		if (item && item.get('status') == 'hidden')
+		{
+			item.set('status', 'active');
+			item.save();
+		}
 
 		return false;
 	},
@@ -45,21 +59,28 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		var filtered = this.items.search({status: this.status});
 		this.renderHTML({items: filtered.toJSON(), status: this.status});
 	},
+	wakeUp: function() {
+		this.holderReady = false;
+		var that = this;
+		this.requireSingedIn(function(){
+			that.render();
+			that.listenTo(that.items, 'sync add change reset remove', that.render);
+		});
+	},
 	initialize: function() {
 		console.log('wallets.js | initialize');
 		this.renderLoading();
-		this.items = new App.Collections.Wallets();
-		/// initialize models, collections etc. Request fetching from storage
-
-		this.listenTo(this.items, 'sync', this.render);
 
 		var that = this;
-		this.items.fetch().done(function(){
-
-			that.listenTo(that.items, 'add', that.render);
-			that.listenTo(that.items, 'change', that.render);
-			that.listenTo(that.items, 'reset', that.render);
-			that.listenTo(that.items, 'remove', that.render);
+		this.requireSingedIn(function(){
+			that.items = new App.Collections.Wallets();
+			/// initialize models, collections etc. Request fetching from storage
+			that.listenTo(that.items, 'sync', that.render);
+			that.items.fetch().done(function(){
+				that.listenTo(that.items, 'add change reset remove', that.render);
+			}).error(function(){
+				that.render();
+			});
 		});
 	}
 

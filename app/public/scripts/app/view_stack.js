@@ -43,6 +43,11 @@ App.viewStack = {
 		else
 			return false;
 	},
+	clear: function()
+	{
+		this.stack = {};
+		this.inStackCount = 0;
+	},
 	removeOldestIfNeeded: function()
 	{
 		var maxElements = App.settings.pagesStackMaxLength;

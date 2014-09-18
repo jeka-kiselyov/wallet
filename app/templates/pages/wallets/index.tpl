@@ -7,18 +7,27 @@
 <div class="col-xs-12 col-sm-12 col-md-9">
 
 	{if $items|count == 0}
-		<div class="alert alert-warning" role="alert">You have no wallets <a href="{$settings->site_path}/wallets/add" class="btn btn-primary btn-xs">Add</a></div>
+		{if $status|default:'active' == 'active'}
+			<div class="alert alert-warning" role="alert">You have no wallets <a href="{$settings->site_path}/wallets/add" class="btn btn-primary btn-xs">Add</a></div>
+		{else}
+			<div class="alert alert-warning" role="alert">You have no hidden wallets</div>			
+		{/if}
 	{else}
 		<div class="list-group">
 		{foreach from=$items item=i}
 			<a href="{$settings->site_path}/wallets/{$i->id}" class="list-group-item item" data-id="{$i->id}">
 			    <span class="badge">${$i->total}</span>
 				<h4 class="list-group-item-heading">{$i->name|escape:'html'}</h4>
-				<p class="list-group-item-text">...</p>
+				<div class="item_information">
+					<p class="list-group-item-text">...</p>
+				</div>
 				<div class="item_buttons hideme">
 					<button class="btn btn-default btn-xs item_button_remove"><span class="glyphicon glyphicon-trash"></span> {if $i->status|default:'active' == 'active'}Hide{else}Remove{/if}</button>
 					{if $i->status|default:'active' == 'active'}
 					<button class="btn btn-default btn-xs item_button_edit"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+					{/if}
+					{if $i->status|default:'active' == 'hidden'}
+					<button class="btn btn-default btn-xs item_button_restore"><span class="glyphicon glyphicon-repeat"></span> Restore</button>
 					{/if}
 				</div>
 

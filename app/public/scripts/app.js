@@ -60,6 +60,7 @@ window.App = {
 		if (typeof(this.page) !== 'undefined' && this.page) /// undelegate events from previous page
 		{
 			this.page.undelegateEvents();
+			this.page.stopListening();
 		}
 
 		/// Trying to get view from stack
@@ -110,6 +111,7 @@ window.App = {
 	{
 		console.log('User info changed');
 		// You can also refresh the page here if you want to.
+
 		this.renderLayoutBlocks();
 	},
 	renderLayoutBlocks: function()

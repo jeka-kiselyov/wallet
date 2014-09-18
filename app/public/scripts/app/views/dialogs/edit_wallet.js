@@ -15,7 +15,7 @@ App.Views.Dialogs.EditWallet = App.Views.Abstract.Dialog.extend({
 		this.show({item: this.item.toJSON()});
 	},
 	onShown: function() {
-		this.$('#input_name').focus();
+		this.$('#input_name').focus().select();
 	},
 	onSubmit: function() {
 		var that = this;

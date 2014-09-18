@@ -3,7 +3,8 @@ App.Views.Dialogs.HideWallet = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'hide_wallet',
 	events: {
-		"submit form": "onSubmit"
+		"submit form": "onSubmit",
+		"click .process_button": "doProcess"
 	},
 	initialize: function(params) {
 		if (typeof(params.item) != 'undefined')
@@ -13,13 +14,13 @@ App.Views.Dialogs.HideWallet = App.Views.Abstract.Dialog.extend({
 
 		this.show({item: this.item.toJSON()});
 	},
-	onSubmit: function() {
-		var that = this;
-
-		this.$('.btn-primary').button('loading');
+	doProcess: function() {
+		this.$('.btn-danger').button('loading');	
 		this.item.hide();		
 		this.hide();
-
+	},
+	onSubmit: function() {
+		this.hide();
 		return false;
 	}
 });

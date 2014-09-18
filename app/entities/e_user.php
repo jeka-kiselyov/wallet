@@ -41,6 +41,7 @@
 	    $wallet->user_id = $this->id;
 	    $wallet->total = 0;
 	    $wallet->type = 'default';
+	    $wallet->status = 'active';
 
 	    $wallet->save();
 

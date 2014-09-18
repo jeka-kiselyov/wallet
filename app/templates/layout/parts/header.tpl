@@ -1,5 +1,5 @@
 
-	<nav class="navbar navbar-default" id="header" role="navigation">
+	<nav class="navbar navbar-default disable-selection" id="header" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">

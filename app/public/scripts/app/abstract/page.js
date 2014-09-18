@@ -2,7 +2,38 @@
 App.Views.Abstract.Page = Backbone.View.extend({
 
 	isReady: false,
+	requiresSignedIn: false,
 	widgets: [],
+	requireSingedIn: function(callback)
+	{
+		this.requiresSignedIn = true;
+
+		this.listenToOnce(App.currentUser, 'signedout', function() {
+				App.viewStack.clear();
+				App.router.navigate('/', {trigger: true});			
+		});
+
+		if (typeof(App.currentUser) !== 'undefined' && App.currentUser.isSignedIn())
+		{
+			if (typeof(callback) === 'function')
+				callback(App.currentUser);
+			return App.currentUser;
+		}
+		else
+		{
+			this.listenToOnce(App.currentUser, 'signedin', function(){
+					callback(App.currentUser);				
+			});
+			App.showDialog('Signin');
+			App.dialog.on('hidden', function(){
+				if (!App.currentUser.isSignedIn())
+				{
+					App.viewStack.clear();
+					App.router.navigate('/', {trigger: true});					
+				}
+			});
+		}
+	},
 	setURL: function(url) {
 		if (typeof(url) === 'undefined')
 		{

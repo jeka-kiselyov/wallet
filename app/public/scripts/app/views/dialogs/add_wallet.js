@@ -20,6 +20,7 @@ App.Views.Dialogs.AddWallet = App.Views.Abstract.Dialog.extend({
 		var item = new App.Models.Wallet();
 		item.set('name', name);
 		item.set('total', 0);
+		item.set('status', 'active');
 		item.save();
 
 		if (typeof(App.page) !== 'undefined' && App.page && typeof(App.page.items) !== 'undefined' && App.page.items.model == App.Models.Wallet)

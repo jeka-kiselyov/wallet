@@ -25,7 +25,8 @@
       <div class="modal-footer">
 
         <div class="form-group">
-          <input type="submit" class="btn btn-danger pull-left" value="{if $item->status|default:'active' == 'active'}Yes, Hide It{else}Yes, Remove{/if}" data-loading-text="Removing...">
+          <input type="button" class="process_button btn btn-danger pull-left" value="{if $item->status|default:'active' == 'active'}Yes, Hide It{else}Yes, Remove{/if}" data-loading-text="Removing...">
+          <input type="submit" class="btn btn-primary pull-left" value="Cancel" data-loading-text="Canceling...">
         </div>
 
       </div>

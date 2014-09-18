@@ -45,6 +45,7 @@ App.router = new (Backbone.Router.extend({
   },
 
   wallets: function() {
+    console.log('Rouuu');
     App.showPage('Wallets');
   },
 

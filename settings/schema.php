@@ -6,7 +6,7 @@
 		'user_id'           => array('type'=>"INTEGER", 'key'=>true),
 		'name' => array('type'=>"STRING(255)"),
 		'type' => array('type'=>"ENUM('default','user')"),
-		'status' => array('type'=>"ENUM('active','hidden')"),
+		'status' => array('type'=>"ENUM('active','hidden')", 'defaultValue'=>"active"),
 		'total' => array('type'=>'FLOAT')
 	);
 
