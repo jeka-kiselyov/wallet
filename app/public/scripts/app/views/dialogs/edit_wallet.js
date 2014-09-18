@@ -1,9 +1,10 @@
-// hide_wallet.js
-App.Views.Dialogs.HideWallet = App.Views.Abstract.Dialog.extend({
+// edit_wallet.js
+App.Views.Dialogs.EditWallet = App.Views.Abstract.Dialog.extend({
 
-	dialogName: 'hide_wallet',
+	dialogName: 'edit_wallet',
 	events: {
-		"submit form": "onSubmit"
+		"submit form": "onSubmit",
+		"shown.bs.modal": "onShown"
 	},
 	initialize: function(params) {
 		if (typeof(params.item) != 'undefined')
@@ -13,11 +14,18 @@ App.Views.Dialogs.HideWallet = App.Views.Abstract.Dialog.extend({
 
 		this.show({item: this.item.toJSON()});
 	},
+	onShown: function() {
+		this.$('#input_name').focus();
+	},
 	onSubmit: function() {
 		var that = this;
 
 		this.$('.btn-primary').button('loading');
-		this.item.hide();		
+		var name = this.$('#input_name').val();
+		
+		this.item.set('name', name);
+		this.item.save();
+
 		this.hide();
 
 		return false;

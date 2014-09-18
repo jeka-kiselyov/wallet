@@ -13,17 +13,21 @@
 		{foreach from=$items item=i}
 			<a href="{$settings->site_path}/wallets/{$i->id}" class="list-group-item item" data-id="{$i->id}">
 			    <span class="badge">${$i->total}</span>
-				<h4 class="list-group-item-heading">
-				<span class="item_buttons hideme">
-					<button class="btn btn-default btn-sm item_button_remove"><span class="glyphicon glyphicon-trash"></span></button>
-				</span>{$i->name|escape:'html'}
-				</h4>
+				<h4 class="list-group-item-heading">{$i->name|escape:'html'}</h4>
 				<p class="list-group-item-text">...</p>
+				<div class="item_buttons hideme">
+					<button class="btn btn-default btn-xs item_button_remove"><span class="glyphicon glyphicon-trash"></span> {if $i->status|default:'active' == 'active'}Hide{else}Remove{/if}</button>
+					{if $i->status|default:'active' == 'active'}
+					<button class="btn btn-default btn-xs item_button_edit"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+					{/if}
+				</div>
 
 			</a>
 		{/foreach}
 
-		<div class="list-group-item list-group-item-info"><a href="{$settings->site_path}/wallets/add" class="btn btn-primary">Add</a></div>
+		{if $status|default:'active' == 'active'}
+			<div class="list-group-item list-group-item-info"><a href="{$settings->site_path}/wallets/add" class="btn btn-primary">Add</a></div>
+		{/if}
 		</div>	
 	{/if}
 
@@ -35,8 +39,8 @@
 		</div>
 		<div class="panel-body">
 			<ul class="nav nav-pills nav-stacked">
-				<li class="active"><a href="#"><span class="glyphicon glyphicon-ok"></span> Active</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-trash"></span> Trash</a></li>
+				<li {if $status|default:'active' == 'active'}class="active"{/if}><a href="#" class="filter_menu" data-status="active"><span class="glyphicon glyphicon-ok"></span> Active</a></li>
+				<li {if $status|default:'active' == 'hidden'}class="active"{/if}><a href="#" class="filter_menu" data-status="hidden"><span class="glyphicon glyphicon-trash"></span> Trash</a></li>
 			</ul>
 		</div>
 	</div>

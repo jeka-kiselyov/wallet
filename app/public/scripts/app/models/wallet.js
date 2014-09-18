@@ -13,6 +13,17 @@ App.Models.Wallet = Backbone.Model.extend({
     url: function() {
 		return App.settings.apiEntryPoint + 'wallets/' + (typeof(this.id) === 'undefined' ? '' : this.id);
     },
+    hide: function() {
+        if (this.get('status') == 'active')
+        {
+            this.set('status', 'hidden');
+            this.save();
+        }
+        else if (this.get('status') == 'hidden')
+        {
+            this.destroy();
+        }
+    },
     getTransactions: function() {
         if (typeof(this.transactions) === 'undefined')
         {
