@@ -3,7 +3,9 @@ App.Collections.Transactions = Backbone.Collection.extend({
 
 	model: App.Models.Transaction,
 	wallet_id: false,
-
+	comparator: function(item) {
+		return -item.get('datetime'); // Note the minus!
+	},
     url: function() {
 		if (this.wallet_id)
 			return App.settings.apiEntryPoint + 'wallets/' + this.wallet_id + '/transactions';

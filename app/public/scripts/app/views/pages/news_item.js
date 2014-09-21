@@ -2,6 +2,7 @@
 App.Views.Pages.NewsItem = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/news/view',
+    category: 'news',
 	disqus: null,
 	title: function() {
 		if (typeof(this.model) != 'undefined' && this.model.get('title'))

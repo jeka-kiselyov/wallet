@@ -1,0 +1,17 @@
+.wallet_total {
+	font-size: 24px;
+}
+
+a.action {
+	border-bottom: 1px dashed #2a6496;
+	text-decoration: none;
+}
+
+a.action:hover {
+	border-bottom: 1px dashed #2a6496;
+	text-decoration: none;
+}
+
+.transaction_amount {
+	text-align: right;
+}

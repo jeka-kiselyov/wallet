@@ -2,6 +2,7 @@
 App.Views.Pages.Static = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/static/view',
+    category: 'static',
 	title: function() {
 		if (typeof(this.model) != 'undefined' && this.model.get('title'))
 			return this.model.get('title');

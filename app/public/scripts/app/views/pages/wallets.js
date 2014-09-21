@@ -2,6 +2,7 @@
 App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/wallets/index',
+    category: 'wallets',
 	title: 'Your Wallets',
 	url: 'wallets',
 	status: 'active',

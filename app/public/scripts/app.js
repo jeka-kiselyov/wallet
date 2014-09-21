@@ -85,7 +85,7 @@ window.App = {
 
 			this.viewStack.addView(pageName, params, this.page);
 		}
-
+		this.renderLayoutBlocks();
 
 		return true;
 	},

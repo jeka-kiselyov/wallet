@@ -19,6 +19,14 @@ App.Views.Header = Backbone.View.extend({
 			this.$('.header_is_signed_in').hide();
 		}
 
+		$(".menu_category").parent().removeClass('active');
+		if (typeof(App.page) !== 'undefined' && typeof(App.page.category) !== 'undefined')
+		{
+			$(".menu_category_"+App.page.category).parent().addClass('active');
+		} else {
+			$(".menu_category_home").parent().addClass('active');
+		}
+
 
 		console.log('Header rendered');
 		return this;

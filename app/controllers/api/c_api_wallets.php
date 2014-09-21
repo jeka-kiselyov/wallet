@@ -44,7 +44,14 @@ class controller_api_wallets extends api_controller
       $wallet = $this->wallets->get_by_id($id);
       if ($wallet && $wallet->user_id = $this->user->id)
       {
-        $transaction = $wallet->addTransaction($data->amount, $data->description);
+        if (isset($data->subtype) && $data->subtype == 'setup')
+        {
+          /// set up
+          $transaction = $wallet->setTotalTo($data->amount);
+        } else {
+          $transaction = $wallet->addTransaction($data->amount, $data->description);
+        }
+        
         $this->data($transaction->to_array());
       }
       else

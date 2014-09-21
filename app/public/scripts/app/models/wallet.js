@@ -29,6 +29,7 @@ App.Models.Wallet = Backbone.Model.extend({
         {
             this.transactions = new App.Collections.Transactions();
             this.transactions.setWalletId(this.id);
+            this.listenTo(this.transactions, 'sync', function(){this.trigger('sync');});
             this.transactions.fetch();
         }
         this.transactions.setWalletId(this.id);
@@ -47,6 +48,20 @@ App.Models.Wallet = Backbone.Model.extend({
         this.set('total', this.getTotal()+amountValue);
 
         this.getTransactions().add(profit);
+        this.trigger('change');
+    },
+    setTotalTo: function(total) {
+        var transaction = new App.Models.Transaction();
+        var totalValue = Math.abs(parseFloat(total, 10));
+
+        transaction.set('amount', totalValue);
+        transaction.set('subtype', 'setup');
+        transaction.set('wallet_id', this.id);
+
+        transaction.save();
+        this.set('total', totalValue);
+        this.getTransactions().add(transaction);
+        this.trigger('change');
     },
     addExpense: function(amount, description) {
 
@@ -61,7 +76,7 @@ App.Models.Wallet = Backbone.Model.extend({
         this.set('total', this.getTotal()+amountValue);
 
         this.getTransactions().add(expense);
-
+        this.trigger('change');
     }
 
 });

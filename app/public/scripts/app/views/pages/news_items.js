@@ -5,6 +5,7 @@ App.Views.Pages.NewsItems = App.Views.Abstract.Page.extend({
 	newsCategoryId: false,
 	perPage: 25,
 	templateName: 'pages/news/recent',
+    category: 'news',
 	widgets: [],
 	title: function() { return 'News, page: '+this.page; },
 	url: function() {
