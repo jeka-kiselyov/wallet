@@ -9,6 +9,7 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		"mouseenter .item": "moreWalletDetails",
 		"mouseleave .item": "lessWalletDetails",
 		"click .item_button_remove": "removeItem",
+		"click .item": "toItem",
 		"click .item_button_edit": "editItem",
 		"click .item_button_restore": "restoreItem",
 		"click .filter_menu": "filter"
@@ -20,8 +21,21 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 			this.status = status;
 			this.render();
 		}
-		// $(".filter_menu").parent().removeClass('active');
-		// $(ev.currentTarget).parent().addClass('active');
+		return false;
+	},
+	toItem: function(ev) {
+		var data = $(ev.currentTarget).data();
+		if (typeof(data.id) === 'undefined')
+			return true;
+
+		var id = parseInt(data.id, 10);
+		var item = this.items.get(id);
+
+		if (!item)
+			return true;
+
+		App.showPage('Wallet', {item: item});
+
 		return false;
 	},
 	moreWalletDetails: function(ev) {

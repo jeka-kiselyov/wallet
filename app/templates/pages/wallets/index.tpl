@@ -1,5 +1,5 @@
 <ul class="breadcrumb">
-  <li><a href="#">Home</a></li>
+  <li><a href="{$settings->site_path}">Home</a></li>
   <li class="active">Your Wallets</li>
 </ul>
 
