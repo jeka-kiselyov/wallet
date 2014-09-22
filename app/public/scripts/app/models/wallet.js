@@ -39,6 +39,7 @@ App.Models.Wallet = Backbone.Model.extend({
 
         var profit = new App.Models.Transaction();
         var amountValue = Math.abs(parseFloat(amount, 10));
+        amountValue = Math.round(amountValue * 100) / 100;
 
         profit.set('description', description);
         profit.set('amount', amountValue);
@@ -53,6 +54,7 @@ App.Models.Wallet = Backbone.Model.extend({
     setTotalTo: function(total) {
         var transaction = new App.Models.Transaction();
         var totalValue = Math.abs(parseFloat(total, 10));
+        totalValue = Math.round(totalValue * 100) / 100;
 
         transaction.set('amount', totalValue);
         transaction.set('subtype', 'setup');
@@ -67,6 +69,7 @@ App.Models.Wallet = Backbone.Model.extend({
 
         var expense = new App.Models.Transaction();
         var amountValue = -Math.abs(parseFloat(amount, 10));
+        amountValue = Math.round(amountValue * 100) / 100;
 
         expense.set('description', description);
         expense.set('amount', amountValue);
