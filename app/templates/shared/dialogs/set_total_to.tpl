@@ -11,7 +11,7 @@
 
         <div class="form-group">
           <label class="sr-only" for="input_total">Total</label>
-          <input type="number" min="0" name="total" class="form-control" id="input_total" placeholder="Total">
+          <input type="number" min="0" step="0.01" name="total" class="form-control" id="input_total" placeholder="Total">
         </div>
 
 

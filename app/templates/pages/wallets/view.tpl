@@ -40,6 +40,12 @@
 
 			{foreach from=$transactions item=t}
 			<div class="list-group-item item" data-id="{$t->id}">
+				<div class="pull-left transaction_time">
+					{assign var="current_transaction_time_date" value=$t->datetime|date_format}
+					<div class="transaction_time_date">{if $last_time_date|default:'' != $current_transaction_time_date}{$current_transaction_time_date}{else}&nbsp;{/if}</div>
+					<div class="transaction_time_time">{$t->datetime|date_format:'g:i a'}</div>
+					{assign var="last_time_date" value=$current_transaction_time_date}
+				</div>
 				{if $t->amount >= 0}
 				<div class="pull-right text-success transaction_amount"><strong>${$t->amount|rational}.<sup>{$t->amount|decimal}</sup></strong></div>
 				{else}

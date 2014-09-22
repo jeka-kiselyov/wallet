@@ -11,7 +11,7 @@
 
         <div class="form-group">
           <label class="sr-only" for="input_amount">Amount</label>
-          <input type="number" min="0" name="amount" class="form-control" id="input_amount" placeholder="Amount">
+          <input type="number" min="0" step="0.01" name="amount" class="form-control" id="input_amount" placeholder="Amount">
         </div>
 
         <div class="form-group">

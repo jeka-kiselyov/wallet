@@ -7,11 +7,13 @@
 		{
 			if ($to == false)
 				$to = time();
-			if ($from = false)
+
+			if ($from == false)
 				$from = time() - date('t')*24*60*60;
 
 			$nto = $this->time_helper->ceilDate($to);
 			$nfrom = $this->time_helper->floorDate($from);
+
 			$wallet_id = (int)$wallet_id;
 
 			$query = "SELECT * FROM transactions WHERE wallet_id = '".$wallet_id."' AND `datetime` > '".$nfrom."' AND `datetime` < '".$nto."' ";
@@ -34,7 +36,7 @@
 		{
 			if ($to == false)
 				$to = time();
-			if ($from = false)
+			if ($from == false)
 				$from = time() - date('t')*24*60*60;
 
 			$nto = $this->time_helper->ceilDate($to);
