@@ -27,9 +27,13 @@
     }
     else
     {
-	    $classname = "model_".$name;
- 		eval("class ".$classname." extends model_base {}");
-	    return new $classname();
+    	$schema = schema::getInstance();
+    	if ($schema->get_fields($name) !== false)
+    	{	    
+    		$classname = "model_".$name;
+	 		eval("class ".$classname." extends model_base {}");
+		    return new $classname();
+    	}
     }
  }
 
@@ -42,7 +46,11 @@
  		} 
  		else 
  		{
- 			eval("class ".$class_name." extends entity_base {}");
+	    	$schema = schema::getInstance();
+	    	if ($schema->get_fields(Inflector::pluralize($name)) !== false)
+	    	{	    
+	 			eval("class ".$class_name." extends entity_base {}");
+	    	}
  		}
  }
 

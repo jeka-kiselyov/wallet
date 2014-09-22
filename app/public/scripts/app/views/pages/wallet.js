@@ -31,16 +31,31 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 	addExpense: function()
 	{
 		var description = $("#add_transaction_text").val();
+		var amount = $("#add_transaction_amount").val(); // could be empty if we are getting amount from description (1st try).
+
 		console.log('Add transaction with description: '+description);
 
 		var numbers = description.split(",").join(".").match(/[0-9.]+/g);
-		if (typeof(numbers) !== 'undefined' && numbers && typeof(numbers[0]) !== 'undefined')
+		if (typeof(numbers) !== 'undefined' && numbers && typeof(numbers[0]) !== 'undefined' && numbers[0])
 		{
-			var amount = +numbers[0];
+			amount = +numbers[0];
 			this.model.addExpense(amount, description);
+			this.$('#add_transaction_amount').hide();
+			$("#add_transaction_text").val('').blur();
+		} else {
+			amount = amount.split(',').join('.');
+			amount = +amount;
+			if (amount > 0)
+			{
+				this.model.addExpense(amount, description);
+				this.$('#add_transaction_amount').hide();
+				this.$("#add_transaction_text").val('').blur();
+			} else {
+				this.$('#add_transaction_amount').show();
+				this.$('#add_transaction_amount').focus();
+			}		
 		}
 
-		$("#add_transaction_text").val('').blur();
 		return false;
 	},
 	render: function() {

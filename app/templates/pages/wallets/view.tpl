@@ -34,6 +34,8 @@
 				<div class="form-group">
 					<form method="post" id="add_transaction_form">
 						<input type="text" class="form-control" id="add_transaction_text" placeholder="Describe expense and press Enter to add">
+						<input type="number" min="0" step="0.01" class="form-control hideme" id="add_transaction_amount" placeholder="Transaction amount">
+						<button type="submit" class="hideme">
 					</form>
 				</div>
 			</div>

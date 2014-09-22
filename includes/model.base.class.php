@@ -30,6 +30,9 @@
     else {
       /// get columns from db
       $columns = $this->db->MetaColumnNames($this->table, true);
+      if (!$columns)
+        throw new Exception("Invalid model name: ".$this->table, 1);
+        
       $this->columns = array_fill_keys($columns, '');
     }
     

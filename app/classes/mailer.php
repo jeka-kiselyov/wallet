@@ -18,7 +18,6 @@ class mailer extends singleton_base
 
   private function init_phpmailer()
   {
-    require_once(SITE_PATH_LIBS."phpmailer/class.phpmailer.php");
     $this->mailer = new PHPMailer();
 
     if ($this->registry->settings->mail_method == 'smtp')

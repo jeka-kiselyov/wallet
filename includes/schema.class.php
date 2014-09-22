@@ -15,6 +15,12 @@
             return self::$instance;
         }
 
+        static function add_to_schema($table_name, $fields)
+        {
+            self::$tables[$table_name] = array();
+            self::$tables[$table_name]['fields'] = $fields;
+        }
+
         function get_tables()
         {
             return array_keys(self::$tables);
@@ -33,6 +39,8 @@
         {
             if (isset(self::$tables[$table_name], self::$tables[$table_name]['fields']))
                 return self::$tables[$table_name]['fields'];
+            else
+                return false;
         }
 
         function get_fields_from_db($table_name)

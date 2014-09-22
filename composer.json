@@ -1,0 +1,13 @@
+{
+    "require": {
+        "katzgrau/klogger": "1.0.0",
+        "adodb/adodb-php": "5.19",
+        "mailchimp/mailchimp": "2.0.5",
+        "phpmailer/phpmailer": "5.2.8",
+        "smarty/smarty": "3.1.19",
+        "jeka-kiselyov/dklabcache": "dev-master"
+    },
+    "config": {
+    	"vendor-dir": "includes/libs"
+    }
+}

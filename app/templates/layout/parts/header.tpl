@@ -24,16 +24,22 @@
 						<li>
 							<a href="{$settings->site_path}/news/recent" class="menu_category menu_category_news">News</a>
 						</li>
-						<li class="header_is_not_signed_in" {if $user && $user.id}style="display: none;"{/if}>
+						<li>
+							<a href="mailto:jeka911@gmail.com?subject=Wallet" target="_blank" class="menu_category">Contact</a>
+						</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+						<li class="header_is_not_signed_in navbar-right" {if $user && $user.id}style="display: none;"{/if}>
 							<a href="{$settings->site_path}/user/registration">Register</a>
 						</li>
-						<li class="header_is_not_signed_in" {if $user && $user.id}style="display: none;"{/if}>
+						<li class="header_is_not_signed_in navbar-right" {if $user && $user.id}style="display: none;"{/if}>
 							<a href="{$settings->site_path}/user/signin" class="signin_caller" onclick=" ">Sign In</a>
 						</li>
-						<li class="header_is_signed_in" {if !$user || !$user.id}style="display: none;"{/if}>
+						<li class="header_is_signed_in navbar-right" {if !$user || !$user.id}style="display: none;"{/if}>
 							<a href="{$settings->site_path}/user/logout" class="signout_caller">Log Out</a>
 						</li>
 
+						{*
 						{if isset($user) && $user && $user->is_admin}
 							<li><a href="{$settings->site_path}/admin">Admin Panel</a></li>
 						{/if}
@@ -45,6 +51,7 @@
 								<li><a href="#">Item #3</a></li>
 							</ul>
 						</li>
+						*}
 			    </ul>
 			</div><!-- /.navbar-collapse -->
 		</div>

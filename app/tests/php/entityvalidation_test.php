@@ -14,6 +14,16 @@ class entityvalidation_test extends PHPUnit_Framework_0F {
 				`gender` ENUM( 'M','F' ) ,
 				`age` INT NOT NULL
 		) ENGINE = INNODB;");
+
+
+        schema::add_to_schema('sampleentities', array(
+            // ['id'] is implicit. It's always there, BIGINT, primaryKey, autoIncrement,
+            'email'                     => array('type'=>"STRING(64)"),
+            'login'                     => array('type'=>"STRING(64)"),
+            'gender'                     => array('type'=>"STRING(64)"),
+            'age'                    => array('type'=>"INTEGER")
+        ));
+
 	}
 	
 	public function test_entityvalidation()

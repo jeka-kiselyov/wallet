@@ -16,11 +16,11 @@ class cache extends singleton_base  {
 	function __construct($cache_settings = false) 
 	{
 	    parent::__construct();
-		require_once(SITE_PATH_LIBS."dklabcache/config.php");
-		require_once(SITE_PATH_LIBS."dklabcache/Zend/Cache.php");
-		require_once(SITE_PATH_LIBS."dklabcache/Cache/Backend/MemcachedMultiload.php");
-		require_once(SITE_PATH_LIBS."dklabcache/Cache/Backend/TagEmuWrapper.php");
-		require_once(SITE_PATH_LIBS."dklabcache/Cache/Backend/Profiler.php");
+		// require_once(SITE_PATH_LIBS."dklabcache/config.php");
+		// require_once(SITE_PATH_LIBS."dklabcache/Zend/Cache.php");
+		// require_once(SITE_PATH_LIBS."dklabcache/Cache/Backend/MemcachedMultiload.php");
+		// require_once(SITE_PATH_LIBS."dklabcache/Cache/Backend/TagEmuWrapper.php");
+		// require_once(SITE_PATH_LIBS."dklabcache/Cache/Backend/Profiler.php");
 
 		$this->load_settings($cache_settings);
 		$this->init();
@@ -66,7 +66,7 @@ class cache extends singleton_base  {
 
 		if ($this->cache_type == 'file') 
 		{
-			require_once(SITE_PATH_LIBS."dklabcache/Zend/Cache/Backend/File.php");
+			// require_once(SITE_PATH_LIBS."dklabcache/Zend/Cache/Backend/File.php");
 			$cache = new Zend_Cache_Backend_File(
 			array(
 					'cache_dir' => $this->config['file']['cache_dir'],
@@ -82,7 +82,7 @@ class cache extends singleton_base  {
 		} 
 		elseif ($this->cache_type == 'memory') 
 		{
-			require_once(SITE_PATH_LIBS."dklabcache/Zend/Cache/Backend/Memcached.php");
+			// require_once(SITE_PATH_LIBS."dklabcache/Zend/Cache/Backend/Memcached.php");
 			$cache = new Dklab_Cache_Backend_MemcachedMultiload($this->config['memory']);
 
 			$this->backend = new Dklab_Cache_Backend_TagEmuWrapper(new Dklab_Cache_Backend_Profiler($cache, array($this,'CalcStats')));

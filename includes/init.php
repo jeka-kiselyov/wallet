@@ -11,11 +11,12 @@ define ('SITE_PATH', realpath(dirname(__FILE__)."/../")  );
 
  require SITE_PATH_SETTINGS."environment.php";
  require SITE_PATH_SETTINGS."db.php";
+ require SITE_PATH_LIBS."autoload.php";
 
- require SITE_PATH_LIBS."Smarty".DIRECTORY_SEPARATOR."Smarty.class.php";
+ // require SITE_PATH_LIBS."Smarty".DIRECTORY_SEPARATOR."Smarty.class.php";
 
- require SITE_PATH_LIBS."adodb5".DIRECTORY_SEPARATOR."adodb-exceptions.inc.php";
- require SITE_PATH_LIBS."adodb5".DIRECTORY_SEPARATOR."adodb.inc.php";
+ //require SITE_PATH_LIBS."adodb5".DIRECTORY_SEPARATOR."adodb-exceptions.inc.php";
+ //require SITE_PATH_LIBS."adodb5".DIRECTORY_SEPARATOR."adodb.inc.php";
 
  require SITE_PATH_INCLUDES."db.class.php";
  require SITE_PATH_INCLUDES."schema.class.php";
@@ -62,6 +63,8 @@ define ('SITE_PATH', realpath(dirname(__FILE__)."/../")  );
  $registry->set("router", $router);
 
  $tpl = new Smarty();
+ $tpl->addPluginsDir(SITE_PATH_INCLUDES.DIRECTORY_SEPARATOR.'template_plugins');
+
  $tpl->template_dir = SITE_PATH.DIRECTORY_SEPARATOR."app".DIRECTORY_SEPARATOR."templates";
  $tpl->cache_dir = SITE_PATH.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR."templates_cache";
  $tpl->compile_dir = SITE_PATH.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR."templates_compiled";

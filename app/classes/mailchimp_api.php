@@ -8,10 +8,9 @@ class mailchimp_api extends singleton_base
   function __construct() 
   {
     parent::__construct(); 
-    require_once SITE_PATH_LIBS.DIRECTORY_SEPARATOR."mailchimp-api-php".DIRECTORY_SEPARATOR."Mailchimp.php";
     
     $this->api_key = $this->registry->settings->mailchimp_api_key;
-    $this->mailchimp = new Mailchimp($this->api_key);
+    $this->mailchimp = new Mailchimp/Mailchimp($this->api_key);
   }
 
   function __get($name)
