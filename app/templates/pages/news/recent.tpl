@@ -13,7 +13,7 @@
       <h4 class="media-heading"><a href="{$settings->site_path}/news/view/{$i->slug}.html" class="to_news_item" data-news-item-id="{$i->id}">{$i.title|escape:'html'}</a></h4>
       <p>{$i->description}</p>
 
-      <p class="text-muted">posted on {$i->time_created|date_format:'%b %d, %Y'}</p>
+      <p class="text-muted">posted on {$i->time_created|date_format:'M j, Y'}</p>
       <a href="{$settings->site_path}/news/view/{$i->slug}.html" class="btn btn-default btn-xs to_news_item" role="button" data-news-item-id="{$i->id}">Read More</a>
     </div>
   </div>
