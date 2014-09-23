@@ -23,7 +23,7 @@
 	{add_js file="vendors/bootstrap/dist/js/bootstrap.min" prepend=true}
 	{add_js file="vendors/underscore/underscore-min" prepend=true}
 	{add_js file="vendors/backbone/backbone" prepend=true}
-	{add_js file="vendors/backbone-paginator/backbone.paginator" prepend=true}
+	{add_js file="vendors/backbone.paginator/lib/backbone.paginator.min" prepend=true}
 
 	{add_js file="vendors/jsmart/jsmart"} 
 
