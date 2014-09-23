@@ -1,4 +1,4 @@
-<phpunit bootstrap="includes/init.php">
+<phpunit bootstrap="includes/init.php" backupGlobals="false">
 	<testsuites>
 		<testsuite name="PHP Unit Tests">
 			<directory suffix="_test.php">app/tests/php</directory>

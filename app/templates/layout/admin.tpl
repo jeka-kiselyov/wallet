@@ -5,19 +5,17 @@
   <meta name="robots" content="noindex" />
   <title>{t}Admin Panel at{/t} {$settings->site_title}</title>
   <link rel='icon' href='{$settings->site_path}/images/favicon.ico' type='image/x-icon' />
-  {foreach from=$head_css item=css}
-  <link href="{$settings->site_path}/css/{$css}.css" media="screen" rel="stylesheet" type="text/css" />
-  {/foreach}
-  {include file="parts/jquery.tpl"}
-  {include file="parts/bootstrap.tpl"}
-  {include file="parts/bootstrap-select.tpl"}
+  {add_js file="vendors/jquery/jquery.min" prepend=true} 
+  {add_js file="vendors/bootstrap/dist/js/bootstrap.min" prepend=true}
+  {add_css file="vendors/bootstrap/dist/css/bootstrap.min" prepend=true}
+
+  {add_js file="scripts/table_helper" prepend=true} 
+
+  {add_css file="css/admin"}
+
   {include file="parts/ckeditor_with_ckfinder.tpl"}
-  <script src="{$settings->site_path}/scripts/table_helper.js" type="text/javascript"></script>
-  {foreach from=$head_js item=js}
-  <script src="{$settings->site_path}/scripts/{$js}.js" type="text/javascript"></script>
-  {/foreach}
-  <script src="{$settings->site_path}/scripts/table_helper.js" type="text/javascript"></script>
-  <link href="{$settings->site_path}/css/admin.css" rel="stylesheet" type="text/css" media="all" />
+  {include_js_files}
+  {include_css_files}
 </head>
 <body>
 

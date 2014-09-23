@@ -18,15 +18,14 @@
 		var app_version = '{$settings->version}';
 	</script>
 
-	{add_js file="vendors/jquery/jquery-1.10.2.min" prepend=true} 
+	{add_js file="vendors/jquery/jquery.min" prepend=true} 
 	{* Prepend - this scripts will be included first, even if you've added something in controller *}
-	{add_js file="vendors/bootstrap/js/bootstrap.min" prepend=true}
-	{add_js file="vendors/backbonejs/underscore-min" prepend=true}
-	{add_js file="vendors/backbonejs/backbone-min" prepend=true}
-	{add_js file="vendors/backbonejs/backbone.paginator" prepend=true}
-	{add_js file="vendors/j911helpers/j911helpers" prepend=true} 
+	{add_js file="vendors/bootstrap/dist/js/bootstrap.min" prepend=true}
+	{add_js file="vendors/underscore/underscore-min" prepend=true}
+	{add_js file="vendors/backbone/backbone" prepend=true}
+	{add_js file="vendors/backbone-paginator/backbone.paginator" prepend=true}
 
-	{add_js file="vendors/jsmarty/jsmart"} 
+	{add_js file="vendors/jsmart/jsmart"} 
 
 	{add_js file="scripts/app"}
 	{add_js file="scripts/app/view_stack"}
@@ -53,7 +52,7 @@
 	{/if}
 	</script>
 
-	{add_css file="vendors/bootstrap/css/bootstrap.min" prepend=true}
+	{add_css file="vendors/bootstrap/dist/css/bootstrap.min" prepend=true}
 	{add_css file="css/main" prepend=true}
 
 	{include_css_files}

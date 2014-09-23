@@ -19,7 +19,6 @@
 
 {add_js_test name="framework_test"}
 {add_js_test name="model_user_test"}
-{add_js_test name="model_wallet_test"}
 
 {include_js_files}
 {include_css_files}
