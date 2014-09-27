@@ -9,7 +9,6 @@
   "moduleType": [
     "globals"
   ],
-  "license": "MIT",
   "dependencies": {
     "jquery": "1.10.2",
     "jasmine": "https://github.com/pivotal/jasmine/releases/download/v2.0.2/jasmine-standalone-2.0.2.zip",

@@ -6,7 +6,8 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 	events: {
 		"submit #add_transaction_form": "addExpense",
 		"click #add_profit_button": "addProfit",
-		"click #set_total_to_button": "setTotalTo"
+		"click #set_total_to_button": "setTotalTo",
+		"click .item": "transactionDetails"
 	},
 	title: function() {
 		if (typeof(this.model) != 'undefined' && this.model.get('name'))
@@ -17,6 +18,22 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 	url: function() {
 		if (typeof(this.model) != 'undefined' && this.model.id)
 			return 'wallets/'+this.model.id;
+	},
+	transactionDetails: function(ev) 
+	{
+		var data = $(ev.currentTarget).data();
+		if (typeof(data.id) === 'undefined')
+			return true;
+
+		var id = parseInt(data.id, 10);
+		var item = this.model.getTransactions().get(id);
+
+		if (!item)
+			return true;
+
+		App.showDialog('TransactionDetails', {item: item});
+
+		return false;
 	},
 	setTotalTo: function()
 	{
@@ -66,7 +83,21 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 		var that = this;
 		this.requireSingedIn(function(){
 			that.render();
-			that.listenTo(that.model, 'change sync', that.render);
+			that.listenTo(that.model, 'change sync destroy', that.render);
+		});
+	},
+	reloadWallet: function() {
+		var wallet_id = this.model.id;
+		var that = this;
+		this.requireSingedIn(function(){
+			that.model = new App.Models.Wallet();
+			that.model.id = wallet_id;
+			
+			that.listenTo(that.model, 'change sync destroy', that.render);
+			
+			that.model.fetch({error: function(){
+				App.showPage('NotFound');
+			}});	
 		});
 	},
 	initialize: function(params) {
@@ -87,7 +118,7 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 				that.model = new App.Models.Wallet();
 				that.model.id = params.id;
 				
-				that.listenTo(that.model, 'change sync', that.render);
+				that.listenTo(that.model, 'change sync destroy', that.render);
 				
 				that.model.fetch({error: function(){
 					App.showPage('NotFound');
