@@ -6,7 +6,7 @@
  if (ENVIRONMENT_SERVER == 'localhost')
   $settings['site_path'] = "http://wallet.com";
    else
-    $settings['site_path'] = "";
+    $settings['site_path'] = "http://finances.com";
 
  // General settings
  $settings['site_title'] = "Wallet";
