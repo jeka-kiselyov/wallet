@@ -53,10 +53,15 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 		console.log('Add transaction with description: '+description);
 
 		var numbers = description.split(",").join(".").match(/[0-9.]+/g);
+		var fromDescriptionAmount = false;
 		if (typeof(numbers) !== 'undefined' && numbers && typeof(numbers[0]) !== 'undefined' && numbers[0])
 		{
-			amount = +numbers[0];
-			this.model.addExpense(amount, description);
+			fromDescriptionAmount = +numbers[0];
+		}
+
+		if (fromDescriptionAmount)
+		{
+			this.model.addExpense(fromDescriptionAmount, description);
 			this.$('#add_transaction_amount').hide();
 			$("#add_transaction_text").val('').blur();
 		} else {
@@ -70,7 +75,7 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 			} else {
 				this.$('#add_transaction_amount').show();
 				this.$('#add_transaction_amount').focus();
-			}		
+			}	
 		}
 
 		return false;

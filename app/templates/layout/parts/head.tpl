@@ -11,6 +11,7 @@
 	<![endif]-->
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>{if isset($title) && $title}{$title|escape:"html"} | {/if}{$settings->site_title}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel='icon' href='{$settings->site_path}/images/favicon.ico' type='image/x-icon' />
 
 	<script type="text/javascript">
