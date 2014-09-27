@@ -37,12 +37,12 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 	},
 	setTotalTo: function()
 	{
-		App.showDialog('setTotalTo', {wallet: this.model});
+		App.showDialog('SetTotalTo', {wallet: this.model});
 		return false;
 	},
 	addProfit: function()
 	{
-		App.showDialog('addProfit', {wallet: this.model});
+		App.showDialog('AddProfit', {wallet: this.model});
 		return false;
 	},
 	addExpense: function()

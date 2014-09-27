@@ -1,5 +1,5 @@
 // set_total_to.js
-App.Views.Dialogs.setTotalTo = App.Views.Abstract.Dialog.extend({
+App.Views.Dialogs.SetTotalTo = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'set_total_to',
 	events: {
@@ -19,9 +19,13 @@ App.Views.Dialogs.setTotalTo = App.Views.Abstract.Dialog.extend({
 		this.$('.btn-primary').button('loading');
 
 		var total = this.$('#input_total').val();
+		total = +total;
 		//var description = this.$('#input_description').val();
 		
-		this.wallet.setTotalTo(total);
+		if (total)
+		{
+			this.wallet.setTotalTo(total);			
+		}
 
 		this.hide();
 

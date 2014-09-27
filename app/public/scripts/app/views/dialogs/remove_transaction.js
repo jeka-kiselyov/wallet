@@ -17,7 +17,7 @@ App.Views.Dialogs.RemoveTransaction = App.Views.Abstract.Dialog.extend({
 	doProcess: function() {
 		var that = this;
 		this.$('.btn-danger').button('loading');	
-		this.listenToOnce(this.item, 'destroy', function(){
+		this.listenToOnce(this.item, 'sync error', function(){
 			that.hide();
 			if (typeof(App.page) !== 'undefined' && typeof(App.page.reloadWallet) === 'function')
 				App.page.reloadWallet();

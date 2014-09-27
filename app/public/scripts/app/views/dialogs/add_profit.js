@@ -1,5 +1,5 @@
 // add_profit.js
-App.Views.Dialogs.addProfit = App.Views.Abstract.Dialog.extend({
+App.Views.Dialogs.AddProfit = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'add_profit',
 	events: {
@@ -21,7 +21,11 @@ App.Views.Dialogs.addProfit = App.Views.Abstract.Dialog.extend({
 		var amount = this.$('#input_amount').val();
 		var description = this.$('#input_description').val();
 		
-		this.wallet.addProfit(amount, description);
+		amount = +amount;
+		if (amount && amount > 0)
+		{
+			this.wallet.addProfit(amount, description);			
+		}
 
 		this.hide();
 
