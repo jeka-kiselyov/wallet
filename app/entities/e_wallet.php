@@ -149,8 +149,8 @@
 		public function delete()
 		{
 			/// remove transactions
-			$this->db->delete('transactions', "wallet_id='".(int)$this->id."' ");		
-			$this->db->delete('reccurences', "wallet_id='".(int)$this->id."' ");			
+			$c = $this->db->delete('transactions', " wallet_id = ?", $this->id);
+			$c = $this->db->delete('reccurences', "wallet_id = ?", $this->id);	
 
 			return parent::delete();
 		}

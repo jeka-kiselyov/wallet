@@ -88,7 +88,7 @@ class db
          */
         public function delete( $tablename, $where, $params = null)
         {
-                $result = self :: $adodb -> Execute( 'DELETE FROM '.$tablename.' WHERE '.$where , $params);
+                $result = self :: $adodb -> Execute( 'DELETE FROM `'.$tablename.'` WHERE '.$where , $params);
                 return $result;
         }
 

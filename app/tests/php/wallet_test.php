@@ -68,7 +68,6 @@
 
         $wallet = $this->wallets->get_by_id($wallet_id);
         $this->assertEquals($wallet, false);
-
         // related transactions should be removed too
         $transactions = $this->transactions->find_by_wallet_id($wallet_id);
         $this->assertEquals(count($transactions), 0);
