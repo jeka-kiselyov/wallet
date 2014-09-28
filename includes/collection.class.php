@@ -92,6 +92,7 @@ class collection implements ArrayAccess, Countable, IteratorAggregate
 			$q.=" LIMIT ".(int)$this->limit_from.", ".(int)$this->limit_count;
 
 		$rs = $this->db->execute($q);
+		if ($rs)
 		while ($array = $rs->FetchRow())
 		{
 			$this->entities[$array['id'].""] = new $this->entity_name($array, $this);

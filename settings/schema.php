@@ -37,6 +37,15 @@
 		'weekday'         => array('type'=>"INTEGER", 'defaultValue'=>"0"),
 	);
 
+	$schema['wallets_accesses'] = array();
+	$schema['wallets_accesses']['fields'] = array(
+		// ['id'] is implicit. It's always there, BIGINT, primaryKey, autoIncrement,
+		'wallet_id'			=> array('type'=>"INTEGER", 'key'=>true),
+		'original_user_id'	=> array('type'=>"INTEGER", 'key'=>true),
+		'to_user_id'		=> array('type'=>"INTEGER", 'key'=>true),
+		'to_email'			=> array('type'=>"STRING", 'key'=>true)
+	);
+
 	$schema['authentications'] = array();
 	$schema['authentications']['fields'] = array(
 		// ['id'] is implicit. It's always there, BIGINT, primaryKey, autoIncrement,

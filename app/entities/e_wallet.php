@@ -118,6 +118,44 @@
 			return $transaction->save();
 		}
 
+
+		public function giveAccess($email)
+		{
+			$email = trim($email);
+			if (!$email || !$this->regexpes->is_email($email))
+				return false;
+
+			$wallets_access = new wallets_access;
+			$wallets_access->wallet_id = $this->id;
+			$wallets_access->to_email = $email;
+			$wallets_access->original_user_id = $this->user_id;
+			$to_user = $this->users->get_by_email($email);
+			if ($to_user)
+			{
+				if ($this->hasAccess($to_user->id))
+					return true;
+				$wallets_access->to_user_id = $to_user->id;
+			}
+			else
+				$wallets_access->to_user_id = 0;
+			$success = $wallets_access->save();
+
+			return $success;
+		}
+
+		public function getAccesses()
+		{
+			return $this->wallets_accesses->find_by_wallet_id($this->id);
+		}
+
+		public function hasAccess($user_id)
+		{
+			if ($this->user_id == $user_id || $this->db->getrow('SELECT * FROM `wallets_accesses` WHERE wallet_id = ? AND to_user_id = ?', array($this->id, (int)$user_id)))
+				return true;
+			else
+				return false;
+		}
+
 		protected function validation()
 		{
 			return array(

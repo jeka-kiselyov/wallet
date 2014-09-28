@@ -14,6 +14,15 @@
 		);
 	}
 
+	public function hasAccessToWallet($wallet_id)
+	{
+		$wallet = $this->wallets->get_by_id($wallet_id);
+		if ($wallet && $wallet->hasAccess($this->id))
+			return true;
+		else
+			return false;
+	}
+
 	public function save()
 	{
 		if (!$this->id)
@@ -30,7 +39,30 @@
 		}
 
 		unset($this->fields['is_admin']);
-		return parent::save();
+		$success = parent::save();
+		if ($success)
+		{
+			//// update wallets accesses if there re any
+			$accesses = $this->wallets_accesses->find_by_email($this->email);
+			if ($accesses)
+				foreach ($accesses as $access) {
+					$access->to_user_id = $this->id;
+					$access->save();
+				}
+		}
+		return $success;
+	}
+
+	public function delete()
+	{
+		$accesses = $this->wallets_accesses->find_by_email($this->email);
+		if ($accesses)
+			foreach ($accesses as $access) {
+				$access->to_user_id = 0;
+				$access->save();
+			}	
+
+		return parent::delete();
 	}
 
 	public function createWallet($name)
