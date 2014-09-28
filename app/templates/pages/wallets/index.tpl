@@ -25,6 +25,7 @@
 					<button class="btn btn-default btn-xs item_button_remove"><span class="glyphicon glyphicon-trash"></span> {if $i->status|default:'active' == 'active'}Hide{else}Remove{/if}</button>
 					{if $i->status|default:'active' == 'active'}
 					<button class="btn btn-default btn-xs item_button_edit"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+					<button class="btn btn-default btn-xs item_button_accesses"><span class="glyphicon glyphicon-user"></span> Manage Accesses</button>
 					{/if}
 					{if $i->status|default:'active' == 'hidden'}
 					<button class="btn btn-default btn-xs item_button_restore"><span class="glyphicon glyphicon-repeat"></span> Restore</button>

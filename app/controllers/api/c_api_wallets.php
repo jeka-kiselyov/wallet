@@ -9,6 +9,59 @@ class controller_api_wallets extends api_controller
     $this->error_prefix.='2';
   }
 
+  protected function crud_accesses_create($wallet_id)
+  {
+    $this->require_signed_in();
+
+    $wallet = false;
+    $data = $this->payload();
+    if ($wallet_id)
+    {
+      $wallet = $this->wallets->get_by_id($wallet_id);
+      if ($wallet && $wallet->user_id = $this->user->id)
+      {
+        if (isset($data->to_email, $data->wallet_id) && $data->wallet_id == $wallet_id)
+        {
+          /// set up
+          $wallet->giveAccess($data->to_email);
+        }
+        
+        $accesses = $wallet->getAccesses();
+        $ret = array();
+        foreach ($accesses as $a) {
+          $ret[] = array("id"=>$a->id, "to_email"=>$a->to_email, "to_user_id"=>$a->to_user_id, "wallet_id"=>$a->wallet_id);
+        }
+        $this->data($ret);
+      }
+      else
+        $this->not_found();
+    }    
+
+  }
+
+
+  protected function crud_accesses_list($wallet_id)
+  {
+    $this->require_signed_in();
+
+    $wallet = false;
+    if ($wallet_id)
+    {
+      $wallet = $this->wallets->get_by_id($wallet_id);
+      if ($wallet && $wallet->user_id = $this->user->id)
+      {
+        $accesses = $wallet->getAccesses();
+        $ret = array();
+        foreach ($accesses as $a) {
+          $ret[] = $a->to_array();
+        }
+        $this->data($ret);
+      }
+      else
+        $this->not_found();
+    }    
+  }
+
   protected function crud_transactions_list($id)
   {
     $this->require_signed_in();
@@ -35,7 +88,6 @@ class controller_api_wallets extends api_controller
   protected function crud_transactions_create($id)
   {
     $this->require_signed_in();
-    // @todo add caching
 
     $wallet = false;
     $data = $this->payload();

@@ -13,6 +13,7 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		"click .item": "toItem",
 		"click .item_button_edit": "editItem",
 		"click .item_button_restore": "restoreItem",
+		"click .item_button_accesses": "showAccesses",
 		"click .filter_menu": "filter"
 	},
 	filter: function(ev) {
@@ -63,6 +64,12 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		}
 
 		return false;
+	},
+	showAccesses: function(ev) {
+		var id = $(ev.currentTarget).parents('.item').data('id');
+		App.showDialog('WalletAccesses', {item: this.items.get(id)});
+
+		return false;		
 	},
 	editItem: function(ev) {
 		var id = $(ev.currentTarget).parents('.item').data('id');

@@ -13,8 +13,7 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 		if (typeof(data) === 'undefined')
 			data = {};
 
-		this.$el.html('<div id="dialog_'+this.dialogName+'" class="modal fade dialog_'+this.dialogName+'" role="dialog" aria-labelledby="dialog_label">'+
-				'<div class="modal-dialog"><div class="modal-content">Loading</div></div></div>');
+		this.renderLoading();
 
 		var that = this;
 		this.$el.children().on('shown.bs.modal', function (e) {
@@ -31,9 +30,14 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 		});
 
 		this.$el.children().modal();
-
+		this.renderHTML(data);
+	},
+	renderLoading: function() {
+		this.$el.html('<div id="dialog_'+this.dialogName+'" class="modal fade dialog_'+this.dialogName+'" role="dialog" aria-labelledby="dialog_label">'+
+				'<div class="modal-dialog"><div class="modal-content">Loading</div></div></div>');		
+	},
+	renderHTML: function(data) {
 		var that = this;
-
 		App.templateManager.fetch('dialogs/'+this.dialogName, data, function(html) {
 		 	console.log('Dialog '+that.dialogName+' rendering');
 		 	that.$(".modal").html(html);
