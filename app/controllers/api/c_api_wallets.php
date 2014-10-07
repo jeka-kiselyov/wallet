@@ -140,10 +140,10 @@ class controller_api_wallets extends api_controller
     $this->require_signed_in();
 
     $wallet = false;
-    if ($wallet_id && ($wallet->user_id == $this->user->id || $wallet->hasAccess($this->user->id)))
+    if ($wallet_id)
     {
       $wallet = $this->wallets->get_by_id($wallet_id);
-      if ($wallet && $wallet->user_id == $this->user->id)
+      if ($wallet && ($wallet->user_id == $this->user->id || $wallet->hasAccess($this->user->id)))
       {
         $transaction = $this->transactions->get_by_id($transaction_id);
         if ($transaction && $transaction->wallet_id == $wallet->id)
@@ -162,22 +162,21 @@ class controller_api_wallets extends api_controller
     $this->require_signed_in();
 
     $wallet = false;
-    if ($wallet_id && ($wallet->user_id == $this->user->id || $wallet->hasAccess($this->user->id)))
+    if ($wallet_id)
     {
       $wallet = $this->wallets->get_by_id($wallet_id);
-      if ($wallet && $wallet->user_id == $this->user->id)
-      {
-        $transaction = $this->transactions->get_by_id($transaction_id);
-        if ($transaction && $transaction->wallet_id == $wallet->id)
-        {
-          $transaction->delete();
-          $this->data(null);
-        } else
-          $this->not_found();
-      }
-      else
+      $transaction = $this->transactions->get_by_id($transaction_id);
+      if (!$wallet || !$transaction || $transaction->wallet_id != $wallet->id)
         $this->not_found();
+
+      if ($wallet->user_id != $this->user_id && ($transaction->user_id != $this->user_id || !$wallet->hasAccess($this->user->id)))
+        $this->has_no_rights();
+
+      $transaction->delete();
+      $this->data(null);
     }    
+    else
+      $this->not_found();
   }
 
   protected function crud_read($id)
