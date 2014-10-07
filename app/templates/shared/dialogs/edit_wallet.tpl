@@ -14,6 +14,16 @@
           <input type="text" name="name" class="form-control" id="input_name" placeholder="Name" value="{$item->name|escape:'html'}">
         </div>
 
+        <div class="form-group">
+          <label class="sr-only" for="input_name">Currency</label>
+          <select name="currency" id="input_currency" class="form-control">
+            <option value="">Select Currency</option>
+            {foreach from=$settings.currencies item=c key=id}
+              <option value="{$id}" {if $item->currency == $id}selected="selected"{/if}>{$c}</option>
+            {/foreach}
+          </select>
+        </div>
+
         <div class="alert alert-danger errors-container" style="display: none;">
         </div>
 

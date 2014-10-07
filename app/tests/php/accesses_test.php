@@ -61,6 +61,13 @@
         $this->assertFalse($user1->hasAccessToWallet($wallet2->id)); // get from user entity
         $this->assertFalse($wallet2->hasAccess($user1->id)); // get from user entity
 
+        /////// try to get from model
+        $with_access = $this->wallets->find_shared_with_user_id($user2->id);
+        $this->assertEquals(count($with_access), 1);
+
+        $this->assertInstanceOf('wallet', $with_access->at(0));
+        $this->assertEquals($with_access->at(0)->id, $wallet1->id);
+
         $user1->delete();
         $user2->delete();
         $wallet1->delete();

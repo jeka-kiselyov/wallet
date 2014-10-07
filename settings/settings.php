@@ -6,12 +6,14 @@
  if (ENVIRONMENT_SERVER == 'localhost')
   $settings['site_path'] = "http://wallet.com";
    else
-    $settings['site_path'] = "http://finances.com";
+    $settings['site_path'] = "http://wallet.jeka911.com";
 
  // General settings
  $settings['site_title'] = "Wallet";
  $settings['timezone'] = "UTC";
  $settings['version'] = '1.12335';
+
+ $settings['invite_mode'] = false;
 
  // MVC settings
  $settings['mvc']['enable_magic_entities_and_models'] = true;

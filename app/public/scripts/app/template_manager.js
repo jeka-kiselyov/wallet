@@ -73,10 +73,8 @@ App.templateManager = {
 	commonData: function()
 	{
 		return {
-			settings: {
-				site_path: App.settings.sitePath,
-				client_side: true
-			}
+			settings: _.extend(App.settings, 
+				{site_path: App.settings.sitePath, client_side: true, invite_mode: App.settings.inviteMode})
 		};
 	},
 	fetch: function(name, data, success) {

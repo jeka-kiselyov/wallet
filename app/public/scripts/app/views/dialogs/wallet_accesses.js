@@ -6,6 +6,22 @@ App.Views.Dialogs.WalletAccesses = App.Views.Abstract.Dialog.extend({
 	events: {
 		"submit form": "onSubmit",
 		"shown.bs.modal": "onShown",
+		"click .item_button_remove_access": "removeAccess"
+	},
+	removeAccess: function(ev) {
+		var data = $(ev.currentTarget).data();
+		if (typeof(data.id) === 'undefined')
+			return true;
+
+		var id = parseInt(data.id, 10);
+		var access = this.accesses.get(id);
+
+		if (!access)
+			return true;
+
+		App.showDialog('RemoveAccess', {item: this.item, access: access});
+
+		return false;
 	},
 	initialize: function(params) {
 		if (typeof(params.item) != 'undefined')
@@ -19,14 +35,26 @@ App.Views.Dialogs.WalletAccesses = App.Views.Abstract.Dialog.extend({
 
         this.accesses.fetch();
 
-        this.show({item: this.item.toJSON(), accesses: this.accesses.toJSON(), status: this.status });
+        this.show(this.data());
+	},
+	data: function() {
+		var ret_accesses = [];
+
+		if (this.accesses && this.accesses.length)
+		for (var i = 0; i < this.accesses.length; i++)
+		{
+			var acc = this.accesses.at(i).toJSON();
+			acc['gravatar']= this.accesses.at(i).getGravatarURL();
+			ret_accesses.push(acc);
+		}
+		return {item: this.item.toJSON(), accesses: ret_accesses, status: this.status }
 	},
 	loaded: function() {
 		this.status = 'ready';
 		this.render();
 	},
 	render: function() {
-		this.renderHTML({item: this.item.toJSON(), accesses: this.accesses.toJSON(), status: this.status });
+		this.renderHTML(this.data());
 		this.$('#input_email').focus();
 	},
 	onShown: function() {

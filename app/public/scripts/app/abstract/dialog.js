@@ -29,10 +29,12 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 			that.trigger('hidden');
 		});
 
+		this.isVisible = true;
 		this.$el.children().modal();
 		this.renderHTML(data);
 	},
 	renderLoading: function() {
+	 	console.log('Dialog '+this.dialogName+' rendered loading');
 		this.$el.html('<div id="dialog_'+this.dialogName+'" class="modal fade dialog_'+this.dialogName+'" role="dialog" aria-labelledby="dialog_label">'+
 				'<div class="modal-dialog"><div class="modal-content">Loading</div></div></div>');		
 	},

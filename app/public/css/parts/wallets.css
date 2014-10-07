@@ -43,3 +43,12 @@ line-height: 1.1;
 #add_transaction_amount {
 	margin-top: 3px;
 }
+
+.wallet_item {
+
+}
+
+.wallet_item .wallet_buttons {
+	float: right;
+	margin-right: 10px;
+}

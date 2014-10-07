@@ -156,6 +156,16 @@
 				return false;
 		}
 
+		public function removeAccess($email)
+		{
+			$accesses = $this->getAccesses();
+			foreach ($accesses as $a)
+				if ($a->to_email == $email)
+					$a->delete();
+
+			return false;
+		}
+
 		protected function validation()
 		{
 			return array(

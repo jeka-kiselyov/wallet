@@ -46,6 +46,11 @@ class collection implements ArrayAccess, Countable, IteratorAggregate
 			return null;
 	}
 
+	function at($id)
+	{
+		return $this->get_entity_by_index($id);
+	}
+
 	function add_entity($entity)
 	{
 		$id = "".$entity->id;

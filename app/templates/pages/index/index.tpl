@@ -1,4 +1,7 @@
+{if $settings->invite_mode}
 
+
+{else}
 <h1 class="text-center">What is Wallet?</h1>
 
 
@@ -50,3 +53,4 @@
 	</div>
 </div>
 
+{/if}

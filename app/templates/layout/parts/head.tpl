@@ -28,6 +28,8 @@
 
 	{add_js file="vendors/jsmart/jsmart"} 
 
+	{add_js file="scripts/functions"}
+
 	{add_js file="scripts/app"}
 	{add_js file="scripts/app/view_stack"}
 	{add_js file="scripts/app/settings"}

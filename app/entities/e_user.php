@@ -65,7 +65,7 @@
 		return parent::delete();
 	}
 
-	public function createWallet($name)
+	public function createWallet($name, $currency = 'USD')
 	{
 	    $wallet = new Wallet();
 
@@ -74,6 +74,7 @@
 	    $wallet->total = 0;
 	    $wallet->type = 'default';
 	    $wallet->status = 'active';
+	    $wallet->currency = $currency;
 
 	    $wallet->save();
 

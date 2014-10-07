@@ -18,7 +18,7 @@ class controller_api_wallets extends api_controller
     if ($wallet_id)
     {
       $wallet = $this->wallets->get_by_id($wallet_id);
-      if ($wallet && $wallet->user_id = $this->user->id)
+      if ($wallet && $wallet->user_id == $this->user->id)
       {
         if (isset($data->to_email, $data->wallet_id) && $data->wallet_id == $wallet_id)
         {
@@ -39,6 +39,29 @@ class controller_api_wallets extends api_controller
 
   }
 
+  protected function crud_accesses_delete($wallet_id, $access_id)
+  {
+    $this->require_signed_in();
+
+    $wallet = false;
+    if ($wallet_id && $access_id)
+    {
+      $wallet = $this->wallets->get_by_id($wallet_id);
+      if ($wallet && $wallet->user_id == $this->user->id)
+      {
+        $a = $this->wallets_accesses->get_by_id($access_id);
+        if ($a && $a->wallet_id == $wallet->id)
+        {
+          $wallet->removeAccess($a->to_email);
+          $this->data(null);
+        }
+        else
+          $this->not_found();
+      }
+      else
+        $this->not_found();
+    }        
+  }
 
   protected function crud_accesses_list($wallet_id)
   {
@@ -48,7 +71,7 @@ class controller_api_wallets extends api_controller
     if ($wallet_id)
     {
       $wallet = $this->wallets->get_by_id($wallet_id);
-      if ($wallet && $wallet->user_id = $this->user->id)
+      if ($wallet && $wallet->user_id == $this->user->id)
       {
         $accesses = $wallet->getAccesses();
         $ret = array();
@@ -71,7 +94,7 @@ class controller_api_wallets extends api_controller
     if ($id)
     {
       $wallet = $this->wallets->get_by_id($id);
-      if ($wallet && $wallet->user_id = $this->user->id)
+      if ($wallet && ($wallet->user_id == $this->user->id || $wallet->hasAccess($this->user->id)))
       {
         $transactions = $wallet->getTransactions();
         $ret = array();
@@ -94,7 +117,7 @@ class controller_api_wallets extends api_controller
     if ($id)
     {
       $wallet = $this->wallets->get_by_id($id);
-      if ($wallet && $wallet->user_id = $this->user->id)
+      if ($wallet && ($wallet->user_id == $this->user->id || $wallet->hasAccess($this->user->id)))
       {
         if (isset($data->subtype) && $data->subtype == 'setup')
         {
@@ -117,10 +140,10 @@ class controller_api_wallets extends api_controller
     $this->require_signed_in();
 
     $wallet = false;
-    if ($wallet_id && $transaction_id)
+    if ($wallet_id && ($wallet->user_id == $this->user->id || $wallet->hasAccess($this->user->id)))
     {
       $wallet = $this->wallets->get_by_id($wallet_id);
-      if ($wallet && $wallet->user_id = $this->user->id)
+      if ($wallet && $wallet->user_id == $this->user->id)
       {
         $transaction = $this->transactions->get_by_id($transaction_id);
         if ($transaction && $transaction->wallet_id == $wallet->id)
@@ -139,10 +162,10 @@ class controller_api_wallets extends api_controller
     $this->require_signed_in();
 
     $wallet = false;
-    if ($wallet_id && $transaction_id)
+    if ($wallet_id && ($wallet->user_id == $this->user->id || $wallet->hasAccess($this->user->id)))
     {
       $wallet = $this->wallets->get_by_id($wallet_id);
-      if ($wallet && $wallet->user_id = $this->user->id)
+      if ($wallet && $wallet->user_id == $this->user->id)
       {
         $transaction = $this->transactions->get_by_id($transaction_id);
         if ($transaction && $transaction->wallet_id == $wallet->id)
@@ -178,7 +201,7 @@ class controller_api_wallets extends api_controller
 
     $data = $this->payload();
 
-    $wallet = $this->user->createWallet($data->name);
+    $wallet = $this->user->createWallet($data->name, $data->currency);
     $wallet = $this->wallets->get_by_id($wallet->id);
     $this->data($this->entity_to_result($wallet));
   }
@@ -198,10 +221,12 @@ class controller_api_wallets extends api_controller
       $name = $this->payload('name','');
       $status = $this->payload('status','');
       $type = $this->payload('type','');
+      $currency = $this->payload('currency','');
 
       if ($name) $wallet->name = $name;
       if ($status) $wallet->status = $status;
       if ($type) $wallet->type = $type;
+      if ($currency) $wallet->currency = $currency;
       
       $wallet->save();
     }
@@ -226,9 +251,12 @@ class controller_api_wallets extends api_controller
     $this->require_signed_in();
 
     $wallets = $this->wallets->find_by_user_id($this->user->id);
+    $shared_with = $this->wallets->find_shared_with_user_id($this->user->id);
     $data = array();
     foreach ($wallets as $wallet) 
-      $data[] = $this->entity_to_result($wallet);
+      $data[] = $this->entity_to_result($wallet, array('origin'=>'mine'));
+    foreach ($shared_with as $wallet) 
+      $data[] = $this->entity_to_result($wallet, array('origin'=>'shared'));
 
     $this->data($data);
   }

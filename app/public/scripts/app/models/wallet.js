@@ -5,7 +5,8 @@ App.Models.Wallet = Backbone.Model.extend({
         name: null,
         type: null,
         status: 'active',
-        total: null
+        total: null,
+        currency: 'USD'
     },
     getTotal: function() {
 		return parseFloat(this.get('total'),10);

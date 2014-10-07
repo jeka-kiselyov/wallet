@@ -7,6 +7,7 @@
 		'name' => array('type'=>"STRING(255)"),
 		'type' => array('type'=>"ENUM('default','user')"),
 		'status' => array('type'=>"ENUM('active','hidden')", 'defaultValue'=>"active"),
+		'currency' => array('type'=>"STRING(5)", 'defaultValue'=>"USD"),
 		'total' => array('type'=>'FLOAT')
 	);
 

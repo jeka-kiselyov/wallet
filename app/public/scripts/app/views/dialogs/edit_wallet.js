@@ -22,11 +22,31 @@ App.Views.Dialogs.EditWallet = App.Views.Abstract.Dialog.extend({
 
 		this.$('.btn-primary').button('loading');
 		var name = this.$('#input_name').val();
+		var currency = this.$('#input_currency').val();
+		var error = '';
 		
-		this.item.set('name', name);
-		this.item.save();
+		if (!currency)
+			error = 'Please select wallet currency';	
 
-		this.hide();
+		if (error)
+		{
+			this.$('.errors-container').html(error);
+			this.$('.errors-container').slideDown();
+
+			this.$('#input_currency').focus();
+			this.$('.btn-primary').button('reset');
+			var that = this;
+			setTimeout(function() {
+				that.$('.errors-container').slideUp();
+			}, 2000);
+		} else {
+			this.item.set('name', name);
+			this.item.set('currency', currency);
+			this.item.save();
+
+			this.hide();
+		}
+		
 
 		return false;
 	}

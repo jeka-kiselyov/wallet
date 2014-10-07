@@ -13,11 +13,8 @@
 				<h3 class="panel-title">{$item->name|escape:'html'}</h3>
 			</div>
 			<div class="panel-body">
-			{if $item->total >= 0}
-				<p class="text-center text-success wallet_total"><strong>${$item->total|rational}.<sup>{$item->total|decimal}</sup></strong></p>
-			{else}
-				<p class="text-center text-danger wallet_total"><strong>-${$item->total|rational}.<sup>{$item->total|decimal}</sup></strong></p>
-			{/if}
+			
+				<p class="text-center {if $item->total >= 0}text-success{else}text-danger{/if} wallet_total"><strong>{if $item->total < 0}-{/if}{if $item->currency == 'USD'}${/if}{$item->total|rational}.<sup>{$item->total|decimal}</sup>{if $item->currency != 'USD'} {$item->currency}{/if}</strong></p>
 				
 				<button type="button" id="add_profit_button" class="btn btn-success btn-block">Add Profit</button>
 				<div class="pull-right">or <a href="#" class="action" id="set_total_to_button">set total to</a></div>
@@ -48,11 +45,9 @@
 					<div class="transaction_time_time">{$t->datetime|date_format:'g:i a'}</div>
 					{assign var="last_time_date" value=$current_transaction_time_date}
 				</div>
-				{if $t->amount >= 0}
-				<div class="pull-right text-success transaction_amount"><strong>${$t->amount|rational}.<sup>{$t->amount|decimal}</sup></strong></div>
-				{else}
-				<div class="pull-right text-danger transaction_amount"><strong>${$t->amount|rational}.<sup>{$t->amount|decimal}</sup></strong></div>
-				{/if}
+
+				<div class="pull-right {if $t->amount >= 0}text-success{else}text-danger{/if} transaction_amount"><strong>{if $item->currency == 'USD'}${/if}{$t->amount|rational}.<sup>{$t->amount|decimal}</sup>{if $item->currency != 'USD'} {$item->currency}{/if}</strong></div>
+				
 				<h6 class="list-group-item-heading">{$t->description|escape:'html'|default:'&nbsp;'}</h6>
 			</div>
 			{/foreach}

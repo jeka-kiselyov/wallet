@@ -6,6 +6,7 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 	title: 'Your Wallets',
 	url: 'wallets',
 	status: 'active',
+	origin: 'both',
 	events: {
 		"mouseenter .item": "moreWalletDetails",
 		"mouseleave .item": "lessWalletDetails",
@@ -14,13 +15,23 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		"click .item_button_edit": "editItem",
 		"click .item_button_restore": "restoreItem",
 		"click .item_button_accesses": "showAccesses",
-		"click .filter_menu": "filter"
+		"click .filter_menu": "filter",
+		"click .origin_menu": "filterOrigin"
 	},
 	filter: function(ev) {
 		var status = $(ev.currentTarget).data('status');
 		if ((status == 'active' || status == 'hidden') && status != this.status)
 		{
 			this.status = status;
+			this.render();
+		}
+		return false;
+	},
+	filterOrigin: function(ev) {
+		var origin = $(ev.currentTarget).data('origin');
+		if ((origin == 'both' || origin == 'mine' || origin == 'shared') && origin != this.origin)
+		{
+			this.origin = origin;
 			this.render();
 		}
 		return false;
@@ -42,11 +53,11 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 	},
 	moreWalletDetails: function(ev) {
 		$(ev.currentTarget).find(".item_buttons").show();
-		$(ev.currentTarget).find(".item_information").hide();
+		//$(ev.currentTarget).find(".item_information").hide();
 	},
 	lessWalletDetails: function(ev) {
 		$(ev.currentTarget).find(".item_buttons").hide();
-		$(ev.currentTarget).find(".item_information").show();
+		//$(ev.currentTarget).find(".item_information").show();
 	},
 	removeItem: function(ev) {
 		var id = $(ev.currentTarget).parents('.item').data('id');
@@ -78,8 +89,11 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		return false;
 	},
 	render: function() {
-		var filtered = this.items.search({status: this.status});
-		this.renderHTML({items: filtered.toJSON(), status: this.status});
+		if (this.origin == 'both')
+			var filtered = this.items.search({status: this.status});
+		else
+			var filtered = this.items.search({status: this.status, origin: this.origin}); 
+		this.renderHTML({items: filtered.toJSON(), status: this.status, origin: this.origin});
 	},
 	wakeUp: function() {
 		this.holderReady = false;
