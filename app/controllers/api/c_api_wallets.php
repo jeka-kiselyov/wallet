@@ -169,7 +169,7 @@ class controller_api_wallets extends api_controller
       if (!$wallet || !$transaction || $transaction->wallet_id != $wallet->id)
         $this->not_found();
 
-      if ($wallet->user_id != $this->user_id && ($transaction->user_id != $this->user_id || !$wallet->hasAccess($this->user->id)))
+      if ($wallet->user_id != $this->user->id && ($transaction->user_id != $this->user->id || !$wallet->hasAccess($this->user->id)))
         $this->has_no_rights();
 
       $transaction->delete();
