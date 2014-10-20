@@ -157,6 +157,8 @@ App.templateManager = {
 			url: App.settings.templatePath + name,
 			data: {},
 			success: process,
+			dataType: 'html',
+			mimeType: 'text/plain',
 			cache: use_cache
 		});
 	}
