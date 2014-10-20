@@ -10,7 +10,7 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 		this.renderHTML({});
 	},
 	initialize: function() {
-		this.renderLoading();
+		this.renderLoading();		
 
 		/// initialize models, collections etc. Request fetching from storage
 		

@@ -5,7 +5,7 @@
 
 
 <div class="row">
-<div class="col-xs-12 col-sm-12 col-md-9">
+<div class="col-xs-12 col-md-9">
 
 	{if $items|count == 0}
 		{if $status|default:'active' == 'active'}
@@ -49,7 +49,7 @@
 	{/if}
 
 </div>
-<div class="col-xs-12 col-sm-12 col-md-3">
+<div class="col-xs-12 col-md-3">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Filter</h3>

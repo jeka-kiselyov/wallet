@@ -20,6 +20,9 @@ App.Views.Widgets.news_sidebar = Backbone.View.extend({
 			that.$el.html(html);
 			that.trigger('render');
 			that.trigger('loaded');
+
+			if (typeof(App.page) !== 'undefined' && App.page && typeof(App.page.newsCategoryId) !== 'undefined' && App.page.newsCategoryId)
+				that.$('#news_sidebar_item_'+App.page.newsCategoryId).addClass('active');
 		});		
 	},
 	tryToGetCachedData: function() {
