@@ -4,6 +4,9 @@ App.router = new (Backbone.Router.extend({
   setUrl: function(path) {
     this.navigate(path);
   },
+  redirect: function(path) {
+    this.navigate(path, {trigger: true});
+  },
 
   routes: {
     "": "index",// root

@@ -9,12 +9,18 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 	render: function() {
 		this.renderHTML({});
 	},
+	wakeUp: function() {
+		if (typeof(App.currentUser) !== 'undefined' && App.currentUser && App.currentUser.isSignedIn())
+			App.router.redirect('/wallets/');
+
+	},
 	initialize: function() {
 		this.renderLoading();		
-
+		if (typeof(App.currentUser) !== 'undefined' && App.currentUser && App.currentUser.isSignedIn())
+			App.router.redirect('/wallets/');
 		/// initialize models, collections etc. Request fetching from storage
-		
 		this.render();
+
 	}
 
 });
