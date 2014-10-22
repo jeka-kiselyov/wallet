@@ -43,6 +43,7 @@
 	{add_js_folder path="scripts/app/collections/"}
 	{add_js_folder path="scripts/app/views/dialogs/"}
 	{add_js_folder path="scripts/app/views/widgets/"}
+	{add_js_folder path="scripts/app/views/parts/"}
 	{add_js_folder path="scripts/app/views/pages/"}
 
 	{add_js file="scripts/app/views/header"}

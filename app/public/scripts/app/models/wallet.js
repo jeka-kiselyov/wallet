@@ -30,8 +30,10 @@ App.Models.Wallet = Backbone.Model.extend({
         {
             this.transactions = new App.Collections.Transactions();
             this.transactions.setWalletId(this.id);
-            this.listenTo(this.transactions, 'sync', function(){this.trigger('sync');});
-            this.transactions.fetch();
+
+            var that = this;
+            this.transactions.fetch().done(function(){
+            });
         }
         this.transactions.setWalletId(this.id);
         return this.transactions;

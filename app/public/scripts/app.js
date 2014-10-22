@@ -3,7 +3,7 @@ window.App = {
 
 	Models: {},
 	Collections: {},
-	Views: {Abstract: {}, Dialogs: {}, Pages: {}, Widgets: {}},
+	Views: {Abstract: {}, Dialogs: {}, Pages: {}, Widgets: {}, Parts: {}},
 
 	router: null,
 
@@ -59,8 +59,7 @@ window.App = {
 
 		if (typeof(this.page) !== 'undefined' && this.page) /// undelegate events from previous page
 		{
-			this.page.undelegateEvents();
-			this.page.stopListening();
+			this.page.sleep();
 		}
 
 		/// Trying to get view from stack

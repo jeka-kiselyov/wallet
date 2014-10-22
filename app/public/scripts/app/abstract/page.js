@@ -4,6 +4,8 @@ App.Views.Abstract.Page = Backbone.View.extend({
 	isReady: false,
 	requiresSignedIn: false,
 	widgets: [],
+	parts: [],
+	partsInitialized: false,
 	requireSingedIn: function(callback)
 	{
 		this.requiresSignedIn = true;
@@ -67,7 +69,19 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.holderReady = false;
 		this.render();
 	},
+	sleep: function() {
+		
+		for (var k in this.parts)
+		{
+			this.parts[k].undelegateEvents();
+			this.parts[k].stopListening();
+		}
+
+		this.undelegateEvents();
+		this.stopListening();
+	},
 	proccessWidgets: function() {
+		this.widgets = [];
 		var that = this;
 		this.$('.client-side-widget').each(function(){
 			var data = $(this).data();

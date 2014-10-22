@@ -90,17 +90,31 @@ class controller_api_wallets extends api_controller
     $this->require_signed_in();
     // @todo add caching
 
+    $to = time();
+    $from = time() - date('t')*24*60*60;
+
+    if (isset($_GET['to']))
+    {
+      $to = (int)$_GET['to'];
+      $from = $to - 30*24*60*60;
+    } elseif (isset($_GET['from'])) {
+      $from = (int)$_GET['from'];
+      $to = $from + 30*24*60*60;
+    }
+
     $wallet = false;
     if ($id)
     {
       $wallet = $this->wallets->get_by_id($id);
       if ($wallet && ($wallet->user_id == $this->user->id || $wallet->hasAccess($this->user->id)))
       {
-        $transactions = $wallet->getTransactions();
+        $transactions = $wallet->getTransactions($from, $to);
         $ret = array();
         foreach ($transactions as $transaction) {
           $ret[] = $transaction->to_array();
         }
+        
+        header("Link: <".'http'.(empty($_SERVER['HTTPS'])?'':'s').'://'.$_SERVER['HTTP_HOST'].$_SERVER['REDIRECT_URL']."?to=".$from.">; rel=\"next\", <".'http'.(empty($_SERVER['HTTPS'])?'':'s').'://'.$_SERVER['HTTP_HOST'].$_SERVER['REDIRECT_URL']."?from=".$to.">; rel=\"prev\"");
         $this->data($ret);
       }
       else

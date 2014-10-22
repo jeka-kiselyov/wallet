@@ -6,8 +6,7 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 	events: {
 		"submit #add_transaction_form": "addExpense",
 		"click #add_profit_button": "addProfit",
-		"click #set_total_to_button": "setTotalTo",
-		"click .item": "transactionDetails"
+		"click #set_total_to_button": "setTotalTo"
 	},
 	title: function() {
 		if (typeof(this.model) != 'undefined' && this.model.get('name'))
@@ -18,22 +17,6 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 	url: function() {
 		if (typeof(this.model) != 'undefined' && this.model.id)
 			return 'wallets/'+this.model.id;
-	},
-	transactionDetails: function(ev) 
-	{
-		var data = $(ev.currentTarget).data();
-		if (typeof(data.id) === 'undefined')
-			return true;
-
-		var id = parseInt(data.id, 10);
-		var item = this.model.getTransactions().get(id);
-
-		if (!item)
-			return true;
-
-		App.showDialog('TransactionDetails', {item: item});
-
-		return false;
 	},
 	setTotalTo: function()
 	{
@@ -81,22 +64,42 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 		return false;
 	},
 	render: function() {
-		this.renderHTML({item: this.model.toJSON(), transactions: this.model.getTransactions().sort().toJSON() });
+		console.log('views/pages/wallet.js | rendering');
+		this.renderHTML({ item: this.model.toJSON() });
+
+		if (!this.partsInitialized)
+			this.initializeParts();
+
+		for (var k in this.parts)
+			this.parts[k].render();
+	},
+	initializeParts: function() {
+		console.info('views/pages/wallet.js | initializing parts');
+		this.parts = [];
+		this.parts.push(new App.Views.Parts.Transactions({id: 'transactions_container', model: this.model, collection: this.model.getTransactions()}));
+		this.partsInitialized = true;		
 	},
 	wakeUp: function() {
+		console.log('views/pages/wallet.js | waking up');
 		this.holderReady = false;
 		var that = this;
 		this.requireSingedIn(function(){
 			that.render();
 			that.listenTo(that.model, 'change sync destroy', that.render);
+			for (var k in that.parts)
+				if (typeof(that.parts[k].wakeUp) === 'function')
+					that.parts[k].wakeUp();
 		});
 	},
 	reloadWallet: function() {
 		var wallet_id = this.model.id;
 		var that = this;
 		this.requireSingedIn(function(){
+			var transactions = that.model.getTransactions();
 			that.model = new App.Models.Wallet();
 			that.model.id = wallet_id;
+			that.model.transactions = transactions;
+			that.model.transactions.fetch();
 			
 			that.listenTo(that.model, 'change sync destroy', that.render);
 			
@@ -106,8 +109,9 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 		});
 	},
 	initialize: function(params) {
-		console.log('wallet.js | initialize');
+		console.log('views/pages/wallet.js | initializing');
 		this.renderLoading();
+
 
 		var that = this;
 		this.requireSingedIn(function(){
@@ -117,7 +121,7 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 			{
 				that.model = params.item;
 				that.render();
-				that.listenTo(that.model, 'change sync', that.render);
+				that.listenTo(that.model, 'change sync destroy', that.render);
 			} else if (typeof(params.id) !== 'undefined') 
 			{
 				that.model = new App.Models.Wallet();
