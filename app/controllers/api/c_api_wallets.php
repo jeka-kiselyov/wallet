@@ -87,19 +87,20 @@ class controller_api_wallets extends api_controller
 
   protected function crud_transactions_list($id)
   {
+    sleep(4);
     $this->require_signed_in();
     // @todo add caching
 
     $to = time();
     $from = time() - date('t')*24*60*60;
 
-    if (isset($_GET['to']))
+    if (isset($_GET['to']) && isset($_GET['from']))
     {
       $to = (int)$_GET['to'];
-      $from = $to - 30*24*60*60;
-    } elseif (isset($_GET['from'])) {
       $from = (int)$_GET['from'];
-      $to = $from + 30*24*60*60;
+
+      if ($from > $to || max($to, $from) - min($to, $from) > 32*24*60*60)
+        $from = $to - 31*60*60;
     }
 
     $wallet = false;

@@ -4,7 +4,17 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 	templateName: 'parts/transactions',
 	el: $("#comments_container"),
 	events: {
-		"click .item": "transactionDetails"
+		"click .item": "transactionDetails",
+		"click #goto_next": "gotoNext",
+		"click #goto_prev": "gotoPrev"
+	},
+	gotoNext: function()
+	{
+		this.collection.gotoNext();
+	},
+	gotoPrev: function()
+	{
+		this.collection.gotoPrev();
 	},
 	transactionDetails: function(ev) 
 	{
@@ -29,17 +39,17 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 		if (!this.model || !this.collection)
 			console.error('views/parts/transactions.js | model && collection && id should be provided for this view');
 
-		this.listenTo(this.collection, 'fetch sync', this.render);
+		this.listenTo(this.collection, 'fetch sync changedperiod', this.render);
 	},
 	wakeUp: function() {
 		console.error('views/parts/transactions.js | Waking up');
-		this.listenTo(this.collection, 'fetch sync', this.render);		
+		this.listenTo(this.collection, 'fetch sync changedperiod', this.render);		
 	},
 	render: function() {
 		console.log('views/parts/transactions.js | Rendering, state = '+this.collection.state);
 		this.setElement($('#'+this.id));
 
-		var data = {state: this.collection.state, transactions: this.collection.sort().toJSON(), item: this.model.toJSON()};
+		var data = {state: this.collection.state, collection: this.collection, transactions: this.collection.sort().toJSON(), item: this.model.toJSON()};
 
 		var that = this;
 		App.templateManager.fetch(this.templateName, data, function(html) {

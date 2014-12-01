@@ -4,6 +4,12 @@
 	</div>
 {else}
 
+	{if $collection|default:false && $collection.hasNextPeriod()}
+	<div class="list-group-item">
+		<button type="button" class="btn btn-default btn-sm  btn-info btn-block" id="goto_next">Next</button>
+	</div>
+	{/if}
+
 	{foreach from=$transactions item=t}
 	<div class="list-group-item item" data-id="{$t->id}">
 		<div class="pull-left transaction_time">
@@ -18,5 +24,11 @@
 		<h6 class="list-group-item-heading">{$t->description|escape:'html'|default:'&nbsp;'}</h6>
 	</div>
 	{/foreach}
+
+	{if $collection|default:false && $collection.hasPrevPeriod()}
+	<div class="list-group-item">
+		<button type="button" class="btn btn-default btn-sm  btn-info btn-block" id="goto_prev">Prev</button>
+	</div>
+	{/if}
 
 {/if}
