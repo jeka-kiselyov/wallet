@@ -6,7 +6,8 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 	events: {
 		"click .item": "transactionDetails",
 		"click #goto_next": "gotoNext",
-		"click #goto_prev": "gotoPrev"
+		"click #goto_prev": "gotoPrev",
+		"click #goto_current": "gotoCurrent"
 	},
 	gotoNext: function()
 	{
@@ -15,6 +16,10 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 	gotoPrev: function()
 	{
 		this.collection.gotoPrev();
+	},
+	gotoCurrent: function()
+	{
+		this.collection.gotoCurrent();
 	},
 	transactionDetails: function(ev) 
 	{
@@ -39,15 +44,21 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 		if (!this.model || !this.collection)
 			console.error('views/parts/transactions.js | model && collection && id should be provided for this view');
 
-		this.listenTo(this.collection, 'fetch sync changedperiod', this.render);
+		this.listenTo(this.collection, 'fetch sync', this.render);
+		this.listenTo(this.collection, 'changedperiod', this.fadeOut);	
 	},
 	wakeUp: function() {
 		console.error('views/parts/transactions.js | Waking up');
-		this.listenTo(this.collection, 'fetch sync changedperiod', this.render);		
+		this.listenTo(this.collection, 'fetch sync', this.render);
+		this.listenTo(this.collection, 'changedperiod', this.fadeOut);			
+	},
+	fadeOut: function() {
+		this.$('#transactions_container').fadeTo(1, 0.5);
 	},
 	render: function() {
 		console.log('views/parts/transactions.js | Rendering, state = '+this.collection.state);
 		this.setElement($('#'+this.id));
+		this.$('#transactions_container').fadeTo(1, 1);
 
 		var data = {state: this.collection.state, collection: this.collection, transactions: this.collection.sort().toJSON(), item: this.model.toJSON()};
 

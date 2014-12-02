@@ -87,7 +87,6 @@ class controller_api_wallets extends api_controller
 
   protected function crud_transactions_list($id)
   {
-    sleep(4);
     $this->require_signed_in();
     // @todo add caching
 

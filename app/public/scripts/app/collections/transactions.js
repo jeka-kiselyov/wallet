@@ -10,11 +10,64 @@ App.Collections.Transactions = Backbone.Collection.extend({
 		return -item.get('datetime'); // Note the minus!
 	},
     url: function() {
-
 		if (this.wallet_id)
 			return App.settings.apiEntryPoint + 'wallets/' + this.wallet_id + '/transactions/'+this.periodToGETParams();
 		else
 			return App.settings.apiEntryPoint + 'transactions/'+this.periodToGETParams();
+    },
+    periodToReadableFormat: function(month, year) {
+        var monthNames = [ "January", "February", "March", "April", "May", "June",
+                            "July", "August", "September", "October", "November", "December" ];
+
+        if (typeof(month) == 'undefined' || typeof(year) == 'undefined')
+        {
+            if (!this.periodMonth || !this.periodYear)
+                this.setPeriod();
+
+            return monthNames[this.periodMonth-1]+' '+this.periodYear;
+        } else {
+            return monthNames[month-1]+' '+year;
+        }
+    },
+    nextPeriodToReadableFormat: function() {
+        if (!this.periodMonth || !this.periodYear)
+            this.setPeriod();
+        var month = this.periodMonth + 1;
+        var year = this.periodYear;
+        if (month == 13)
+        {
+            year++;
+            month = 1;
+        }
+
+        return this.periodToReadableFormat(month, year);
+    },
+    prevPeriodToReadableFormat: function() {
+        if (!this.periodMonth || !this.periodYear)
+            this.setPeriod();
+        var month = this.periodMonth - 1;
+        var year = this.periodYear;
+        if (month == 0)
+        {
+            year--;
+            month = 12;
+        }
+
+        return this.periodToReadableFormat(month, year);
+    },
+    currentPeriodToReadableFormat: function() {
+        var d = new Date();
+        return this.periodToReadableFormat(d.getMonth() + 1, d.getFullYear());
+    },
+    diffToCurrentPeriod: function() {
+        if (!this.periodMonth || !this.periodYear)
+            this.setPeriod();
+
+        var d = new Date();
+        var curMonth = d.getMonth() + 1;
+        var curYear = d.getFullYear();
+
+        return (curMonth - this.periodMonth) + (curYear - this.periodYear)*12;
     },
     periodToGETParams: function() {
         if (!this.periodMonth || !this.periodYear)
@@ -60,6 +113,24 @@ App.Collections.Transactions = Backbone.Collection.extend({
             this.periodMonth = 1;
             this.periodYear++;
         }
+
+        return true;
+    },
+    currentPeriod: function() {
+        if (!this.periodMonth || !this.periodYear)
+        {
+            this.setPeriod();
+            return true;
+        }
+
+        if (!this.hasNextPeriod())
+            return false;
+
+        var d = new Date();
+        var curMonth = d.getMonth() + 1;
+        var curYear = d.getFullYear();
+        this.periodMonth = curMonth;
+        this.periodYear = curYear;
 
         return true;
     },
@@ -112,6 +183,15 @@ App.Collections.Transactions = Backbone.Collection.extend({
     },
     gotoPrev: function() {
         if (this.prevPeriod())
+        {
+            this.fetch();
+            this.trigger('changedperiod');
+            return true;
+        }
+        return false;        
+    },
+    gotoCurrent: function() {
+        if (this.currentPeriod())
         {
             this.fetch();
             this.trigger('changedperiod');
