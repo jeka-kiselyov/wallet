@@ -7,9 +7,8 @@ App.router = new (Backbone.Router.extend({
   redirect: function(path) {
     this.navigate(path, {trigger: true});
   },
-
   routes: {
-    "": "index",// root
+    "(/)": "index",// #help
     "help": "help",// #help
     "wallets(/)": "wallets",// #wallets
     "wallets/:id": "wallet",// #wallets/4

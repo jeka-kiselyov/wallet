@@ -29,8 +29,26 @@ class controller_api_users extends api_controller
     $password = $this->payload('password', '');
     $email = $this->payload('email', '');
 
+    $demo = false;
+    if ($email == 'demo@demo.com')
+    {
+      //// demo user
+      $login = time()."_".rand(0,time());
+      $email = $login."@example.com";
+      $password = md5($password);
+      $demo = true;
+    }
+
     try {
       $user = $this->users->register($type, $login, $password, $email);
+      
+      if ($demo)
+      {
+        $user->is_demo = 1;
+        $user->confirmation_code = '';
+        $user->save();
+      }
+
       if (!$user->confirmation_code)
       {
         /// can sign in now

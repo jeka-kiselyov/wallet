@@ -73,6 +73,9 @@ App.Models.User = Backbone.Model.extend({
 			}
 		}
     },
+    demoRegister: function() {
+		this.register('demo', 'demo@demo.com', 'demonstration');
+    },
     register: function(login, email, password) {
 		var that = this;
 

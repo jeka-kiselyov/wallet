@@ -139,6 +139,7 @@
 		'type'                  => array('type'=>"STRING(20)", 'defaultValue'=>"default"),
 		'password'              => array('type'=>"STRING(50)", 'key'=>true),
 		'login'                 => array('type'=>"STRING", 'key'=>true),
+		'is_demo'              => array('type'=>"INTEGER", 'defaultValue'=>"0"),
 		'is_admin'              => array('type'=>"INTEGER", 'defaultValue'=>"0"),
 		'registration_date'     => array('type'=>"INTEGER"),
 		'activity_date'         => array('type'=>"INTEGER"),

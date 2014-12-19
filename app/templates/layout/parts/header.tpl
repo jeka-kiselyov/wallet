@@ -16,7 +16,7 @@
 				<ul class="nav navbar-nav">
 
 						<li class="active">
-							<a href="{$settings->site_path}" class="menu_category menu_category_home">Home</a>
+							<a href="{$settings->site_path}/" class="menu_category menu_category_home">Home</a>
 						</li>
 						<li class="header_is_signed_in" {if !$user || !$user.id}style="display: none;"{/if}>
 							<a href="{$settings->site_path}/wallets" class="menu_category menu_category_wallets">Wallets</a>
