@@ -18,6 +18,7 @@
     "backbone.paginator": "git@github.com:backbone-paginator/backbone.paginator",
     "underscore": "1.7.0",
     "ckeditor": "4.4.4",
-    "bootstrap": "3.2.0"
+    "bootstrap": "3.2.0",
+    "bootstrap-clickonmouseover": "git@github.com:jeka-kiselyov/bootstrap-clickonmouseover"
   }
 }

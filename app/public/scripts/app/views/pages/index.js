@@ -20,6 +20,12 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 			App.router.redirect('/wallets/');
 		/// initialize models, collections etc. Request fetching from storage
 		this.render();
+		
+		this.on('render', function(){
+			$('#demo_signup').clickonmouseover();			
+		});
+
+		
 
 	}
 
