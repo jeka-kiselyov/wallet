@@ -15,10 +15,10 @@
     "jasmine-ajax": "https://raw.githubusercontent.com/pivotal/jasmine-ajax/master/lib/mock-ajax.js",
     "jsmart": "2.13.1",
     "backbone": "1.0.0",
-    "backbone.paginator": "git@github.com:backbone-paginator/backbone.paginator",
+    "backbone.paginator": "https://github.com/backbone-paginator/backbone.paginator/archive/2.0.2.zip",
     "underscore": "1.7.0",
     "ckeditor": "4.4.4",
     "bootstrap": "3.2.0",
-    "bootstrap-clickonmouseover": "git@github.com:jeka-kiselyov/bootstrap-clickonmouseover"
+    "bootstrap-clickonmouseover": "https://github.com/jeka-kiselyov/bootstrap-clickonmouseover/archive/master.zip"
   }
 }
