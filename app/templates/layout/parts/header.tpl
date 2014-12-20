@@ -15,7 +15,7 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 
-						<li class="active">
+						<li class="active header_is_not_signed_in">
 							<a href="{$settings->site_path}/" class="menu_category menu_category_home">Home</a>
 						</li>
 						<li class="header_is_signed_in" {if !$user || !$user.id}style="display: none;"{/if}>
