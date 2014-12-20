@@ -1,6 +1,6 @@
 <ul class="breadcrumb">
   <li><a href="{$settings->site_path}">Home</a></li>
-  <li><a href="{$settings->site_path}/wallets">Wallets</a></li>
+  <li><a href="{$settings->site_path}/wallets">{t}Wallets{/t}</a></li>
   <li class="active">{$item->name|default:'Wallet'|escape:'html'}</li>
 </ul>
 

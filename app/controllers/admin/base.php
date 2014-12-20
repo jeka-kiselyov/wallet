@@ -89,7 +89,8 @@
 		    	"icon"=>"globe",
 		    	"items"=>array(
 		    		array("name"=>$this->_("Languages"), "href"=>"i18n/languages", "additional"=>array("icon"=>"plus", "href"=>"i18n/addlanguage")),
-		    		array("name"=>$this->_("Strings"), "href"=>"i18n/strings")
+		    		array("name"=>$this->_("Strings"), "href"=>"i18n/strings"),
+		    		array("name"=>$this->_("Parse templates"), "href"=>"i18n/parse")
 		    	)
 		    );
 

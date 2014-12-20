@@ -5,6 +5,28 @@
  	public $translations = null;
  	private $not_translated_strings = null;
 
+ 	public function get_strings()
+ 	{
+ 		if (is_null($this->translations))
+ 			$this->load_translations();
+
+ 		if (is_null($this->not_translated_strings))
+ 			$this->load_not_translated_strings();
+
+ 		$ret = array();
+
+ 		foreach ($this->not_translated_strings as $string) {
+ 			if (isset($this->translations[$string]))
+ 				$ret[$string] = $this->translations[$string];
+ 		}
+ 		foreach ($this->translations as $key=>$string) {
+ 				$ret[$key] = $string;
+ 		}
+
+
+ 		return $ret;
+ 	}
+
  	public function add_translation($string_id, $translation)
  	{
  		$string_id = (int)$string_id;

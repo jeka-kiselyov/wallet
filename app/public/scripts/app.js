@@ -24,6 +24,7 @@ window.App = {
 			this.setUser();
 
 		this.localStorage.invalidate(this.settings.version);
+		this.i18n.setLanguage(this.settings.appLanguage);
 		this.router.init();
 		this.loadingStatus(false);
 	},

@@ -38,6 +38,7 @@
 	{add_js file="scripts/app/settings"}
 	{add_js file="scripts/app/local_storage"}
 	{add_js file="scripts/app/template_manager"}
+	{add_js file="scripts/app/i18n"}
 
 	{add_js_folder path="scripts/app/abstract/"}
 	{add_js_folder path="scripts/app/models/"}

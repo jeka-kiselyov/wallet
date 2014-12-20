@@ -11,6 +11,8 @@ App.settings = {
 	disqusShortname: 'wasabiventuresacademy',
 	disqusLanguage: 'ru',
 
+	appLanguage: 'ru',
+
 	enableTemplatesCache: false,
 	enablePagesStack: true,
 	pagesStackMaxLength: 25,

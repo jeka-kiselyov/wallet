@@ -13,6 +13,52 @@ class controller_admin_i18n extends admin_controller
       $this->redirect("admin_i18n", "languages");
   }
 
+  function parse()
+  {
+    $form_checker = new checker;
+    $this->ta('form_checker', $form_checker);
+    if (isset($_POST['cancel']))
+      $this->redirect("admin_i18n", "index");
+  }
+
+  function ajax_get_files()
+  {
+    header("Content-type: application/json; charset=utf-8");
+    $files = array();
+    $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(SITE_PATH.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'templates'), RecursiveIteratorIterator::SELF_FIRST);
+
+    foreach($objects as $name => $object)
+      if (substr($name, strlen($name)-4,4) == '.tpl')
+        $files[] = str_replace(SITE_PATH.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'templates', '', $name);
+
+    echo json_encode($files, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    $this->rendered = true;
+  }
+
+  function ajax_parse_file()
+  {
+    header("Content-type: application/json; charset=utf-8");
+    $this->rendered = true;
+    
+    $file = ''; if (isset($_POST['file'])) $file = $_POST['file'];
+    $file = SITE_PATH.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'templates'.$file;
+    if (is_file($file))
+    {
+      $data = file_get_contents($file);
+      preg_match_all("/{t}([^{]+){\/t}/", $data, $m);
+      if (isset($m[1]) && $m[1])
+      {
+        foreach ($m[1] as $string) {
+          $string = trim($string);
+          $this->i18n->add_string_to_translation_list($string);
+        }
+      }
+      echo json_encode(count($m[1]));
+    } else {
+      echo json_encode(false);
+    }
+  }
+
   function editstring()
   {
     if (isset($_POST['cancel']))

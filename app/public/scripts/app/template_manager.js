@@ -68,6 +68,18 @@ App.templateManager = {
 		    }
 		);
 
+	    jSmart.prototype.registerPlugin(
+	        'block',
+	        't',
+	        function(params, content, data, repeat)
+	        {
+	        	if (typeof(App) === 'undefined' || typeof(App.i18n) === 'undefined')
+	        		return content;
+	        	else
+	        		return App.i18n.translate(content);
+	        }
+	    );
+
 	    this._initialized = true;
 	},
 	commonData: function()
