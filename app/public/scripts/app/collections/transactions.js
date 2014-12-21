@@ -24,9 +24,9 @@ App.Collections.Transactions = Backbone.Collection.extend({
             if (!this.periodMonth || !this.periodYear)
                 this.setPeriod();
 
-            return monthNames[this.periodMonth-1]+' '+this.periodYear;
+            return App.i18n.translate(monthNames[this.periodMonth-1])+' '+this.periodYear;
         } else {
-            return monthNames[month-1]+' '+year;
+            return App.i18n.translate(monthNames[month-1])+' '+year;
         }
     },
     nextPeriodToReadableFormat: function() {
