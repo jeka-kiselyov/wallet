@@ -11,7 +11,17 @@ App.settings = {
 	disqusShortname: 'wasabiventuresacademy',
 	disqusLanguage: 'ru',
 
-	appLanguage: 'ru',
+	appLanguage: 'en',
+	detectLanguage: function() {
+		var language = window.navigator.userLanguage || window.navigator.language;
+		if (language && language.indexOf('-') != -1)
+		{
+			language = language.split('-')[0];
+		}
+		return language;
+	},
+
+	allowRealTimeTranslation: true,
 
 	enableTemplatesCache: false,
 	enablePagesStack: true,

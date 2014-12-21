@@ -1,5 +1,5 @@
 <ul class="breadcrumb">
-  <li><a href="{$settings->site_path}">Home</a></li>
+  <li><a href="{$settings->site_path}">{t}Home{/t}</a></li>
   <li><a href="{$settings->site_path}/wallets">{t}Wallets{/t}</a></li>
   <li class="active">{$item->name|default:'Wallet'|escape:'html'}</li>
 </ul>
@@ -16,8 +16,8 @@
 			
 				<p class="text-center {if $item->total >= 0}text-success{else}text-danger{/if} wallet_total"><strong>{if $item->total < 0}-{/if}{if $item->currency == 'USD'}${/if}{$item->total|rational}.<sup>{$item->total|decimal}</sup>{if $item->currency != 'USD'} {$item->currency}{/if}</strong></p>
 				
-				<button type="button" id="add_profit_button" class="btn btn-success btn-block">Add Profit</button>
-				<div class="pull-right">or <a href="#" class="action" id="set_total_to_button">set total to</a></div>
+				<button type="button" id="add_profit_button" class="btn btn-success btn-block">{t}Add Profit{/t}</button>
+				<div class="pull-right">{t}or{/t} <a href="#" class="action" id="set_total_to_button">{t}set total to{/t}</a></div>
 			</div>
 		</div>
 	</div>
@@ -26,12 +26,12 @@
 
 		<div class="list-group">
 			<div class="list-group-item ">
-				<h3 class="panel-title">Transactions</h3>
+				<h3 class="panel-title">{t}Transactions{/t}</h3>
 
 				<div class="form-group">
 					<form method="post" id="add_transaction_form">
-						<input type="text" class="form-control" id="add_transaction_text" placeholder="Describe expense and press Enter to add">
-						<input type="number" min="0" step="0.01" class="form-control hideme" id="add_transaction_amount" placeholder="Transaction amount">
+						<input type="text" class="form-control" id="add_transaction_text" placeholder="{t}Describe expense and press Enter to add{/t}">
+						<input type="number" min="0" step="0.01" class="form-control hideme" id="add_transaction_amount" placeholder="{t}Transaction amount{/t}">
 						<button type="submit" class="hideme">
 					</form>
 				</div>

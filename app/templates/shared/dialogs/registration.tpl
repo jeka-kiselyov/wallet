@@ -2,33 +2,33 @@
   <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="dialog_label">Registration</h4>
+        <h4 class="modal-title" id="dialog_label">{t}Registration{/t}</h4>
       </div>
       <div class="modal-body modal-body-default" style="padding-bottom: 0;">
 
       <form method="post" action="{$settings->site_path}/user/signin" role="form" id="registration_modal_form">
       <fieldset>
         <div class="form-group">
-          <label class="sr-only" for="input_login">Username</label>
-          <input type="text" name="login" class="form-control" id="input_login" placeholder="Username">
+          <label class="sr-only" for="input_login">{t}Username{/t}</label>
+          <input type="text" name="login" class="form-control" id="input_login" placeholder="{t}Username{/t}">
         </div>
         
         <div class="form-group">
-          <label class="sr-only" for="input_email">Email</label>
-          <input type="email" name="email" class="form-control" id="input_email" placeholder="Email">
+          <label class="sr-only" for="input_email">{t}Email{/t}</label>
+          <input type="email" name="email" class="form-control" id="input_email" placeholder="{t}Email{/t}">
         </div>
 
         <div class="form-group">
-          <label class="sr-only" for="input_password">Password</label>
-          <input type="password" name="password" class="form-control" id="input_password" placeholder="Password">
+          <label class="sr-only" for="input_password">{t}Password{/t}</label>
+          <input type="password" name="password" class="form-control" id="input_password" placeholder="{t}Password{/t}">
         </div>
 
         <div class="alert alert-danger errors-container" id="registration_invalid_password_alert" style="display: none;">
-          Invalid username or password
+          {t}Invalid username or password{/t}
         </div>
 
         <div class="form-group">
-          <input type="submit" class="btn btn-primary pull-left" value="Sign Up" data-loading-text="Registration..." id="registration_modal_form_submit">
+          <input type="submit" class="btn btn-primary pull-left" value="{t}Sign Up{/t}" data-loading-text="{t}Registration...{/t}" id="registration_modal_form_submit">
         </div>
 
       </fieldset>
@@ -36,11 +36,11 @@
 
       </div>
       <div class="modal-body modal-body-success" style="display: none;">
-        <div class="alert alert-info" role="alert">Thank you! Please check your email inbox for confirmation link.</div>
+        <div class="alert alert-info" role="alert">{t}Thank you! Please check your email inbox for confirmation link{/t}.</div>
       </div>
       <div class="modal-footer">
         <div class="pull-right">
-        Already a member? <a href="{$settings->site_path}/user/signin" class="btn btn-default btn-sm">Sign In</a>
+        {t}Already a member?{/t} <a href="{$settings->site_path}/user/signin" class="btn btn-default btn-sm">{t}Sign In{/t}</a>
         </div>
       </div>
     </form>

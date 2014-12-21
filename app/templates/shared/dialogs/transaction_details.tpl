@@ -2,25 +2,25 @@
   <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="dialog_label">Transaction Details</h4>
+        <h4 class="modal-title" id="dialog_label">{t}Transaction Details{/t}</h4>
       </div>
       <div class="modal-body modal-body-default" style="padding-bottom: 0;">
 
         <table class="table table-hover table-striped">
           <tr>
-            <td><strong>Amount</strong></td>
+            <td><strong>{t}Amount{/t}</strong></td>
             <td><strong>${$item->amount|rational}.<sup>{$item->amount|decimal}</sup></strong></td>
           </tr>
           <tr>
-            <td><strong>Date</strong></td>
+            <td><strong>{t}Date{/t}</strong></td>
             <td>{$item->datetime|date_format}</td>
           </tr>
           <tr>
-            <td><strong>Time</strong></td>
+            <td><strong>{t}Time{/t}</strong></td>
             <td>{$item->datetime|date_format:'g:i a'}</td>
           </tr>
           <tr>
-            <td><strong>Description</strong></td>
+            <td><strong>{t}Description{/t}</strong></td>
             <td>{$item->description|escape:'html'|default:'&nbsp;'}</td>
           </tr>
         </table>
@@ -47,7 +47,7 @@
       </div>
       <div class="modal-footer">
         <div class="pull-right">
-          <a href="#" class="btn btn-default btn-sm" id="remove_transaction_button"><span class="glyphicon glyphicon-trash"></span>  Remove</a>
+          <a href="#" class="btn btn-default btn-sm" id="remove_transaction_button"><span class="glyphicon glyphicon-trash"></span>  {t}Remove{/t}</a>
         </div>
       </div>
     </form>
