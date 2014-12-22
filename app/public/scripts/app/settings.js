@@ -20,6 +20,8 @@ App.settings = {
 		}
 		return language;
 	},
+	timeFormat: '12', // 12 or 24
+	dateFormat: 'dmy',  // mdy or dmy
 
 	allowRealTimeTranslation: true,
 

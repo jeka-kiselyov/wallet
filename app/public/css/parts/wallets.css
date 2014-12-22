@@ -18,17 +18,17 @@ a.action:hover {
 
 .transaction_time {
 	font-size: 12px;
-	width: 150px;
+	width: 170px;
 	overflow: hidden;
 }
 
 .transaction_time_date {
 	float: left;
-	width: 80px;
+	width: 100px;
 	overflow: hidden;
 	font-weight: bold;
-margin-bottom: 5px;
-line-height: 1.1;
+	margin-bottom: 5px;
+	line-height: 1.1;
 }
 
 .transaction_time_time {
@@ -36,8 +36,8 @@ line-height: 1.1;
 	width: 70px;
 	overflow: hidden;
 	font-weight: bold;
-margin-bottom: 5px;
-line-height: 1.1;
+	margin-bottom: 5px;
+	line-height: 1.1;
 }
 
 #add_transaction_amount {

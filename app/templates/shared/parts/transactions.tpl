@@ -33,9 +33,9 @@
 		{foreach from=$transactions item=t}
 		<div class="list-group-item item" data-id="{$t->id}">
 			<div class="pull-left transaction_time">
-				{assign var="current_transaction_time_date" value=$t->datetime|date_format}
+				{assign var="current_transaction_time_date" value=$t->datetime|wallet_date}
 				<div class="transaction_time_date">{if $last_time_date|default:'' != $current_transaction_time_date}{$current_transaction_time_date}{else}&nbsp;{/if}</div>
-				<div class="transaction_time_time">{$t->datetime|date_format:'g:i a'}</div>
+				<div class="transaction_time_time">{$t->datetime|wallet_time}</div>
 				{assign var="last_time_date" value=$current_transaction_time_date}
 			</div>
 

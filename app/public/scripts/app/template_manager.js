@@ -68,6 +68,37 @@ App.templateManager = {
 		    }
 		);
 
+		jSmart.prototype.registerPlugin(
+		    'modifier',
+		    'wallet_time',
+		    function(s)
+		    {
+		    	var date = new Date(s*1000);
+
+		    	if (App.settings.timeFormat == '12')
+			        return date.format('g:i a', s);
+			    else
+			        return date.format('H:i', s);	
+		    }
+		);
+
+		jSmart.prototype.registerPlugin(
+		    'modifier',
+		    'wallet_date',
+		    function(s)
+		    {
+		    	var date = new Date(s*1000);
+
+		    	if (App.settings.dateFormat == 'mdy')
+			        return date.format('M j, Y', s);
+			    else
+			    {
+			    	var monthName = date.format('F', s).toLowerCase();
+			        return date.format('j', s)+' '+App.i18n.translate(monthName)+' '+date.format('Y', s);	
+			    }
+		    }
+		);
+
 	    jSmart.prototype.registerPlugin(
 	        'block',
 	        't',

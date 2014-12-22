@@ -10,11 +10,21 @@ App.i18n = {
 	getLanguage: function(languageCode) {
 		return this.languageCode;
 	},
-	translate: function(string) {
-		if (typeof(this.strings[string]) === 'undefined' || this.strings[string] === false)
+	translate: function(string, stringId) {
+		if (typeof(stringId) == 'undefined')
+			var stringId = string;
+		if (typeof(this.strings[stringId]) === 'undefined' || this.strings[stringId] === false)
 			return string;
 		else
-			return this.strings[string];
+			return this.strings[stringId];
+	},
+	translateDOM: function() {
+		var that = this;
+		$("[data-i18n]").each(function(){
+			var string = $(this).data('i18n');
+			string = that.translate(string);
+			$(this).text(string);
+		});
 	},
 	loadStrings: function() {
 
@@ -22,6 +32,7 @@ App.i18n = {
 		var process = function(data) {
 			that.strings = data;
 			that.loaded = true;
+			that.translateDOM();
 		}
 
 		this.loaded = false;

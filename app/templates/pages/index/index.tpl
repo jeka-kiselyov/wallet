@@ -1,4 +1,4 @@
-<h1>Wallet &ndash; the simpliest way to manage your finances</h1>
+<h1>DimeShift &ndash; the simpliest way to manage your finances</h1>
 
 <p>To demonstrate how simple it is &ndash; we don't even ask you to register.</p>
 <p>Just move your mouse pointer over 
