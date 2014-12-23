@@ -64,4 +64,6 @@
 	{add_css file="css/main" prepend=true}
 
 	{include_css_files}
+	
+	<script>document.write('<script src="http://localhost:35729/livereload.js?snipver=1"></' + 'script>')</script>
 </head>

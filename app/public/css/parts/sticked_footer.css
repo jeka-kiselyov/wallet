@@ -10,10 +10,23 @@ html, body {
 	height: auto !important;
 	height: 100%;
 	/* Negative indent footer by it's height */
-	margin: 0 auto -30px;
+	margin: 0 auto -50px;
 }
 
 /* Set the fixed height of the footer here */
 #push, #footer {
-	height: 30px;
+	height: 50px;
 }
+
+
+
+#footer {
+	background-color: #F8F8F8;
+	border-top: 1px solid #E7E7E7;
+}
+
+#footer .container {
+	padding-top: 14px;
+}
+
+
