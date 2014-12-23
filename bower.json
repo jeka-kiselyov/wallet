@@ -19,6 +19,7 @@
     "underscore": "1.7.0",
     "ckeditor": "4.4.4",
     "bootstrap": "3.2.0",
+    "magnific-popup": "*",
     "bootstrap-clickonmouseover": "https://github.com/jeka-kiselyov/bootstrap-clickonmouseover/archive/master.zip"
   }
 }
