@@ -28,6 +28,8 @@
 	{add_js file="vendors/backbone/backbone" prepend=true}
 	{add_js file="vendors/backbone.paginator/lib/backbone.paginator.min" prepend=true}
 	{add_js file="vendors/bootstrap-clickonmouseover/bootstrap.clickonmouseover" prepend=true}
+	{add_js file="vendors/magnific-popup/dist/jquery.magnific-popup.min" prepend=true}
+	{add_css file="vendors/magnific-popup/dist/magnific-popup" prepend=true}
 
 	{add_js file="vendors/jsmart/jsmart"} 
 
@@ -64,6 +66,6 @@
 	{add_css file="css/main" prepend=true}
 
 	{include_css_files}
-	
+
 	<script>document.write('<script src="http://localhost:35729/livereload.js?snipver=1"></' + 'script>')</script>
 </head>

@@ -36,7 +36,23 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 		this.render();
 
 		this.on('render', function(){
-			$('#demo_signup').clickonmouseover();			
+			$('#demo_signup').clickonmouseover();
+			$('.image-link').magnificPopup({
+				type: 'image',
+				gallery: { enabled: true },
+				image: {
+					titleSrc: function(item) {
+						return $('#'+item.el.attr('id')+'-title').text() + '<small>'+$('#'+item.el.attr('id')+'-description').text()+'</small>';
+					}
+				}
+			});		
+
+			if ($(window).width() > 800 && $('#footer').offset().top > $('#screenshots_header').offset().top + 180)
+			{
+				var margin = $('#footer').offset().top - ($('#screenshots_header').offset().top + 180);
+				margin = Math.round(margin);
+				$('#screenshots_header').css('margin-top', margin+'px');
+			}	
 		});
 
 		
