@@ -172,7 +172,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			{
 				var rvalues = [];
 				var i = 0;
-				if (values.length > 20)
+				if (values.length > 50)
 				{
 					/// by 3
 					while (typeof(values[i]) !== 'undefined')
