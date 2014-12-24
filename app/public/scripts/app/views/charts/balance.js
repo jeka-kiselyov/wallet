@@ -152,9 +152,10 @@ App.Views.Charts.Balance = Backbone.View.extend({
 
 			var labels = _.map(values, function(item){ return item.label; });
 			var series = [[]];
-			series[0] = _.map(values, function(item){ return item.total; });
+			series[0] = _.map(values, function(item){ return item.value; });
 
 			that._data = {labels: labels, series: series};
+			console.log(that._data);
 			that.dataFetched = false;
 
 			that.dataReady = true;
