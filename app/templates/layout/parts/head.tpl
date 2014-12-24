@@ -30,6 +30,8 @@
 	{add_js file="vendors/bootstrap-clickonmouseover/bootstrap.clickonmouseover" prepend=true}
 	{add_js file="vendors/magnific-popup/dist/jquery.magnific-popup.min" prepend=true}
 	{add_css file="vendors/magnific-popup/dist/magnific-popup" prepend=true}
+	{add_js file="vendors/chartist/dist/chartist" prepend=true}
+	{add_css file="vendors/chartist/dist/chartist.min" prepend=true}
 
 	{add_js file="vendors/jsmart/jsmart"} 
 
@@ -49,6 +51,7 @@
 	{add_js_folder path="scripts/app/views/widgets/"}
 	{add_js_folder path="scripts/app/views/parts/"}
 	{add_js_folder path="scripts/app/views/pages/"}
+	{add_js_folder path="scripts/app/views/charts/"}
 
 	{add_js file="scripts/app/views/header"}
 

@@ -65,19 +65,25 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 	},
 	render: function() {
 		console.log('views/pages/wallet.js | rendering');
-		this.renderHTML({ item: this.model.toJSON() });
-
 		if (!this.partsInitialized)
 			this.initializeParts();
 
-		for (var k in this.parts)
-			this.parts[k].render();
+		this.once('render',function(){
+			for (var k in this.parts)
+				this.parts[k].render();
+			for (var k in this.charts)
+				this.charts[k].render();
+		});
+		this.renderHTML({ item: this.model.toJSON() });
 	},
 	initializeParts: function() {
 		console.info('views/pages/wallet.js | initializing parts');
 		this.parts = [];
 		this.parts.push(new App.Views.Parts.Transactions({id: 'transactions_container', model: this.model, collection: this.model.getTransactions()}));
-		this.partsInitialized = true;		
+		this.partsInitialized = true;
+
+		this.charts = [];
+		this.charts.push(new App.Views.Charts.Balance({id: 'balance_canvas', model: this.model}));
 	},
 	wakeUp: function() {
 		console.log('views/pages/wallet.js | waking up');

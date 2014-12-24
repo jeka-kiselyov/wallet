@@ -115,14 +115,13 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		App.templateManager.fetch(this.templateName, data, function(html) {
 			that.$el.html('<div class="page">'+html+'</div>');
 			$('.page', "#page_holder_"+App.currentHolder).removeClass('page_loading');
-
+			that.proccessWidgets();
 			that.trigger('render');
 			that.trigger('loaded');
 		});
 		this.setTitle();
 		this.setURL();
 		this.isReady = true;
-		this.proccessWidgets();
 		// var that = this;
 		// setTimeout(function(){
 		// 	that.proccessWidgets();

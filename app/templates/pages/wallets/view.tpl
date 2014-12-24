@@ -20,6 +20,17 @@
 				<div class="pull-right">{t}or{/t} <a href="#" class="action" id="set_total_to_button">{t}set total to{/t}</a></div>
 			</div>
 		</div>
+
+
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">{$item->name|escape:'html'}</h3>
+			</div>
+			<div class="panel-body">
+				<div id="balance_canvas" class="ct-chart ct-perfect-fourth" ></div>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-xs-12 col-sm-12 col-md-8 col-md-pull-4">
