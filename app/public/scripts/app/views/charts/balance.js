@@ -99,7 +99,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 						var foundEmpty = [];
 						var iDay = d.day + 1;
 						var iMonth = d.month;
-						foundEmpty.push(iDay+'-'+iMonth);
+						foundEmpty.push(d.day+'-'+d.month);
 
 						while ((foundTotal == 0) && ((curMonth == iMonth && curDay >= iDay) || (curMonth > iMonth)) )
 						if (typeof(days[iDay+'-'+iMonth]) !== 'undefined')
