@@ -143,21 +143,16 @@ App.Views.Charts.Balance = Backbone.View.extend({
 
 			/// generate labels
 			//days.reverse();
-
-			var labels = [];
+			var values = [];
 			_.each(days, function(day, key){
-				labels.push(day.day+'/'+(day.month+1));
+				values.push({label: day.day+'/'+(day.month+1), value: day.total});
 			});
+			values.reverse();
+			values = _.last(values, 30);
 
-			/// generate series
+			var labels = _.map(values, function(item){ return item.label; });
 			var series = [[]];
-			_.each(days, function(day, key){
-				series[0].push(day.total);
-			});
-
-			labels.reverse(); series[0].reverse();
-			labels =  _.last(labels, 30);
-			series[0] =  _.last(series[0], 30);
+			series[0] = _.map(values, function(item){ return item.total; });
 
 			that._data = {labels: labels, series: series};
 			that.dataFetched = false;
