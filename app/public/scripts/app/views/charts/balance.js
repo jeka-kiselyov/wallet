@@ -203,7 +203,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 
 						if (typeof(values[i+1]) !== 'undefined')
 							rvalue = rvalue / 2;
-						
+
 						var rlabel = values[i].label;
 						if (typeof(values[i+1]) !== 'undefined') rlabel+=' - <br>'+values[i+1].label;
 
@@ -248,10 +248,11 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			return;
 
 		this.once('dataReady', function(){
-			this.chart = new Chartist.Bar('#'+this.id, this._data, {
+			this.chart = new Chartist.Line('#'+this.id, this._data, {
 				low: 0,
 				chartPadding: 0,
-				fullWidth: false
+				fullWidth: false,
+				showArea: true
 			});
 		});
 		this.fetchData();
