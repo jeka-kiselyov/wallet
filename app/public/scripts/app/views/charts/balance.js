@@ -181,6 +181,11 @@ App.Views.Charts.Balance = Backbone.View.extend({
 						if (typeof(values[i+1]) !== 'undefined') rvalue+=values[i+1].value;
 						if (typeof(values[i+2]) !== 'undefined') rvalue+=values[i+2].value;
 
+						if (typeof(values[i+1]) !== 'undefined' && typeof(values[i+2]) !== 'undefined')
+							rvalue = rvalue / 3;
+						else if (typeof(values[i+1]) !== 'undefined')
+							rvalue = rvalue / 2;
+
 						var rlabel = values[i].label;
 						if (typeof(values[i+2]) !== 'undefined') rlabel+=' - <br>'+values[i+2].label;
 						else
@@ -196,6 +201,9 @@ App.Views.Charts.Balance = Backbone.View.extend({
 						var rvalue = values[i].value;
 						if (typeof(values[i+1]) !== 'undefined') rvalue+=values[i+1].value;
 
+						if (typeof(values[i+1]) !== 'undefined')
+							rvalue = rvalue / 2;
+						
 						var rlabel = values[i].label;
 						if (typeof(values[i+1]) !== 'undefined') rlabel+=' - <br>'+values[i+1].label;
 
