@@ -163,6 +163,50 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			values.reverse();
 			values = _.last(values, 30);
 
+			/// remove empty from the start
+			var alreadyStarted = false;
+			values = _.filter(values, function(item){ if (item.value > 0 || alreadyStarted) { alreadyStarted = true; return true; } else return false; });
+
+			/// group by 
+			if (values.length > 10)
+			{
+				var rvalues = [];
+				var i = 0;
+				if (values.length > 20)
+				{
+					/// by 3
+					while (typeof(values[i]) !== 'undefined')
+					{
+						var rvalue = values[i].value;
+						if (typeof(values[i+1]) !== 'undefined') rvalue+=values[i+1].value;
+						if (typeof(values[i+2]) !== 'undefined') rvalue+=values[i+2].value;
+
+						var rlabel = values[i].label;
+						if (typeof(values[i+2]) !== 'undefined') rlabel+=' - <br>'+values[i+2].label;
+						else
+						if (typeof(values[i+1]) !== 'undefined') rlabel+=' - <br>'+values[i+1].label;
+
+						rvalues.push({label: rlabel, value: rvalue});
+						i = i + 3;
+					}
+				} else {
+					/// by 2
+					while (typeof(values[i]) !== 'undefined')
+					{
+						var rvalue = values[i].value;
+						if (typeof(values[i+1]) !== 'undefined') rvalue+=values[i+1].value;
+
+						var rlabel = values[i].label;
+						if (typeof(values[i+1]) !== 'undefined') rlabel+=' - <br>'+values[i+1].label;
+
+						rvalues.push({label: rlabel, value: rvalue});
+						i = i + 2;
+					}
+				}
+
+				values = rvalues;
+			}
+
 			var labels = _.map(values, function(item){ return item.label; });
 			var series = [[]];
 			series[0] = _.map(values, function(item){ return item.value; });
