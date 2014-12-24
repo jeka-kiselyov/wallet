@@ -85,11 +85,24 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			var firstDay = 0;
 			var firstMonth = 0;
 			_.each(days, function(day){
-				firstDay = day.day;
-				firstMonth = day.month;
+				if (day.total > 0)
+				{
+					if (firstDay == 0 && firstMonth == 0)
+					{
+						firstDay = day.day;
+						firstMonth = day.month;
+					}
+
+					if (day.month < firstMonth || day.day < firstDay)
+					{
+						firstDay = day.day;
+						firstMonth = day.month;
+					}
+				}
 			});
 
 			/// forth step. Fill days without transactions by values from next days started from firstDay
+			if (firstDay)
 			_.each(days, function(d){
 				if (firstMonth < d.month || (firstDay < d.day && firstMonth == d.month))
 				{
