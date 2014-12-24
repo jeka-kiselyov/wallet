@@ -161,18 +161,18 @@ App.Views.Charts.Balance = Backbone.View.extend({
 				values.push({label: day.day+'/'+(day.month+1), value: day.total});
 			});
 			values.reverse();
-			values = _.last(values, 30);
+			values = _.last(values, 50);
 
 			/// remove empty from the start
 			var alreadyStarted = false;
 			values = _.filter(values, function(item){ if (item.value > 0 || alreadyStarted) { alreadyStarted = true; return true; } else return false; });
 
 			/// group by 
-			if (values.length > 10)
+			if (values.length > 15)
 			{
 				var rvalues = [];
 				var i = 0;
-				if (values.length > 50)
+				if (values.length > 30)
 				{
 					/// by 3
 					while (typeof(values[i]) !== 'undefined')
