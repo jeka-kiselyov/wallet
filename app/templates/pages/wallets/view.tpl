@@ -25,7 +25,7 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">{$item->name|escape:'html'}</h3>
+				<h3 class="panel-title" data-i18n="Expenses per day trends">{t}Expenses per day trends{/t}</h3>
 			</div>
 			<div class="panel-body">
 				<div id="balance_canvas" class="ct-chart ct-perfect-fourth" ></div>
