@@ -115,6 +115,8 @@ App.Views.Charts.Balance = Backbone.View.extend({
 								foundTotal = days[iDay+'-'+iMonth].total;
 							}
 
+							iDay++;
+
 						} else {
 							/// next month
 							iMonth++;
