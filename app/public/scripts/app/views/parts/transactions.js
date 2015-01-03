@@ -61,7 +61,6 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 		this.$('#transactions_container').fadeTo(1, 1);
 
 		var data = {state: this.collection.state, collection: this.collection, transactions: this.collection.sort().toJSON(), item: this.model.toJSON()};
-
 		var that = this;
 		App.templateManager.fetch(this.templateName, data, function(html) {
 			that.$el.html(html);

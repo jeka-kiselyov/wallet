@@ -4,6 +4,7 @@ App.templateManager = {
 	_cache: {},
 	_templates: {},
 	_loadingStates: {},
+	_loadingCallbacks: {},
 	_initialized: false,
 
 	initialize: function()
@@ -136,13 +137,28 @@ App.templateManager = {
 		}
 
 		var that = this;
-		this._loadingStates[name] = 'loading';
 
 		if (typeof(success) === 'function')
 		{
-			this.loadFromServer(name, function(tpl) {
-				success(tpl.fetch(data));
-			});
+			if (typeof(this._loadingStates[name]) !== 'undefined' && this._loadingStates[name] === 'loading')
+			{
+				// already fetched
+				if (typeof(this._loadingCallbacks[name]) === 'undefined')
+				{
+					this._loadingCallbacks[name] = [];
+				}
+
+				this._loadingCallbacks[name].push(function(tpl){
+					success(tpl.fetch(data));
+				});
+				
+			} else {
+				// fetch template
+				this.loadFromServer(name, function(tpl) {
+					success(tpl.fetch(data));
+				});
+			}
+
 		} else {
 			this.loadFromServer(name);
 		}
@@ -176,10 +192,25 @@ App.templateManager = {
 		return false;
 	},
 	loadFromServer: function(name, callback) {
+
+		this._loadingStates[name] = 'loading';
 		var that = this;
 		var templateName = name;
+		var callbackFunc = callback;
+
+		console.time("template_manager.js | Fetch "+templateName+" from server");
+
 		var process = function(data)
 		{
+			console.timeEnd("template_manager.js | Fetch "+templateName+" from server");
+			console.group("Template name: "+templateName);
+			console.log("Callback function present: "+typeof(callbackFunc));
+			if (typeof(that._loadingCallbacks[templateName]) === 'undefined')
+				console.log("No additional callbacks");
+			else
+				console.log("Additional callbacks: "+that._loadingCallbacks[templateName].length);
+			console.groupEnd();
+
 			if (data)
 			{
 				App.localStorage.set('app_temapltes_'+templateName, data);
@@ -187,8 +218,16 @@ App.templateManager = {
 				that._templates[templateName] = new jSmart(data);
 				that._loadingStates[templateName] = 'ready';
 
-				if (typeof(callback) === 'function')
-					callback(that._templates[templateName]);
+				if (typeof(that._loadingCallbacks[templateName]) !== 'undefined')
+				{
+					for(var k in that._loadingCallbacks[templateName])
+						that._loadingCallbacks[templateName][k](that._templates[templateName]);
+
+					that._loadingCallbacks[templateName] = [];
+				}
+
+				if (typeof(callbackFunc) === 'function')
+					callbackFunc(that._templates[templateName]);
 			}
 		};
 

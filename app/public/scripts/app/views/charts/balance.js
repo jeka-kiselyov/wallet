@@ -221,7 +221,6 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			series[0] = _.map(values, function(item){ return item.value; });
 
 			that._data = {labels: labels, series: series};
-			console.log(that._data);
 			that.dataFetched = false;
 
 			that.dataReady = true;
@@ -229,26 +228,19 @@ App.Views.Charts.Balance = Backbone.View.extend({
 		});
 		this.fetchTransactions();
 	},
-	data: function() {
-		this.fetchData();
-		return  {
-			labels: ['11/12', '12/12', '13/12', '14/12', '15/12','11/12', '12/12', '13/12', '14/12', '15/12'],
-			series: [
-				[560,560,500,450.55,500,560,560,500,450.55,100]
-			]
-		};
-	},
 	wakeUp: function() {
 		this.render();
 	},
 	render: function() {
 		console.log('Rendering chart');
-		console.log(this.id);
-		console.log($('#'+this.id));
+
 		if (!$('#'+this.id).length)
 			return;
 
 		this.once('dataReady', function(){
+			if (typeof(this._data.labels) === 'undefined' || !this._data.labels || this._data.labels.length == 0)
+				return; // @todo: show 'not enough data'
+
 			this.chart = new Chartist.Line('#'+this.id, this._data, {
 				low: 0,
 				chartPadding: 0,
