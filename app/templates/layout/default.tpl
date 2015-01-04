@@ -20,8 +20,6 @@
 {add_js_test name="framework_test"}
 {add_js_test name="model_user_test"}
 
-{include_js_files}
-{include_css_files}
 {* In case you've included some scripts in templates with add_js smarty function *}
 
 {if $settings->tests.jasmine.enabled}
