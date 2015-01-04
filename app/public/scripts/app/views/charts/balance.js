@@ -49,7 +49,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			return false;
 		if (this.dataReady)
 		{
-        	that.trigger('dataReady');
+        	this.trigger('dataReady');
 			return this._data;
 		}
 
