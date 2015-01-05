@@ -7,6 +7,8 @@
     "grunt-contrib-concat": "*",
     "grunt-contrib-cssmin": "*",
     "grunt-contrib-copy": "*",
-    "grunt-bower-task": "~0.4.0"
+    "grunt-bower-task": "~0.4.0",
+    "grunt-composer": "~0.4.4",
+    "grunt-contrib-watch": "~0.6.1"
   }
 }

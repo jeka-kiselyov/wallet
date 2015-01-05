@@ -21,7 +21,12 @@
 		var app_version = '{$settings->version}';
 	</script>
 
+	{if $settings->environment == 'localhost'}
+	<script src="{$settings->site_path}/scripts/dist/app.js" type="text/javascript"></script>
+	<script>document.write('<script src="http://localhost:35729/livereload.js?snipver=1"></' + 'script>')</script>
+	{else}
 	<script src="{$settings->site_path}/scripts/dist/app.min.js" type="text/javascript"></script>
+	{/if}
 
 	<script>
 	{if isset($user) && $user}
@@ -31,6 +36,4 @@
 
 	<link href="{$settings->site_path}/css/dist/app.min.css" media="screen" rel="stylesheet" type="text/css" />
 
-
-	<script>document.write('<script src="http://localhost:35729/livereload.js?snipver=1"></' + 'script>')</script>
 </head>

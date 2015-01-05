@@ -57,9 +57,6 @@ App.Views.Charts.Balance = Backbone.View.extend({
 
 		var that = this;
 		this.once('transactionsReady',function(){
-			_.each(this.aTransactions, function(item){
-				console.log(item.get('amount'));
-			});
 			//// first step. Filter expenses
 			var a = _.filter(this.aTransactions, function(t){ return t.get('amount') < 0; });
 

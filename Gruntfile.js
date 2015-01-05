@@ -86,6 +86,22 @@ module.exports = function(grunt) {
         }
        //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
       }
+    },
+    watch: {
+      scripts: {
+        files: ['app/public/scripts/**/*.js','app/public/scripts/*.js'],
+        tasks: ['concat','uglify'],
+        options: {
+          spawn: false,
+        }
+      },
+      styles: {
+        files: ['app/public/css/*.css','app/public/css/**/*.css'],
+        tasks: ['cssmin'],
+        options: {
+          spawn: false,
+        }
+      }, 
     }
   });
 
@@ -95,8 +111,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-bower-task');
+  grunt.loadNpmTasks('grunt-composer');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
-  grunt.registerTask('default', ['bower','concat','uglify','cssmin','copy']);
+  grunt.registerTask('default', ['composer:install', 'bower','concat','uglify','cssmin','copy']);
 
 };

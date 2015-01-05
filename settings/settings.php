@@ -2,11 +2,13 @@
 
  $settings = array();
 
+ $settings['environment'] = ENVIRONMENT_SERVER;
  // Site path
  if (ENVIRONMENT_SERVER == 'localhost')
   $settings['site_path'] = "http://wallet.com";
    else
     $settings['site_path'] = "http://wallet.jeka911.com";
+
 
  // General settings
  $settings['site_title'] = "Wallet";

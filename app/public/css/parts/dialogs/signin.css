@@ -8,6 +8,8 @@
 	user-select: none;
 }
 
+
+
 .dialog_signin_container input[type="password"],
 .dialog_signin_container input[type="text"] {
 	width: 355px;
@@ -45,7 +47,7 @@
 }
 
 .social_button_icon {
-	float: left; 
+	float: left;
 	width: 30px; 
 	text-align: center; 
 	font-weight: bold;
