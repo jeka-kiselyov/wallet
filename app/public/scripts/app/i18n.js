@@ -12,7 +12,7 @@ App.i18n = {
 	},
 	translate: function(string, stringId) {
 		if (typeof(stringId) == 'undefined')
-			var stringId = string;
+			stringId = string;
 		if (typeof(this.strings[stringId]) === 'undefined' || this.strings[stringId] === false)
 			return string;
 		else
@@ -33,7 +33,7 @@ App.i18n = {
 			that.strings = data;
 			that.loaded = true;
 			that.translateDOM();
-		}
+		};
 
 		this.loaded = false;
 		$.ajax({

@@ -60,13 +60,13 @@ App.Models.User = Backbone.Model.extend({
 		if (typeof(data) !== 'undefined')
 		{
 			this.set(data);
-			if (this.signedIn == false)
+			if (this.signedIn === false)
 			{
 				this.signedIn = true;
 				this.trigger('signedInStatusChanged');
 			}
 		} else {
-			if (this.signedIn == true)
+			if (this.signedIn === true)
 			{
 				this.signedIn = false;
 				this.trigger('signedInStatusChanged');

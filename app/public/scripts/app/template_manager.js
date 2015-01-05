@@ -26,7 +26,7 @@ App.templateManager = {
 	    	} else {
 		        throw new Error('Template ' + name + ' is not yet loaded');	    		
 	    	}
-	    }
+	    };
 
 		jSmart.prototype.registerPlugin(
 			'modifier',
@@ -37,7 +37,7 @@ App.templateManager = {
 				var decimal = Math.abs(n) - Math.floor(Math.abs(n));
 				decimal*=100;
 				decimal = Math.round(decimal);
-				if (decimal == 0)
+				if (decimal === 0)
 					return '00';
 				if (decimal < 10)
 					return '0'+decimal;
@@ -126,7 +126,7 @@ App.templateManager = {
 		if (!this._initialized)
 			this.initialize();
 
-		var data = _.extend(data, this.commonData());
+		data = _.extend(data, this.commonData());
 
 		if (typeof(this._templates[name]) !== 'undefined' || this.tryToLoadFromStorage(name))
 		{
@@ -218,6 +218,9 @@ App.templateManager = {
 				that._templates[templateName] = new jSmart(data);
 				that._loadingStates[templateName] = 'ready';
 
+				if (typeof(callbackFunc) === 'function')
+					callbackFunc(that._templates[templateName]);
+
 				if (typeof(that._loadingCallbacks[templateName]) !== 'undefined')
 				{
 					for(var k in that._loadingCallbacks[templateName])
@@ -225,9 +228,6 @@ App.templateManager = {
 
 					that._loadingCallbacks[templateName] = [];
 				}
-
-				if (typeof(callbackFunc) === 'function')
-					callbackFunc(that._templates[templateName]);
 			}
 		};
 

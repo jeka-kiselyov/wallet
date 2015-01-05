@@ -29,7 +29,7 @@ App.localStorage = {
 		if (typeof(window) === 'undefined')
 			return false;
 		try {
-			return ('localStorage' in window && window['localStorage']);
+			return ('localStorage' in window && window.localStorage);
 		} catch(err) { return false; }
 
 		return true;
