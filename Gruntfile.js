@@ -77,6 +77,15 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['app/public/vendors/bootstrap/fonts/*'], dest: 'app/public/css/fonts/', filter: 'isFile'}
         ]
       }
+    },
+    bower: {
+      install: {
+        options: {
+          install: true,
+          copy: false
+        }
+       //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
+      }
     }
   });
 
@@ -85,8 +94,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-bower-task');
 
   // Default task(s).
-  grunt.registerTask('default', ['concat','uglify','cssmin','copy']);
+  grunt.registerTask('default', ['bower','concat','uglify','cssmin','copy']);
 
 };
