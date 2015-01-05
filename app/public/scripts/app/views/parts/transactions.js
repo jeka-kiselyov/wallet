@@ -63,7 +63,6 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 		var data = {state: this.collection.state, collection: this.collection, transactions: this.collection.sort().toJSON(), item: this.model.toJSON()};
 		var that = this;
 		App.templateManager.fetch(this.templateName, data, function(html) {
-			console.log(html);
 			that.$el.html(html);
 			that.trigger('render');
 			that.trigger('loaded');
