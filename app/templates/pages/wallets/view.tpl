@@ -7,7 +7,7 @@
 
 <div class="row">
 
-	<div class="col-xs-12 col-sm-12 col-md-4 col-md-push-8">
+	<div class="col-xs-12 col-sm-12 col-md-4 pull-right">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">{$item->name|escape:'html'}</h3>
@@ -21,19 +21,9 @@
 			</div>
 		</div>
 
-
-
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title" data-i18n="Expenses per day trends">{t}Expenses per day trends{/t}</h3>
-			</div>
-			<div class="panel-body">
-				<div id="balance_canvas" class="ct-chart ct-perfect-fourth" ></div>
-			</div>
-		</div>
 	</div>
 
-	<div class="col-xs-12 col-sm-12 col-md-8 col-md-pull-4">
+	<div class="col-xs-12 col-sm-12 col-md-8 pull-left">
 
 		<div class="list-group">
 			<div class="list-group-item ">
@@ -56,5 +46,19 @@
 
 
 	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-4 pull-right">
+
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title" data-i18n="Expenses per day trends">{t}Expenses per day trends{/t}</h3>
+			</div>
+			<div class="panel-body">
+				<div id="balance_canvas" class="ct-chart ct-perfect-fourth" ></div>
+			</div>
+		</div>
+	</div>
+
 
 </div>
