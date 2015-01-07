@@ -59,29 +59,34 @@ App.Views.Charts.Balance = Backbone.View.extend({
 		this.once('transactionsReady',function(){
 			//// first step. Filter expenses
 			var a = _.filter(this.aTransactions, function(t){ return t.get('amount') < 0; });
-
 			//// second step. For each day
 			var days = {};
 			var curTime = new Date();
 			var curDay = curTime.getDate();
 			var curMonth = curTime.getMonth();
+			var curYear = curTime.getYear();
+
 			curTime = curTime.getTime();
-			for (var i = 0; i <= 60; i++)
+			for (var i = 60; i >= 0; i--)
 			{
 				var d = new Date(curTime - 24*60*60*1000*i);
 				var day = d.getDate();
 				var month = d.getMonth();
+				var year = d.getYear();
+
 				var dayTotal = 0;
 				_.each(a, function(t){
 					var tDate = new Date(t.get('datetime')*1000);
-					if (tDate.getDate() == day && tDate.getMonth() == month)
+					if (tDate.getDate() === day && tDate.getMonth() === month)
 						dayTotal += Math.abs(t.get('amount'));
 				});
-				days[day+'-'+month] = {day: day, month: month, total: dayTotal};
+				days[day+'-'+month] = {day: day, month: month, year: year, total: Math.abs(dayTotal)};
 			}
+
 			/// third step. Find first day from a set at which transaction occurs.
 			var firstDay = 0;
 			var firstMonth = 0;
+			var firstYear = 0;
 			_.each(days, function(day){
 				if (day.total > 0)
 				{
@@ -89,12 +94,14 @@ App.Views.Charts.Balance = Backbone.View.extend({
 					{
 						firstDay = day.day;
 						firstMonth = day.month;
+						firstYear = day.year;
 					}
 
-					if (day.month < firstMonth || day.day < firstDay)
+					if ((day.month < firstMonth && day.year == firstYear) || (day.day < firstDay && day.month == firstMonth))
 					{
 						firstDay = day.day;
 						firstMonth = day.month;
+						firstYear = day.year;
 					}
 				}
 			});
@@ -102,7 +109,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			/// forth step. Fill days without transactions by values from next days started from firstDay
 			if (firstDay)
 			_.each(days, function(d){
-				if (firstMonth < d.month || (firstDay < d.day && firstMonth == d.month))
+				if (firstYear < d.year || (firstMonth < d.month && firstYear <= d.year) || (firstDay < d.day && firstMonth == d.month))
 				{
 					if (d.total == 0 && typeof(d.filledMissed) === 'undefined')
 					{
@@ -110,9 +117,10 @@ App.Views.Charts.Balance = Backbone.View.extend({
 						var foundEmpty = [];
 						var iDay = d.day + 1;
 						var iMonth = d.month;
+						var iYear = d.year;
 						foundEmpty.push(d.day+'-'+d.month);
 
-						while ((foundTotal == 0) && ((curMonth == iMonth && curDay >= iDay) || (curMonth > iMonth)) )
+						while ((foundTotal == 0) && ((curMonth == iMonth && curDay >= iDay) || (curYear == iYear && curMonth > iMonth) || curYear > iYear) )
 						if (typeof(days[iDay+'-'+iMonth]) !== 'undefined')
 						{
 
@@ -132,11 +140,17 @@ App.Views.Charts.Balance = Backbone.View.extend({
 							/// next month
 							iMonth++;
 							iDay = 1;
+
+							if (iMonth == 12)
+							{
+								iMonth = 0;
+								iYear++;
+							}
 						}
 
 						//// fill missed sum
 						foundEmpty = _.uniq(foundEmpty);
-						if (foundTotal > 0 && foundEmpty.length > 0)
+						if (foundEmpty.length > 0)
 						{
 							var total = foundTotal / foundEmpty.length;
 							_.each(foundEmpty, function(found){
@@ -158,9 +172,8 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			_.each(days, function(day, key){
 				values.push({label: day.day+'/'+(day.month+1), value: day.total});
 			});
-			values.reverse();
+			//values.reverse();
 			values = _.last(values, 31);
-
 			/// remove empty from the start
 			var alreadyStarted = false;
 			values = _.filter(values, function(item){ if (item.value > 0 || alreadyStarted) { alreadyStarted = true; return true; } else return false; });
@@ -240,6 +253,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 
 			this.chart = new Chartist.Line('#'+this.id, this._data, {
 				low: 0,
+				lineSmooth: false,
 				chartPadding: 0,
 				fullWidth: false,
 				showArea: true
