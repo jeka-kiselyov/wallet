@@ -24,6 +24,7 @@ App.Models.User = Backbone.Model.extend({
         auth_code: null,
         email: null,
         password: null,
+        is_demo: null,
         login: null,
     },
     getWallets: function() {
@@ -56,6 +57,10 @@ App.Models.User = Backbone.Model.extend({
 		return false;
 	},
 
+	isDemo: function() {
+		return (this.get('is_demo') == true); // yep, ==
+	},
+
     signInWithData: function(data) {
 		if (typeof(data) !== 'undefined')
 		{
@@ -76,6 +81,33 @@ App.Models.User = Backbone.Model.extend({
     demoRegister: function() {
 		this.register('demo', 'demo@demo.com', 'demonstration');
     },
+    fillProfile: function(login, email, password) {
+		var that = this;
+
+		this.set('login', login);
+		this.set('email', email);
+		this.set('password', password);
+		this.set('is_demo', false);
+
+		return this.save(null, {success: function(model, data){
+			if (typeof(data.id) !== 'undefined')
+			{
+				console.log("Server side fill profile success");
+				that.set('password', '');
+				that.trigger('filled');
+			}
+		}, error: function(model, response){
+			console.log("Server side fill profile error");
+			if (typeof(response.responseJSON) !== 'undefined' && typeof(response.responseJSON.message) !== 'undefined')
+			{
+				if (!(that.validationError instanceof Array))
+					that.validationError = [];
+				for (var k in response.responseJSON.message)
+					that.validationError.push({msg: response.responseJSON.message[k]});
+			}
+			that.trigger('invalid');
+		}});
+	},
     register: function(login, email, password) {
 		var that = this;
 
@@ -219,6 +251,9 @@ App.Models.User = Backbone.Model.extend({
 		{
 			return false;
 		}
+
+		this.signedIn = false;
+		this.clear().set(this.defaults);
 
 		$.ajax({
             url: url,

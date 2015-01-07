@@ -11,8 +11,9 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.requiresSignedIn = true;
 
 		this.listenToOnce(App.currentUser, 'signedout', function() {
+				console.log('abstract/page.js | Clearing stack and redirect user back to the root');
 				App.viewStack.clear();
-				App.router.navigate('/', {trigger: true});			
+				App.router.redirect('/');			
 		});
 
 		if (typeof(App.currentUser) !== 'undefined' && App.currentUser.isSignedIn())

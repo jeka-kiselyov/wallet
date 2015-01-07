@@ -68,6 +68,19 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 		if (!this.partsInitialized)
 			this.initializeParts();
 
+		//// slide down invitation box if total is changed.
+		if (App.currentUser.isDemo()) 
+		{
+			if (typeof(this.initialWalletTotal) !== 'undefined')
+			{
+				if (!$('#fill_profile_invitation').is(":visible"))
+					if (this.model.get('total') != this.initialWalletTotal)
+						$('#fill_profile_invitation').slideDown('slow');
+			} else {
+				this.initialWalletTotal = this.model.get('total');
+			}
+		}
+
 		this.once('render',function(){
 			for (var k in this.parts)
 				this.parts[k].render();

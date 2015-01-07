@@ -6,6 +6,12 @@
 	{include file="layout/parts/header.tpl"}
 
 	<div class="container" id="container">
+		<div id="fill_profile_invitation" style="display: none;">
+			<div class="alert alert-info">
+			{t}Please don't forget to let us know your email address, so you can sign in to DimeShift on your next visit.{/t} <a href="{$settings->site_path}/user/fillprofile" class="btn btn-primary btn-xs">{t}Do it{/t}</a>
+			</div>
+		</div>
+
 		<div class="page_holder" id="page_holder_1">
 			{include file="pages/{$page_tpl}.tpl"}
 		</div>

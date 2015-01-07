@@ -36,6 +36,18 @@
 			{
 				$this->throwValidationException('This username is already taken');
 			}
+		} else {
+			/// update item
+			$sameEmail = $this->users->find_by_email($this->email);
+			foreach ($sameEmail as $u)
+				if ($u->id != $this->id)
+					$this->throwValidationException('This email is already registered in the system');
+
+			$sameLogin = $this->users->find_by_login($this->login);
+			foreach ($sameLogin as $u)
+				if ($u->id != $this->id)
+					$this->throwValidationException('This username is already taken');
+
 		}
 
 		unset($this->fields['is_admin']);
@@ -87,6 +99,7 @@
 		unset($array['password'], $array['confirmation_code'], $array['password_restore_code']);
 		unset($array['registration_ip'], $array['activity_ip']);
 		$array['id'] = $this->id;
+		$array['is_demo'] = (bool)$this->is_demo;
 		return $array;
 	}
 

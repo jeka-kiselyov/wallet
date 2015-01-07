@@ -64,6 +64,11 @@ class controller_api_users extends api_controller
 
   protected function crud_update($id)
   {
+    $login = $this->payload('login','');
+    $password = $this->payload('password', '');
+    $email = $this->payload('email', '');
+    $is_demo = $this->payload('is_demo', false);
+
     $data = $this->payload();
     if ($id == $data->id)
     {
@@ -72,9 +77,20 @@ class controller_api_users extends api_controller
 
       $user = $this->users->get_by_id($id);
       //@todo: apply changes
+      $user->login = $login;
+      $user->email = $email;
+      $user->password = md5($password.$this->users->password_salt);
+      $user->is_demo = $is_demo;
       
-      $user->save();
+      try {
+        $user->save();
+      } 
+      catch (entityvalidation_exception $e) {
+        $this->error(1, $e->get_error_messages());
+      }
     }
+
+    $user = $this->users->get_by_id($id);
     $this->data($this->entity_to_result($user));
   }
 
@@ -163,13 +179,15 @@ class controller_api_users extends api_controller
 
     if (!$this->user || ($this->user->id != $user['id']) ) /// Don't show special fields for other users
     {
-      $user = array('id'=>$user['id'], 'login'=>$user['login']);
+      $user = array('id'=>$user['id'], 'login'=>$user['login'], 'is_demo'=>(bool)$user['is_demo']);
     } else {
       $user['password'] = '';
       unset($user['password_restore_code']);
       unset($user['confirmation_code']);
       unset($user['auth_code']);
     }
+
+    $user['is_demo'] = (bool)$user['is_demo'];
 
     if ($merge)
       $user = array_merge($user, $merge);

@@ -31,9 +31,8 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 	initialize: function() {
 		this.renderLoading();		
 		if (typeof(App.currentUser) !== 'undefined' && App.currentUser && App.currentUser.isSignedIn())
-			App.router.redirect('/wallets/');
+			return App.router.redirect('/wallets/');
 		/// initialize models, collections etc. Request fetching from storage
-		this.render();
 
 		this.on('render', function(){
 			$('#demo_signup').clickonmouseover();
@@ -55,8 +54,7 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 			}	
 		});
 
-		
-
+		this.render();
 	}
 
 });
