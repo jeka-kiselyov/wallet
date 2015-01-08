@@ -2,7 +2,7 @@
   <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="dialog_label">{t}Add Profit{/t}</h4>
+        <h4 class="modal-title" id="dialog_label">{t}Add Income{/t}</h4>
       </div>
       <div class="modal-body modal-body-default" style="padding-bottom: 0;">
 

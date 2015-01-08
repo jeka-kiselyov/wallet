@@ -16,7 +16,7 @@
 			
 				<p class="text-center {if $item->total >= 0}text-success{else}text-danger{/if} wallet_total"><strong>{if $item->total < 0}-{/if}{if $item->currency == 'USD'}${/if}{$item->total|rational}.<sup>{$item->total|decimal}</sup>{if $item->currency != 'USD'} {$item->currency}{/if}</strong></p>
 				
-				<button type="button" id="add_profit_button" class="btn btn-success btn-block">{t}Add Profit{/t}</button>
+				<button type="button" id="add_profit_button" class="btn btn-success btn-block">{t}Add Income{/t}</button>
 				<div class="pull-right">{t}or{/t} <a href="#" class="action" id="set_total_to_button">{t}set total to{/t}</a></div>
 			</div>
 		</div>
