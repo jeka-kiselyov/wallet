@@ -7,7 +7,7 @@
 		<p class="muted credit"><span data-i18n="Copyright">{t}Copyright{/t}</span> {current_year} {t}DimeShift{/t}. <span data-i18n="GNU Affero GPL License">GNU Affero GPL License</span></a> </p>
 	</div>
 </footer>
-
+{literal}
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
 (function (d, w, c) {
@@ -33,3 +33,4 @@
 </script>
 <noscript><div><img src="//mc.yandex.ru/watch/27846756" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+{/literal}
