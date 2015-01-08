@@ -6,5 +6,6 @@ App.Views.Dialogs.Logout = App.Views.Abstract.Dialog.extend({
 		App.currentUser.signOut();
 		App.viewStack.clear();
 		App.router.redirect('/');
+		$('#fill_profile_invitation').hide();
 	}
 });

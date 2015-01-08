@@ -47,6 +47,8 @@ class controller_api_users extends api_controller
         $user->is_demo = 1;
         $user->confirmation_code = '';
         $user->save();
+
+        $this->demo->fill_demo_account($user->id);
       }
 
       if (!$user->confirmation_code)
