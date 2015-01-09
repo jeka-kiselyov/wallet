@@ -16,10 +16,17 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 		this.renderLoading();
 
 		var that = this;
+		var rendered 	= new $.Deferred();
+		var shown 		= new $.Deferred();
+
+		$.when(rendered, shown).done(function () {
+			that.trigger('ready');
+		});
 		this.$el.children().on('shown.bs.modal', function (e) {
 			that.isVisible = true;
 			console.log("Dialog "+that.dialogName+" is shown. Firing shown event.");
 			that.trigger('shown');
+			shown.resolve();
 		});
 		this.$el.children().on('hidden.bs.modal', function (e) {
 			that.isVisible = false;
@@ -27,6 +34,9 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 			$("#dialog_wrapper").html('');
 			console.log("Dialog "+that.dialogName+" is hidden. Firing hidden event.");
 			that.trigger('hidden');
+		});
+		this.once('rendered', function(){
+			rendered.resolve();
 		});
 
 		this.isVisible = true;
@@ -43,6 +53,7 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 		App.templateManager.fetch('dialogs/'+this.dialogName, data, function(html) {
 		 	console.log('Dialog '+that.dialogName+' rendering');
 		 	that.$(".modal").html(html);
+		 	that.trigger('rendered');
 		 	console.log('Dialog '+that.dialogName+' rendered');
 		});
 	},
