@@ -3,14 +3,14 @@ App.Views.Dialogs.AddWallet = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'add_wallet',
 	events: {
-		"submit form": "onSubmit",
-		"shown.bs.modal": "onShown"
+		"submit form": "onSubmit"
 	},
 	initialize: function() {
+		var that = this;
+		this.on('ready', function() {
+			that.$('#input_name').focus();
+		});
 		this.show();
-	},
-	onShown: function() {
-		this.$('#input_name').focus();
 	},
 	onSubmit: function() {
 		var that = this;

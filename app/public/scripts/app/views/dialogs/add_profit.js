@@ -3,15 +3,17 @@ App.Views.Dialogs.AddProfit = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'add_profit',
 	events: {
-		"submit form": "onSubmit",
-		"shown.bs.modal": "onShown"
+		"submit form": "onSubmit"
 	},
 	initialize: function(params) {
 		this.wallet = params.wallet || false;
+
+		var that = this;
+		this.on('ready', function() {
+			that.$('#input_amount').focus();
+		});
+		
 		this.show();
-	},
-	onShown: function() {
-		this.$('#input_amount').focus();
 	},
 	onSubmit: function() {
 		var that = this;

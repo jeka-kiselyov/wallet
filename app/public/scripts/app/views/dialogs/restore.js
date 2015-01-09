@@ -3,15 +3,14 @@ App.Views.Dialogs.Restore = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'restore',
 	events: {
-		"submit form": "onSubmit",
-		"shown.bs.modal": "onShown"
+		"submit form": "onSubmit"
 	},
 	initialize: function() {
+		var that = this;
+		this.on('ready', function() {
+			that.$('#input_email').focus();
+		});
 		this.show();
-	},
-	onShown: function() {
-		console.log('Restire dialog is shown');
-		this.$('#input_email').focus();
 	},
 	onSubmit: function() {
 		var that = this;

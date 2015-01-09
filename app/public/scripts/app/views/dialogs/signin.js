@@ -3,15 +3,14 @@ App.Views.Dialogs.Signin = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'signin',
 	events: {
-		"submit form": "onSubmit",
-		"shown.bs.modal": "onShown"
+		"submit form": "onSubmit"
 	},
 	initialize: function() {
+		var that = this;
+		this.on('ready', function() {
+			that.$('#input_username').focus();
+		});
 		this.show();
-	},
-	onShown: function() {
-		console.log('Sign In dialog is shown');
-		this.$('#input_username').focus();
 	},
 	onSubmit: function() {
 		this.$('.btn-primary').button('loading');

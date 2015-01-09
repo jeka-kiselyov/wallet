@@ -3,15 +3,14 @@ App.Views.Dialogs.FillProfile = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'fill_profile',
 	events: {
-		"submit form": "onSubmit",
-		"shown.bs.modal": "onShown"
+		"submit form": "onSubmit"
 	},
 	initialize: function() {
+		var that = this;
+		this.on('ready', function() {
+			that.$('#input_login').focus().select();
+		});
 		this.show();
-	},
-	onShown: function() {
-		console.log('FillProfile dialog is shown');
-		this.$('#input_login').focus();
 	},
 	onSubmit: function() {
 		var that = this;

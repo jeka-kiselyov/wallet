@@ -3,8 +3,7 @@ App.Views.Dialogs.EditWallet = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'edit_wallet',
 	events: {
-		"submit form": "onSubmit",
-		"shown.bs.modal": "onShown"
+		"submit form": "onSubmit"
 	},
 	initialize: function(params) {
 		if (typeof(params.item) != 'undefined')
@@ -12,10 +11,12 @@ App.Views.Dialogs.EditWallet = App.Views.Abstract.Dialog.extend({
 		else
 			throw 'Can not initialize dialog without param.item';
 
+		var that = this;
+		this.on('ready', function() {
+			that.$('#input_name').focus().select();
+		});
+		
 		this.show({item: this.item.toJSON()});
-	},
-	onShown: function() {
-		this.$('#input_name').focus().select();
 	},
 	onSubmit: function() {
 		var that = this;

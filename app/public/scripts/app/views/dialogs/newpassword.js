@@ -5,17 +5,16 @@ App.Views.Dialogs.NewPassword = App.Views.Abstract.Dialog.extend({
 	hash: '',
 	dialogName: 'newpassword',
 	events: {
-		"submit form": "onSubmit",
-		"shown.bs.modal": "onShown"
+		"submit form": "onSubmit"
 	},
 	initialize: function(params) {
 		this.code = ''; if (params && typeof(params.code) !== 'undefined') this.code = params.code;
 		this.hash = ''; if (params && typeof(params.hash) !== 'undefined') this.hash = params.hash;
+		var that = this;
+		this.on('ready', function() {
+			that.$('#input_password').focus().select();
+		});
 		this.show({code: this.code, hash: this.hash});
-	},
-	onShown: function() {
-		console.log('Registration dialog is shown');
-		this.$('#input_password').focus();
 	},
 	onSubmit: function() {
 		var that = this;

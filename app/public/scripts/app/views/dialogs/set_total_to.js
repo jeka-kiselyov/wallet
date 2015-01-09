@@ -3,15 +3,15 @@ App.Views.Dialogs.SetTotalTo = App.Views.Abstract.Dialog.extend({
 
 	dialogName: 'set_total_to',
 	events: {
-		"submit form": "onSubmit",
-		"shown.bs.modal": "onShown"
+		"submit form": "onSubmit"
 	},
 	initialize: function(params) {
 		this.wallet = params.wallet || false;
+		var that = this;
+		this.on('ready', function() {
+			that.$('#input_total').focus();
+		});
 		this.show();
-	},
-	onShown: function() {
-		this.$('#input_total').focus();
 	},
 	onSubmit: function() {
 		var that = this;

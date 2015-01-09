@@ -5,7 +5,6 @@ App.Views.Dialogs.WalletAccesses = App.Views.Abstract.Dialog.extend({
 	dialogName: 'wallet_accesses',
 	events: {
 		"submit form": "onSubmit",
-		"shown.bs.modal": "onShown",
 		"click .item_button_remove_access": "removeAccess"
 	},
 	removeAccess: function(ev) {
@@ -35,6 +34,10 @@ App.Views.Dialogs.WalletAccesses = App.Views.Abstract.Dialog.extend({
 
         this.accesses.fetch();
 
+		var that = this;
+		this.on('ready', function() {
+			that.$('#input_email').focus();
+		});
         this.show(this.data());
 	},
 	data: function() {
@@ -55,10 +58,6 @@ App.Views.Dialogs.WalletAccesses = App.Views.Abstract.Dialog.extend({
 	},
 	render: function() {
 		this.renderHTML(this.data());
-		this.$('#input_email').focus();
-	},
-	onShown: function() {
-		this.$('#input_email').focus();
 	},
 	onSubmit: function() {
 		var that = this;
