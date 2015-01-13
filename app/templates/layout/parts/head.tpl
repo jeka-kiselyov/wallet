@@ -20,21 +20,46 @@
 		var site_path = '{$settings->site_path}';
 		var app_version = '{$settings->version}';
 	</script>
-	
-	<link href="{$settings->site_path}/css/dist/app.min.css" media="screen" rel="stylesheet" type="text/css" />
 
-	{if $settings->environment == 'localhost'}
-	<script src="{$settings->site_path}/scripts/dist/app.js" type="text/javascript"></script>
-	<script>document.write('<script src="http://localhost:35729/livereload.js?snipver=1"></' + 'script>')</script>
-	{else}
-	<script src="{$settings->site_path}/scripts/dist/app.min.js" type="text/javascript"></script>
-	{/if}
+	{add_js file="vendors/jquery/jquery.min" prepend=true}
+	{* Prepend - this scripts will be included first, even if you've added something in controller *}
+	{add_js file="vendors/bootstrap/dist/js/bootstrap.min" prepend=true}
+	{add_js file="vendors/underscore/underscore-min" prepend=true}
+	{add_js file="vendors/backbone/backbone" prepend=true}
+	{add_js file="vendors/backbone.paginator/lib/backbone.paginator.min" prepend=true}
+	{add_js file="vendors/bootstrap-clickonmouseover/bootstrap.clickonmouseover" prepend=true}
+	{add_js file="vendors/magnific-popup/dist/jquery.magnific-popup.min" prepend=true}
+	{add_css file="vendors/magnific-popup/dist/magnific-popup" prepend=true}
+	{add_js file="vendors/chartist/dist/chartist" prepend=true}
+	{add_css file="vendors/chartist/dist/chartist.min" prepend=true}
+	{add_js file="vendors/jsmart/jsmart"}
+	{add_js file="scripts/functions"}
+	{add_js file="scripts/app"}
+	{add_js file="scripts/app/view_stack"}
+	{add_js file="scripts/app/settings"}
+	{add_js file="scripts/app/local_storage"}
+	{add_js file="scripts/app/template_manager"}
+	{add_js file="scripts/app/i18n"}
+	{add_js_folder path="scripts/app/abstract/"}
+	{add_js_folder path="scripts/app/models/"}
+	{add_js_folder path="scripts/app/collections/"}
+	{add_js_folder path="scripts/app/views/dialogs/"}
+	{add_js_folder path="scripts/app/views/widgets/"}
+	{add_js_folder path="scripts/app/views/parts/"}
+	{add_js_folder path="scripts/app/views/pages/"}
+	{add_js_folder path="scripts/app/views/charts/"}
+	{add_js file="scripts/app/views/header"}
+	{add_js file="scripts/app/router"}
+	{add_js file="scripts/setup"}
+	{add_css file="vendors/bootstrap/dist/css/bootstrap.min" prepend=true}
+	{add_css file="css/main" prepend=true}
+	{include_css_files}
 
+	{include_js_files}
 	<script>
 	{if isset($user) && $user}
-		window.App.setUser({$user->to_array()|@json_encode});
+	window.App.setUser({$user->to_array()|@json_encode});
 	{/if}
 	</script>
-
 
 </head>

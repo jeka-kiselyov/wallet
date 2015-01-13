@@ -13,7 +13,7 @@
  // General settings
  $settings['site_title'] = "Wallet";
  $settings['timezone'] = "UTC";
- $settings['version'] = '1.12335';
+ $settings['version'] = '0.0.9';
 
  $settings['invite_mode'] = false;
 
@@ -69,11 +69,11 @@
  $settings['smtp_password'] = "************";
 
  // Minify settings
- $settings['minify_css_merge'] = false;
- $settings['minify_css_minify'] = false;
- $settings['minify_css_cache'] = false;
+ $settings['minify_css_merge'] = true;
+ $settings['minify_css_minify'] = true;
+ $settings['minify_css_cache'] = true;
 
- $settings['minify_js_merge'] = false;
+ $settings['minify_js_merge'] = true;
 
  // Testing settings
  $settings['tests']['jasmine']['enabled'] = false;

@@ -2,8 +2,8 @@
 App.settings = {
 
 	sitePath: window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: ''),
-	apiEntryPoint: this.site_path+'/api/',
-	templatePath: this.site_path+'/jstemplates/',
+	apiEntryPoint: site_path+'/api/',
+	templatePath: site_path+'/jstemplates/',
 	version: (typeof(app_version) !== 'undefined') ? app_version : '',
 	title: function(title) {
 		return title+' | '+'Wallet';
@@ -37,7 +37,7 @@ App.settings = {
 	inviteMode: true,
 
 	
-	site_path: this.site_path,
+	site_path: site_path,
 	invite_mode: this.inviteMode,
 	client_side: true,
 
