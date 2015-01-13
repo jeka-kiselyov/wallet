@@ -1,10 +1,10 @@
 {
-  "name": "0Framework",
+  "name": "DimeShift",
   "version": "0.0.1",
   "authors": [
     "jeka911 <jeka911@gmail.com>"
   ],
-  "description": "Yet another PHP/JS/Backbone framework",
+  "description": "",
   "main": "app/public/scripts/app.js",
   "moduleType": [
     "globals"
