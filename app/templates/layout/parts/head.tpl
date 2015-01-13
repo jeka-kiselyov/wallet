@@ -20,6 +20,8 @@
 		var site_path = '{$settings->site_path}';
 		var app_version = '{$settings->version}';
 	</script>
+	
+	<link href="{$settings->site_path}/css/dist/app.min.css" media="screen" rel="stylesheet" type="text/css" />
 
 	{if $settings->environment == 'localhost'}
 	<script src="{$settings->site_path}/scripts/dist/app.js" type="text/javascript"></script>
@@ -34,6 +36,5 @@
 	{/if}
 	</script>
 
-	<link href="{$settings->site_path}/css/dist/app.min.css" media="screen" rel="stylesheet" type="text/css" />
 
 </head>
