@@ -31,7 +31,7 @@ App.Models.User = Backbone.Model.extend({
         if (typeof(this.wallets) === 'undefined')
         {
             this.wallets = new App.Collections.Wallets();
-            this.wallets.fetch();
+            this.wallets.setUserId(this.id);
         }
         return this.wallets;
     },
@@ -254,6 +254,7 @@ App.Models.User = Backbone.Model.extend({
 
 		this.signedIn = false;
 		this.clear().set(this.defaults);
+        delete this.wallets;
 
 		$.ajax({
             url: url,

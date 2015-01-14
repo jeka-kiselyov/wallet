@@ -9,6 +9,24 @@ class controller_api_users extends api_controller
     $this->error_prefix.='1';
   }
 
+  protected function crud_wallets_list($user_id)
+  {
+    $this->require_signed_in();
+
+    if ($user_id != $this->user->id)
+      $this->has_no_rights();
+
+    $wallets = $this->wallets->find_by_user_id($this->user->id);
+    $shared_with = $this->wallets->find_shared_with_user_id($this->user->id);
+    $data = array();
+    foreach ($wallets as $wallet) 
+      $data[] = array_merge($wallet->to_array(), array('origin'=>'mine'));
+    foreach ($shared_with as $wallet) 
+      $data[] = array_merge($wallet->to_array(), array('origin'=>'shared'));
+
+    $this->data($data);
+  }
+
   protected function crud_read($id)
   {
     $user = false;

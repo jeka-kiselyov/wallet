@@ -52,6 +52,8 @@ class controller_user extends userside_controller
     }
   }
 
+
+
   function registration()
   {
     if (isset($_POST['register']))

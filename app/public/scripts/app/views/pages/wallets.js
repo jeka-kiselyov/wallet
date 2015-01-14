@@ -109,7 +109,7 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 
 		var that = this;
 		this.requireSingedIn(function(){
-			that.items = new App.Collections.Wallets();
+			that.items = App.currentUser.getWallets();
 			/// initialize models, collections etc. Request fetching from storage
 			that.listenTo(that.items, 'sync', that.render);
 			that.items.fetch().done(function(){

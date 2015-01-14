@@ -69,11 +69,15 @@
  $settings['smtp_password'] = "************";
 
  // Minify settings
- $settings['minify_css_merge'] = true;
- $settings['minify_css_minify'] = true;
- $settings['minify_css_cache'] = true;
 
- $settings['minify_js_merge'] = true;
+ if (ENVIRONMENT_SERVER == 'localhost')
+ {
+	$settings['minify_css_merge'] = false;
+	$settings['minify_js_merge'] = false;
+ } else {
+	$settings['minify_css_merge'] = true;
+	$settings['minify_js_merge'] = true;
+ }
 
  // Testing settings
  $settings['tests']['jasmine']['enabled'] = false;
