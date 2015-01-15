@@ -1,0 +1,13 @@
+{
+    "code": "uk",
+    "name": "Українська",
+    "is_default": "0",
+    "strings": {
+        "Users": "Користувачі",
+        "Manage": "Налаштування",
+        "Wallets": "Гаманці",
+        "Access": "Доступ",
+        "Manage Accesses": "Налаштування доступу",
+        "Your Wallets": "Ваші гаманці"
+    }
+}
