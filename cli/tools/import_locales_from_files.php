@@ -68,7 +68,7 @@
 
 				$string_in_db = $db->getrow("SELECT * FROM i18n_strings WHERE BINARY string = '".$db->escape($string)."' LIMIT 1;");
 
-				if (!$in_db)
+				if (!$string_in_db)
 				{
 					logstr('WARN: Can not add string to database');
 					continue;
@@ -76,23 +76,7 @@
 				logstr('Added new string: '.$string);
 			}
 
-			$translation_in_db = $db->getrow("SELECT * FROM i18n_translations WHERE language_id = '".$db->escape($in_db['id'])."' AND string_id = '".$db->escape($string_in_db['id'])."' LIMIT 1;");
-			if ($translation_in_db)
-			{
-				/// update
-				if ($translation_in_db['translation'] != $translation)
-				{
-					$db->query("UPDATE i18n_translations SET translation = '".$db->escape($translation)."' WHERE  language_id = '".$db->escape($in_db['id'])."' AND string_id = '".$db->escape($string_in_db['id'])."' LIMIT 1;");
-					logstr('Translation updated. From: '.$translation_in_db['translation']." to: ".$translation);
-				}
-			} else {
-				$i18n_translation = new i18n_translation;
-				$i18n_translation->language_id = $in_db['id'];
-				$i18n_translation->string_id = $string_in_db['id'];
-				$i18n_translation->translation = $translation;
-				$i18n_translation->save();
-				logstr('Translation added');
-			}
+			$i18n_string = $i18n_strings->update_translation($in_db['id'], $translation);
 		}
 
 
