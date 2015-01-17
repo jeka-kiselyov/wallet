@@ -4,6 +4,9 @@
 
 	$db = db::getInstance();
 
+	$i18n_strings = autoloader_get_model_or_class('i18n_strings');
+	$i18n_languages = autoloader_get_model_or_class('i18n_languages');
+
 	$to_import = array();
 	$files = scandir(SITE_PATH_SETTINGS.'locales');
 	foreach ($files as $file)
@@ -50,36 +53,16 @@
 			logstr('Added new language to database');
 		}
 
-		/// need to update?
-		if ($in_db['name'] != $data['name'])
-		{
-			$db->query("UPDATE i18n_languages SET name = '".$db->escape($data['name'])."' WHERE code = '".$db->escape($data['code'])."'");
-			logstr('Language name is updated to '.$data['name']);			
-		}
+		$i18n_language = $i18n_languages->get_by_id($in_db['id']);
 
 		foreach ($data['strings'] as $string => $translation) {
 			// add string if it's not in database
+			$i18n_language->add_string_to_translate($string);
+
 			$string_in_db = $db->getrow("SELECT * FROM i18n_strings WHERE BINARY string = '".$db->escape($string)."' LIMIT 1;");
-			if (!$string_in_db)
-			{
-				$i18n_string = new i18n_string;
-				$i18n_string->string = $string;
-				$i18n_string->save();
-
-				$string_in_db = $db->getrow("SELECT * FROM i18n_strings WHERE BINARY string = '".$db->escape($string)."' LIMIT 1;");
-
-				if (!$string_in_db)
-				{
-					logstr('WARN: Can not add string to database');
-					continue;
-				}
-				logstr('Added new string: '.$string);
-			}
-
-			$i18n_strings = autoloader_get_model_or_class('i18n_strings');
 			$i18n_string = $i18n_strings->get_by_id($string_in_db['id']);
 
-			$i18n_string->update_translation($in_db['id'], $translation);
+			$i18n_string->update_translation($i18n_language->id, $translation);
 		}
 
 
