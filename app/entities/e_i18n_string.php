@@ -18,7 +18,7 @@
 
         $this->cache->clean_matching_tags(array('i18n'));
  		$in_db = $this->db->getone('SELECT translation FROM i18n_translations WHERE string_id = ? AND language_id = ?', array($this->id, $language_id));
- 				var_dump($in_db); 
+ 				//var_dump($in_db); 
  		if ($in_db)
  		{
  			if ($translation)
