@@ -235,6 +235,15 @@
         "september": "сентября",
         "october": "октября",
         "november": "ноября",
-        "december": "декабря"
+        "december": "декабря",
+        "Add Income": "Добавить доход",
+        "Expenses per day trends": "Тенденции дневных расходов",
+        "Fill Profile": "Заполнить профиль",
+        "Thank you! From now, you can sign in to your account any time from any device.": "Спасибо! Теперь вы можете входить в вашу учётную запись с любого устройства.",
+        "View Source on GitHub": "Исходный код на GitHub",
+        "Copyright": "Копирайт",
+        "Please don't forget to let us know your email address, so you can sign in to DimeShift on your next visit.": "Не забудьте указать ваш email, чтобы вы могли получить доступ к вашей учётной записи при следующем визите.",
+        "Do it": "Сделать это",
+        "GNU Affero GPL License": "под лицензией GNU Affero GPL"
     }
 }
