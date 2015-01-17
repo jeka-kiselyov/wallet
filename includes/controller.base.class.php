@@ -94,12 +94,12 @@
   {
   	$controller = str_replace("_", "/", $controller);
   	if ($controller == "index" && !$action)
-  	 header("location: ".$this->registry->settings->site_path."/");
+  	 header("location: ".$this->registry->settings->site_path."/", true, 302);
   	  else
     if ($action)
-     header("location: ".$this->registry->settings->site_path."/".$controller."/".$action."/".$params);
+     header("location: ".$this->registry->settings->site_path."/".$controller."/".$action."/".$params, true, 302);
       else
-       header("location: ".$this->registry->settings->site_path."/".$controller."/");
+       header("location: ".$this->registry->settings->site_path."/".$controller."/", true, 302);
 
     if (!$dont_exit)
       exit();
