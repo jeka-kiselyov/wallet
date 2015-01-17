@@ -77,7 +77,7 @@
 			}
 
 			$i18n_strings = autoloader_get_model_or_class('i18n_strings');
-			$i18n_string = $i18n_strings->get_by_id($i18n_string->id);
+			$i18n_string = $i18n_strings->get_by_id($string_in_db['id']);
 
 			$i18n_string->update_translation($in_db['id'], $translation);
 		}
