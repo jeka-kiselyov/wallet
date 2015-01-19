@@ -1,5 +1,7 @@
 # Easiest way to manage your finances. Online
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jeka-kiselyov/wallet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > - [check it out][1]
 
 License
