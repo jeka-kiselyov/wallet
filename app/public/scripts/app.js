@@ -89,6 +89,22 @@ window.App = {
 
 		return true;
 	},
+	setProgress: function(value)
+	{
+		if (!this.progress)
+			this.progress = new Mprogress();
+
+		if (typeof(value) === 'undefined')
+		{
+			if (this.progress.status == null)
+				return this.progress.start();
+			else
+				return this.progress.inc();
+		}
+		if (value >= 1 || value === true)
+			return this.progress.end();
+		this.progress.set(value);
+	},
 	loadingStatus: function(status)
 	{
 		if (status)

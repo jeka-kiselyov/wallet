@@ -10,6 +10,10 @@ App.Views.Pages.Static = App.Views.Abstract.Page.extend({
 	render: function() {
 		this.renderHTML({static_page: this.model.attributes});
 	},
+	wakeUp: function() {
+		if (!this.model.id)
+			App.showPage('NotFound');
+	},
 	initialize: function(params) {
 
 		/// initialize models, collections etc. Request fetching from storage

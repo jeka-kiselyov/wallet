@@ -67,6 +67,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		$(document).attr('title', title);
 	},
 	wakeUp: function() {
+		App.setProgress(false);
 		this.holderReady = false;
 		this.render();
 	},
@@ -119,6 +120,8 @@ App.Views.Abstract.Page = Backbone.View.extend({
 			that.proccessWidgets();
 			that.trigger('render');
 			that.trigger('loaded');
+
+			App.setProgress(true);
 		});
 		this.setTitle();
 		this.setURL();
@@ -152,6 +155,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 	},
 	renderLoading: function() {
 		/// ask templateManager to prepare template
+		App.setProgress(false);
 		App.templateManager.fetch(this.templateName, {});
 
 		this.switchBuffers();

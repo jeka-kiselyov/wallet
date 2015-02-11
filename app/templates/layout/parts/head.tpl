@@ -29,6 +29,8 @@
 	{add_js file="vendors/backbone.paginator/lib/backbone.paginator.min" prepend=true}
 	{add_js file="vendors/bootstrap-clickonmouseover/bootstrap.clickonmouseover" prepend=true}
 	{add_js file="vendors/magnific-popup/dist/jquery.magnific-popup.min" prepend=true}
+	{add_js file="vendors/mprogress/build/js/mprogress.min" prepend=true}
+	{add_css file="vendors/mprogress/build/css/mprogress" prepend=true}
 	{add_css file="vendors/magnific-popup/dist/magnific-popup" prepend=true}
 	{add_js file="vendors/chartist/dist/chartist" prepend=true}
 	{add_css file="vendors/chartist/dist/chartist.min" prepend=true}
