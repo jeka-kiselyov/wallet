@@ -38,6 +38,9 @@
 						<li class="header_is_signed_in navbar-right" {if !$user || !$user.id}style="display: none;"{/if}>
 							<a href="{$settings->site_path}/user/logout" class="signout_caller" data-i18n="Log Out">{t}Log Out{/t}</a>
 						</li>
+						<li class="header_is_signed_in navbar-right" {if !$user || !$user.id}style="display: none;"{/if}>
+							<a href="{$settings->site_path}/profile" data-i18n="Settings">{t}Settings{/t}</a>
+						</li>
 
 			    </ul>
 			</div><!-- /.navbar-collapse -->

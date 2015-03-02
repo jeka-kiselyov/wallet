@@ -11,6 +11,7 @@ App.router = new (Backbone.Router.extend({
     "(/)": "index",// #help
     "help": "help",// #help
     "wallets(/)": "wallets",// #wallets
+    "profile(/)": "profile",// #wallets
     "wallets/:id": "wallet",// #wallets/4
     "static/view/:id": "static",// #wallets/4
     "news/recent/:page(/)": "newsItems",// #news/recent/3
@@ -33,6 +34,10 @@ App.router = new (Backbone.Router.extend({
 
   index: function() {
     App.showPage('Index');
+  },
+
+  profile: function() {
+    App.showPage('Profile');
   },
 
   static: function(id) {

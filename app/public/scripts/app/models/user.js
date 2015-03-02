@@ -81,6 +81,32 @@ App.Models.User = Backbone.Model.extend({
     demoRegister: function() {
 		this.register('demo', 'demo@demo.com', 'demonstration');
     },
+    changePassword: function(currentPassword, newPassword)
+    {
+		var that = this;
+
+		this.set('current_password', currentPassword);
+		this.set('password', newPassword);
+
+		return this.save(null, {success: function(model, data){
+			if (typeof(data.id) !== 'undefined')
+			{
+				console.log("Server side change password success");
+				that.set('password', '');
+				that.trigger('changed');
+			}
+		}, error: function(model, response){
+			console.log("Server side change password error");
+			if (typeof(response.responseJSON) !== 'undefined' && typeof(response.responseJSON.message) !== 'undefined')
+			{
+				if (!(that.validationError instanceof Array))
+					that.validationError = [];
+				for (var k in response.responseJSON.message)
+					that.validationError.push({msg: response.responseJSON.message[k]});
+			}
+			that.trigger('invalid');
+		}});
+    },
     fillProfile: function(login, email, password) {
 		var that = this;
 

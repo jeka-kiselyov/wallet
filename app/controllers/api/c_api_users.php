@@ -88,6 +88,7 @@ class controller_api_users extends api_controller
     $password = $this->payload('password', '');
     $email = $this->payload('email', '');
     $is_demo = $this->payload('is_demo', false);
+    $current_password = $this->payload('current_password', '');
 
     $data = $this->payload();
     if ($id == $data->id)
@@ -96,10 +97,20 @@ class controller_api_users extends api_controller
         $this->has_no_rights();
 
       $user = $this->users->get_by_id($id);
+      if (!$user->is_demo && $user->password != md5($current_password.$this->users->password_salt))
+        $this->has_no_rights();
+        
       //@todo: apply changes
-      $user->login = $login;
-      $user->email = $email;
-      $user->password = md5($password.$this->users->password_salt);
+
+      if ($login)
+        $user->login = $login;
+
+      if ($email)
+        $user->email = $email;
+
+      if ($password)
+        $user->password = md5($password.$this->users->password_salt);
+
       $user->is_demo = $is_demo;
       
       try {
