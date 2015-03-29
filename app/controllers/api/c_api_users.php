@@ -188,7 +188,7 @@ class controller_api_users extends api_controller
     $username = $this->param('username');
     $password = $this->param('password');
 
-    if (!($user = $this->users->signin($username, $password)) )
+    if (!($user = $this->users->signin($username, $password)) || !$user->id)
     {
       $this->error(1, "Invalid credentials");
     } else
@@ -210,10 +210,7 @@ class controller_api_users extends api_controller
 
     if (!$this->user || ($this->user->id != $user['id']) ) /// Don't show special fields for other users
     {
-      if ($this->user->id != $user['id'])
-      {
-        $user = array('id'=>$user['id'], 'login'=>$user['login'], 'is_demo'=>(bool)$user['is_demo']);        
-      }
+      $user = array('id'=>$user['id'], 'login'=>$user['login'], 'is_demo'=>(bool)$user['is_demo']);
     } else {
       $user['password'] = '';
       unset($user['password_restore_code']);

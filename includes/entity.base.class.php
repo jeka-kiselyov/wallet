@@ -60,6 +60,14 @@ abstract class entity_base implements ArrayAccess
 	    if (is_callable(array($this, 'after_construct')))
 	    	$this->after_construct();
 	} 
+
+	public function __toString()
+	{
+		if ($this->id > 0)
+			return true;
+		else
+			return false;
+	}
 	
 	public function to_array()
 	{
