@@ -210,7 +210,10 @@ class controller_api_users extends api_controller
 
     if (!$this->user || ($this->user->id != $user['id']) ) /// Don't show special fields for other users
     {
-      $user = array('id'=>$user['id'], 'login'=>$user['login'], 'is_demo'=>(bool)$user['is_demo']);
+      if ($this->user->id != $user['id'])
+      {
+        $user = array('id'=>$user['id'], 'login'=>$user['login'], 'is_demo'=>(bool)$user['is_demo']);        
+      }
     } else {
       $user['password'] = '';
       unset($user['password_restore_code']);
