@@ -19,6 +19,7 @@ window.App = {
 	init: function()
 	{
 		var that = this;
+		$.ajaxSetup({ cache: false });
 		
 		if(!this.currentUser)
 			this.setUser();
