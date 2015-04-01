@@ -1,11 +1,5 @@
 module.exports = function(grunt) {
 
-  // Project configuration.
-  // A very basic default task.
-  grunt.registerTask('default', 'Log some stuff.', function() {
-    grunt.log.write('Logging some stuff...').ok();
-  });
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     bower: {
@@ -37,9 +31,9 @@ module.exports = function(grunt) {
       },
       myplugin: {
         options: {
-          prefix: '\\$settings\\[[\'"]version[\'"]]\\s+=\\s+[\'"]'
+          prefix: 'return [\'"]'
         },
-        src: ['settings/settings.php']
+        src: ['settings/version.php']
       }
     },
     bump: {
@@ -50,8 +44,14 @@ module.exports = function(grunt) {
       }
     },
     exec: {
-      minifycss: 'php cli/tools/compress_css_files.php',
-      minifyjs: 'php cli/tools/compress_js_files.php'
+      test: 'php cli/tools/test.php',
+      updateschema: 'php cli/tools/update_schema.php --force',
+      minifycss: 'php cli/tools/compress_css_files.php --debug',
+      minifyjs: 'php cli/tools/compress_js_files.php --debug',
+      createfirstuser: 'php cli/tools/create_first_user.php'
+    },
+    availabletasks: {
+      tasks: {}
     }
   });
 
@@ -61,8 +61,28 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-version');
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-available-tasks');
 
   // Default task(s).
-  grunt.registerTask('default', ['bump', 'version','composer:install', 'bower','exec']);
+  grunt.registerTask('default', [ 'availabletasks' ]);
+  grunt.registerTask('install', [ 'exec:test', 
+                                  'bump', 
+                                  'version', 
+                                  'composer:install', 
+                                  'bower', 
+                                  'exec:updateschema',
+                                  'exec:createfirstuser',
+                                  'exec:minifycss', 
+                                  'exec:minifyjs'
+                                ]);
+  grunt.registerTask('pull', [ 'exec:test', 
+                                  'bump', 
+                                  'version', 
+                                  'composer:install', 
+                                  'bower', 
+                                  'exec:updateschema',
+                                  'exec:minifycss', 
+                                  'exec:minifyjs'
+                                ]);
 
 };

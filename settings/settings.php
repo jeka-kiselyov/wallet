@@ -13,7 +13,7 @@
  // General settings
  $settings['site_title'] = "Wallet";
  $settings['timezone'] = "UTC";
- $settings['version'] = '0.0.11';
+ $settings['version'] = require(SITE_PATH_SETTINGS.'version.php');
 
  $settings['invite_mode'] = false;
 
