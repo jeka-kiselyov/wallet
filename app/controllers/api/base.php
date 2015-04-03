@@ -7,7 +7,7 @@
  	public function __construct($registry)
  	{
  		parent::__construct($registry);
-
+ 		
  		$this->user = $this->sessions->get_user();
 
 		$this->error_prefix = '0';

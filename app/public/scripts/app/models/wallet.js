@@ -49,9 +49,9 @@ App.Models.Wallet = Backbone.Model.extend({
         profit.set('wallet_id', this.id);
 
         profit.save();
-        this.set('total', this.getTotal()+amountValue);
 
         this.getTransactions().add(profit);
+        this.set('total', this.getTotal()+amountValue);
         //this.trigger('change');
     },
     setTotalTo: function(total) {
@@ -64,8 +64,8 @@ App.Models.Wallet = Backbone.Model.extend({
         transaction.set('wallet_id', this.id);
 
         transaction.save();
-        this.set('total', totalValue);
         this.getTransactions().add(transaction);
+        this.set('total', totalValue);
         //this.trigger('change');
     },
     addExpense: function(amount, description) {
@@ -79,9 +79,9 @@ App.Models.Wallet = Backbone.Model.extend({
         expense.set('wallet_id', this.id);
 
         expense.save();
-        this.set('total', this.getTotal()+amountValue);
 
         this.getTransactions().add(expense);
+        this.set('total', this.getTotal()+amountValue);
         //this.trigger('change');
     }
 

@@ -44,12 +44,12 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 		if (!this.model || !this.collection)
 			console.error('views/parts/transactions.js | model && collection && id should be provided for this view');
 
-		this.listenTo(this.collection, 'fetch sync', this.render);
+		this.listenTo(this.collection, 'sync', this.render);
 		this.listenTo(this.collection, 'changedperiod', this.fadeOut);	
 	},
 	wakeUp: function() {
 		console.error('views/parts/transactions.js | Waking up');
-		this.listenTo(this.collection, 'fetch sync', this.render);
+		this.listenTo(this.collection, 'sync', this.render);
 		this.listenTo(this.collection, 'changedperiod', this.fadeOut);			
 	},
 	fadeOut: function() {
@@ -63,6 +63,7 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 		var data = {state: this.collection.state, collection: this.collection, transactions: this.collection.sort().toJSON(), item: this.model.toJSON()};
 		var that = this;
 		App.templateManager.fetch(this.templateName, data, function(html) {
+
 			that.$el.html(html);
 			that.trigger('render');
 			that.trigger('loaded');
