@@ -5,6 +5,8 @@ App.router = new (Backbone.Router.extend({
     this.navigate(path);
   },
   redirect: function(path) {
+    if (typeof(App.page) !== 'undefined' && typeof(App.page.isReady) !== 'undefined' && !App.page.isReady)
+      App.loadingStatus(false);
     this.navigate(path, {trigger: true});
   },
   routes: {
@@ -49,12 +51,10 @@ App.router = new (Backbone.Router.extend({
   },
 
   wallet: function(id) {
-    console.log('routing wallet');
     App.showPage('Wallet', {id: id});
   },
 
   wallets: function() {
-    console.log('Rouuu');
     App.showPage('Wallets');
   },
 

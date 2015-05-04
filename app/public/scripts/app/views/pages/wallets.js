@@ -3,8 +3,6 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/wallets/index',
     category: 'wallets',
-	title: 'Your Wallets',
-	url: 'wallets',
 	status: 'active',
 	origin: 'both',
 	events: {
@@ -17,6 +15,12 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		"click .item_button_accesses": "showAccesses",
 		"click .filter_menu": "filter",
 		"click .origin_menu": "filterOrigin"
+	},
+	title: function() {
+		return 'Wallets';
+	},
+	url: function() {
+		return 'wallets';
 	},
 	filter: function(ev) {
 		var status = $(ev.currentTarget).data('status');

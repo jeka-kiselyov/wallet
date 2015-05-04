@@ -29,9 +29,9 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 		}
 	},
 	initialize: function() {
-		this.renderLoading();		
 		if (typeof(App.currentUser) !== 'undefined' && App.currentUser && App.currentUser.isSignedIn())
 			return App.router.redirect('/wallets/');
+		this.renderLoading();
 		/// initialize models, collections etc. Request fetching from storage
 
 		this.on('render', function(){

@@ -74,10 +74,12 @@ window.App = {
 			console.log('Showing page from stack');
 			this.page = fromStack;
 			this.page.wakeUp();
+			this.loadingStatus(false);
+
 		} else {
 			/// or create new one
-			this.page = new App.Views.Pages[pageName](params);
 			this.loadingStatus(true);
+			this.page = new App.Views.Pages[pageName](params);
 			this.page.on('loaded', function(){ this.loadingStatus(false); }, this);
 			if (this.page.isReady)
 				this.loadingStatus(false);
@@ -110,9 +112,11 @@ window.App = {
 	{
 		if (status)
 		{
+			console.log('app.js | Loading status = true');
 			this.isLoading = true;
 			$('#preloader').stop().show();
 		} else {
+			console.log('app.js | Loading status = false');
 			this.isLoading = false;
 			$('#preloader').stop().fadeOut('slow');
 		}
