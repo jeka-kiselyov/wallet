@@ -22,14 +22,14 @@
 {else}
 {foreach from=$items item=i}
 <tr>
- <td>{$i.id}</td>
- <td>{$i.login|escape:"html"}</td>
- <td>{$i.email|escape:"html"}</td>
- <td>{$i.type|escape:"html"}</td>
- <td>{$i.registration_date|date_format}</td>
- <td>{$i.activity_date|date_format}</td>
+ <td>{$i->id}</td>
+ <td>{$i->login|escape:"html"}</td>
+ <td>{$i->email|escape:"html"}</td>
+ <td>{$i->type|escape:"html"}</td>
+ <td>{$i->registration_date|date_format}</td>
+ <td>{$i->activity_date|date_format}</td>
  <td>
-	<a href='{$settings->site_path}/admin/users/details/{$i.id}' class='btn btn-default btn-xs'>{t}Details{/t}</a>
+	<a href='{$settings->site_path}/admin/users/details/{$i->id}' class='btn btn-default btn-xs'>{t}Details{/t}</a>
 </td>
 </tr>
 {/foreach}

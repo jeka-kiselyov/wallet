@@ -2,39 +2,22 @@
 
 class controller_admin_users extends admin_controller
 {
+  protected $db_table_name = 'users';
+  protected $search_fields = array("login", "email", "type");
+
   public function __construct($registry)
   {
     parent::__construct($registry);
     $this->select_menu('users');
   }
   
-  function index()
+  public function index()
   {
      $this->redirect("admin_users", "manage");
   }
 
-  function manage()
-  {
-    $search = $this->table_helper->proccess_search_parameters("admin_users_");
-  	$order = $this->table_helper->proccess_order_parameters("admin_users_");
-
-  	if (!empty($_POST))
-  	 $this->refresh();
-
-    $search_fields = array("login", "email", "type");
-    $joins = array();
-
-    $pagination = $this->table_helper->proccess_paging_parameters($this->table_helper->get_count("users", $search, $search_fields, $joins), 20);
-
-    $this->ta("pages", $pagination);
-
-    $items = $this->table_helper->get_items("users", $order, $pagination['cur_offset'], 20, $search, $search_fields);
-
-    $this->ta("order", $order);
-    $this->ta("search", $search);
-    $this->ta("items", $items);
-  }
-
+  public function edit() { $this->redirect("admin_users", "manage"); }
+  public function add() { $this->redirect("admin_users", "manage"); }
 
   function details()
   {

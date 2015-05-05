@@ -43,15 +43,6 @@
 		    	)
 		    );
 
-		    $this->menu_items['media'] = 
-		    array(
-		    	"name"=>$this->_("Media"),
-		    	"icon"=>"picture",
-		    	"items"=>array(
-		    		array("name"=>$this->_("Manage"), "href"=>"media/manage")
-		    	)
-		    );
-
 		    $this->menu_items['pages'] = 
 		    array(
 		    	"name"=>$this->_("Static Pages"),
