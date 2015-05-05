@@ -106,7 +106,7 @@
 		'preview_image' => array('type'=>"STRING"),
 		'time_created'  => array('type'=>"INTEGER"),
 		'time_updated'  => array('type'=>"INTEGER"),
-		'language_id'   => array('type'=>"INTEGER", 'key'=>true, 'defaultValue'=>"0")
+		'i18n_language_id'   => array('type'=>"INTEGER", 'key'=>true, 'defaultValue'=>"0")
 	);
 
 	$schema['news_items_categories'] = array();

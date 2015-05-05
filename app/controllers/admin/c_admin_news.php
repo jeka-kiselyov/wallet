@@ -2,6 +2,9 @@
 
 class controller_admin_news extends admin_controller
 {
+  protected $db_table_name = 'news_items';
+  protected $search_fields = array('title', 'body', 'description', 'slug');
+
   public function __construct($registry)
   {
     parent::__construct($registry);
@@ -11,193 +14,6 @@ class controller_admin_news extends admin_controller
   function index()
   {
      $this->redirect("admin_news", "manage");
-  }
-
-  function add()
-  {
-    if (isset($_POST['cancel']))
-      $this->redirect("admin_news", "manage");
-
-    $languages = $this->i18n_languages->get_all();
-    $is_multilingual = false; if (count($languages) > 1) $is_multilingual = true;
-
-    $this->ta('is_multilingual', $is_multilingual);
-    $this->ta('languages', $languages);
-
-    $news_categories = $this->news_categories->get_all();
-
-    $form_checker = new checker;
-    if (isset($_POST['save']) && $form_checker->check_security_token())
-    {
-      $form_checker->check_post('title', checker_rules::MIN_LENGTH(3), $this->_("Title is too short"));
-      $form_checker->check_post('title', checker_rules::MAX_LENGTH(1000), $this->_("Title is too long"));
-
-      $form_checker->check_post('slug', checker_rules::MIN_LENGTH(3), $this->_("Slug is too short"));
-      $form_checker->check_post('slug', checker_rules::MAX_LENGTH(1000), $this->_("Slug is too long"));
-
-      $form_checker->check_post('description', checker_rules::MIN_LENGTH(3), $this->_("Description is too short"));
-      $form_checker->check_post('description', checker_rules::MAX_LENGTH(1000), $this->_("Description is too long"));
-
-      $form_checker->check_post('preview_image', checker_rules::MAX_LENGTH(255), $this->_("Preview image filename is too long"));
-
-      $form_checker->check_post('slug', checker_rules::MAX_LENGTH(1000), $this->_("Slug is too long"));
-
-      $language_id = 0; 
-      if ($is_multilingual && $form_checker->post('language_id')) 
-        $language_id = (int)$form_checker->post('language_id');
-      else
-      {
-        $default_language = $this->i18n_languages->get_by_is_default('1');
-        if ($default_language)
-          $language_id = $default_language->id;
-        else
-          $language_id = 0;
-      }
-
-      if ($form_checker->is_good())
-      {
-        $with_same_slug_s = $this->news_items->find_by_slug($form_checker->post('slug'));
-        foreach ($with_same_slug_s as $with_same_slug)
-        if ($with_same_slug && $with_same_slug->language_id != $language_id)
-          $form_checker->add_error($this->_("This slug is already taken by other news item in this language"));
-      }
-
-      $form_checker->check_post('body', checker_rules::MIN_LENGTH(3), $this->_("Body is too short"));
-      $form_checker->check_post('body', checker_rules::MAX_LENGTH(50000), $this->_("Body is too long. 50kb max"));
-
-      if ($form_checker->is_good())
-      {
-        $news_item = new news_item();
-        $news_item->title = $form_checker->post('title');
-        $news_item->slug = $form_checker->post('slug');
-        $news_item->body = $form_checker->post('body');
-        $news_item->description = $form_checker->post('description');
-        $news_item->language_id = $language_id;
-        $news_item->set_categories($form_checker->post('categories'));
-
-        if ($form_checker->post('preview_image'))
-          $news_item->preview_image = $form_checker->post('preview_image');
-
-        $news_item->save();
-
-        $this->redirect("admin_news", "manage");
-      }
-    }
-
-    $this->ta('news_categories', $news_categories);
-    $this->ta('form_checker', $form_checker);
-  }
-
-  function edit()
-  {
-    if (isset($_POST['cancel']))
-      $this->redirect("admin_news", "manage");
-
-    $news_categories = $this->news_categories->get_all();
-
-    $item_id = (int)$this->gp(0,0);
-    $news_item = $this->news_items->get_by_id($item_id);
-
-    if (!$news_item)
-      $this->redirect("admin_news", "manage");
-
-    $languages = $this->i18n_languages->get_all();
-    $is_multilingual = false; if (count($languages) > 1) $is_multilingual = true;
-
-    $this->ta('is_multilingual', $is_multilingual);
-    $this->ta('languages', $languages);
-
-    $form_checker = new checker;
-    if (isset($_POST['save']) && $form_checker->check_security_token())
-    {
-      $form_checker->check_post('title', checker_rules::MIN_LENGTH(3), $this->_("Title is too short"));
-      $form_checker->check_post('title', checker_rules::MAX_LENGTH(1000), $this->_("Title is too long"));
-
-      $form_checker->check_post('slug', checker_rules::MIN_LENGTH(3), $this->_("Slug is too short"));
-      $form_checker->check_post('slug', checker_rules::MAX_LENGTH(1000), $this->_("Slug is too long"));
-
-      $form_checker->check_post('description', checker_rules::MIN_LENGTH(3), $this->_("Description is too short"));
-      $form_checker->check_post('description', checker_rules::MAX_LENGTH(1000), $this->_("Description is too long"));
-
-      $form_checker->check_post('preview_image', checker_rules::MAX_LENGTH(255), $this->_("Preview image filename is too long"));
-
-      //$form_checker->check_post('categories', checker_rules::IS_ARRAY(), $this->_("Please select at least one category"));
-
-      $language_id = 0; 
-      if ($is_multilingual && $form_checker->post('language_id')) 
-        $language_id = (int)$form_checker->post('language_id');
-      else
-        $language_id = $news_item->language_id;
-
-      if ($form_checker->is_good())
-      {
-        $with_same_slug_s = $this->news_items->find_by_slug($form_checker->post('slug'));
-        foreach ($with_same_slug_s as $with_same_slug)
-        if ($with_same_slug && $with_same_slug->id != $item_id && $with_same_slug->language_id != $language_id)
-          $form_checker->add_error($this->_("This slug is already taken by other news item"));
-      }
-
-      $form_checker->check_post('body', checker_rules::MIN_LENGTH(3), $this->_("Body is too short"));
-      $form_checker->check_post('body', checker_rules::MAX_LENGTH(50000), $this->_("Body is too long. 50kb max"));
-
-      if ($form_checker->is_good())
-      {
-        $news_item->title = $form_checker->post('title');
-        $news_item->slug = $form_checker->post('slug');
-        $news_item->body = $form_checker->post('body');
-        $news_item->description = $form_checker->post('description');
-        $news_item->language_id = $language_id;
-
-        if ($form_checker->post('preview_image'))
-          $news_item->preview_image = $form_checker->post('preview_image');
-        
-        $news_item->save();
-
-        $news_item->set_categories($form_checker->post('categories'));
-
-        $this->redirect("admin_news", "manage");
-      }
-    }
-
-    $this->ta('news_item', $news_item);
-    $this->ta('news_categories', $news_categories);
-    $this->ta('form_checker', $form_checker);
-  }
-
-  function manage()
-  {
-    $languages = $this->i18n_languages->get_all();
-    $is_multilingual = false; if (count($languages) > 1) $is_multilingual = true;
-
-    $this->ta('is_multilingual', $is_multilingual);
-
-    $search = $this->table_helper->proccess_search_parameters("admin_news_items_");
-    $order = $this->table_helper->proccess_order_parameters("admin_news_items_");
-
-    if (isset($_POST['delete']))
-    {
-      $item_id = false; if (isset($_POST['item_id'])) $item_id = (int)$_POST['item_id'];
-      $news_item = $this->news_items->get_by_id($item_id);
-      if ($news_item)
-      {
-        $news_item->delete();
-      }
-    }
-
-    if (!empty($_POST))
-     $this->refresh();
-
-    $search_fields = array("title", "body", "slug", "description");
-    $joins = array(array('table'=>'i18n_languages', 'field'=>'language_id'));
-
-    $pagination = $this->table_helper->proccess_paging_parameters($this->table_helper->get_count("news_items", $search, $search_fields, $joins), 20);
-
-    $this->ta("pages", $pagination);
-    $items = $this->table_helper->get_items("news_items", $order, $pagination['cur_offset'], 20, $search, $search_fields, $joins);
-
-    $this->ta("order", $order);
-    $this->ta("search", $search);
-    $this->ta("items", $items);
   }
 
   function categorytranslations()
@@ -218,34 +34,31 @@ class controller_admin_news extends admin_controller
 
   function categories()
   {
-    $search = $this->table_helper->proccess_search_parameters("admin_news_categories_");
-    $order = $this->table_helper->proccess_order_parameters("admin_news_categories_");
-    
-    $languages = $this->i18n_languages->get_all();
-    $is_multilingual = false; if (count($languages) > 1) $is_multilingual = true;
-
-    $this->ta('is_multilingual', $is_multilingual);
+    $search = $this->table_helper->proccess_search_parameters($this->get_current_class_route()."categories");
+    $order = $this->table_helper->proccess_order_parameters($this->get_current_class_route()."categories");
+    $model = $this->{'news_categories'};
 
     if (isset($_POST['delete']))
     {
       $item_id = false; if (isset($_POST['item_id'])) $item_id = (int)$_POST['item_id'];
-      $news_category = $this->news_categories->get_by_id($item_id);
-      if ($news_category)
+      $item = $model->get_by_id($item_id);
+      if ($item)
       {
-        $news_category->delete();
+        $item->delete();
       }
     }
 
     if (!empty($_POST))
-     $this->refresh();
+      $this->refresh();
 
-    $search_fields = array("name");
+    $search_fields = array('name');
+
     $joins = array();
 
-    $pagination = $this->table_helper->proccess_paging_parameters($this->table_helper->get_count("news_categories", $search, $search_fields, $joins), 20);
+    $pagination = $this->table_helper->proccess_paging_parameters($this->table_helper->get_count('news_categories', $search, $search_fields, $joins), 20);
 
     $this->ta("pages", $pagination);
-    $items = $this->table_helper->get_items("news_categories", $order, $pagination['cur_offset'], 20, $search, $search_fields);
+      $items = new collection($this->db_entity_name, $this->table_helper->get_items_query('news_categories', $order, $pagination['cur_offset'], 20, $search, $search_fields, $joins));
 
     $this->ta("order", $order);
     $this->ta("search", $search);
@@ -255,59 +68,43 @@ class controller_admin_news extends admin_controller
   function addcategory()
   {
     if (isset($_POST['cancel']))
-      $this->redirect("admin_news", "categories");  
+      $this->redirect($this->get_current_class_route(), "categories");
 
     $form_checker = new checker;
     if (isset($_POST['save']) && $form_checker->check_security_token())
     {
-      $form_checker->check_post('name', checker_rules::MIN_LENGTH(2), $this->_("Name is too short"));
-      $form_checker->check_post('name', checker_rules::MAX_LENGTH(255), $this->_("Name is too long"));
+      $item = new news_category;
+      $item->fill_from_form_checker($form_checker);
 
-      if ($form_checker->is_good())
-      {
-        $news_category = new news_category();
-        $news_category->name = $form_checker->post('name');
+      $form_checker->save_entity($item);
 
-        $news_category->save();
-
-        $this->redirect("admin_news", "categories");
-      }
+      if ($form_checker->is_entity_saved())
+        $this->redirect($this->get_current_class_route(), "categories");        
     }
 
-    $this->ta("form_checker", $form_checker);
+    $this->ta('form_checker', $form_checker);
   }
 
   function editcategory()
   {
-    if (isset($_POST['cancel']))
-      $this->redirect("admin_news", "categories");
-
     $item_id = (int)$this->gp(0,0);
-    $news_category = $this->news_categories->get_by_id($item_id);
+    $model = $this->{'news_categories'};
 
-    if (!$news_category)
-      $this->redirect("admin_news", "categories");
+    if (isset($_POST['cancel']) || !$item_id || !($item = $model->get_by_id($item_id)))
+      $this->redirect($this->get_current_class_route(), "categories");
 
     $form_checker = new checker;
     if (isset($_POST['save']) && $form_checker->check_security_token())
     {
-      if ($form_checker->post('cancel'))
-        $this->redirect("admin_news", "categories");
-      
-      $form_checker->check_post('name', checker_rules::MIN_LENGTH(2), $this->_("Name is too short"));
-      $form_checker->check_post('name', checker_rules::MAX_LENGTH(255), $this->_("Name is too long"));
+      $item->fill_from_form_checker($form_checker);
 
-      if ($form_checker->is_good())
-      {
-        $news_category->name = $form_checker->post('name');
-        $news_category->save();
-
-        $this->redirect("admin_news", "categories");
-      }
+      $form_checker->save_entity($item);
+      if ($form_checker->is_entity_saved())
+        $this->redirect($this->get_current_class_route(), "categories");        
     }
 
-    $this->ta('news_category', $news_category);
-    $this->ta("form_checker", $form_checker);
+    $this->ta('item', $item);
+    $this->ta('form_checker', $form_checker);
   }
 
 

@@ -202,7 +202,6 @@
 		$this->ta("order", $order);
 		$this->ta("search", $search);
 		$this->ta("items", $items);
-
 	}
 
 	public function select_menu($menu_item_id)

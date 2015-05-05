@@ -5,6 +5,57 @@
  {
  	private $joined_news_categories;
 
+	protected function validation()
+	{
+		return array(
+				array(
+					'field'=>'title', 
+					'checker' => checker_rules::MIN_LENGTH(1), 
+					'error_message' => 'Title is too short'
+				),
+				array(
+					'field'=>'title', 
+					'checker' => checker_rules::MAX_LENGTH(1000), 
+					'error_message' => 'Title is too long'
+				),
+				array(
+					'field'=>'slug', 
+					'checker' => checker_rules::MIN_LENGTH(1), 
+					'error_message' => 'Slug is too short'
+				),
+				array(
+					'field'=>'slug', 
+					'checker' => checker_rules::MAX_LENGTH(1000), 
+					'error_message' => 'Slug is too long'
+				),
+				array(
+					'field'=>'slug', 
+					'checker' => checker_rules::UNIQUE_IN_DB('news_items', 'slug', $this->id), 
+					'error_message' => 'This slug is already taken by another news item'
+				),
+				array(
+					'field'=>'description', 
+					'checker' => checker_rules::MAX_LENGTH(1000), 
+					'error_message' => 'Description is too long'
+				),
+				array(
+					'field'=>'preview_image', 
+					'checker' => checker_rules::MAX_LENGTH(255), 
+					'error_message' => 'Preview image filename is too long'
+				),
+				array(
+					'field'=>'body', 
+					'checker' => checker_rules::MIN_LENGTH(1), 
+					'error_message' => 'Body is too short'
+				),
+				array(
+					'field'=>'body', 
+					'checker' => checker_rules::MAX_LENGTH(100000), 
+					'error_message' => 'Body is too long'
+				),
+		);
+	}
+
  	public function after_construct()
  	{
  		$this->update_joined();
@@ -114,7 +165,12 @@
 			$this->fields['time_created'] = time();
 		}
 		$this->fields['time_updated'] = time();
-		return parent::save();
+		$success = parent::save();
+
+		if ($success)
+			$this->update_joined();
+
+		return $success;
 	}
 
 

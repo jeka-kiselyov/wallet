@@ -21,17 +21,17 @@
 {else}
 {foreach from=$items item=i}
 <tr>
- <td>{$i.id}</td>
- <td>{$i.name|escape:"html"}</td>
+ <td>{$i->id}</td>
+ <td>{$i->name|escape:"html"}</td>
  {if $is_multilingual}
- <td>{t}{$i.name|escape:"html"}{/t}</td>
+ <td>{t}{$i->name|escape:"html"}{/t}</td>
  {/if}
  <td>
-	<a href='{$settings->site_path}/admin/news/editcategory/{$i.id}' class='btn btn-default btn-xs'>{t}Edit{/t}</a>
+	<a href='{$settings->site_path}/admin/news/editcategory/{$i->id}' class='btn btn-default btn-xs'>{t}Edit{/t}</a>
   {if $is_multilingual}
-  <a href='{$settings->site_path}/admin/news/categorytranslations/{$i.id}' class='btn btn-default btn-xs'>{t}Translations{/t}</a>
+  <a href='{$settings->site_path}/admin/news/categorytranslations/{$i->id}' class='btn btn-default btn-xs'>{t}Translations{/t}</a>
   {/if}
-	<a href='#' class='btn btn-default btn-xs' onclick="remove_item('{$i.id}'); return false;">{t}Delete{/t}</a>
+	<a href='#' class='btn btn-default btn-xs' onclick="remove_item('{$i->id}'); return false;">{t}Delete{/t}</a>
 </td>
 </tr>
 {/foreach}
