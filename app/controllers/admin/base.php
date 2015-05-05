@@ -7,6 +7,7 @@
  	public function __construct($registry)
 	{
  		parent::__construct($registry);
+ 		$user = $this->sessions->get_user();
  		
 	    $this->layout = "admin";
 		if (!$this->admin->is_admin() && ($this->registry->controller != 'admin_login'))
@@ -24,6 +25,8 @@
 				$this->i18n->detect_language();
 		}
 
+		if (isset($this->db_table_name) && $this->db_table_name)
+			$this->db_entity_name = Inflector::singularize($this->db_table_name);
 
 	    $menu_items = array();
 
@@ -121,6 +124,94 @@
 			$menu_item['selected'] = false;
 
 	    $this->ta("menu_items", $this->menu_items);
+
+	    $this->languages = $this->i18n_languages->get_all();
+	    
+	    $this->is_multilingual = false; 
+	    if (count($this->languages) > 1)
+	    	$this->is_multilingual = true;
+
+	    $this->ta('is_multilingual', $this->is_multilingual);
+	    $this->ta('languages', $this->languages);
+	}
+
+
+	public function add()
+	{
+		if (isset($_POST['cancel']))
+			$this->redirect($this->get_current_class_route(), "manage");
+
+		$form_checker = new checker;
+		if (isset($_POST['save']) && $form_checker->check_security_token())
+		{
+			$item = new $this->db_entity_name;
+			$item->fill_from_form_checker($form_checker);
+
+			$form_checker->save_entity($item);
+
+			if ($form_checker->is_entity_saved())
+				$this->redirect($this->get_current_class_route(), "manage");        
+		}
+
+		$this->ta('form_checker', $form_checker);
+	}
+
+
+	public function edit()
+	{
+		$item_id = (int)$this->gp(0,0);
+		$model = $this->{$this->db_table_name};
+
+		if (isset($_POST['cancel']) || !$item_id || !($item = $model->get_by_id($item_id)))
+			$this->redirect($this->get_current_class_route(), "manage");
+
+		$form_checker = new checker;
+		if (isset($_POST['save']) && $form_checker->check_security_token())
+		{
+			$item->fill_from_form_checker($form_checker);
+
+			$form_checker->save_entity($item);
+			if ($form_checker->is_entity_saved())
+				$this->redirect($this->get_current_class_route(), "manage");        
+		}
+
+		$this->ta('item', $item);
+		$this->ta('form_checker', $form_checker);
+	}
+
+	public function manage()
+	{
+		$search = $this->table_helper->proccess_search_parameters($this->get_current_class_route());
+		$order = $this->table_helper->proccess_order_parameters($this->get_current_class_route());
+		$model = $this->{$this->db_table_name};
+
+		if (isset($_POST['delete']))
+		{
+			$item_id = false; if (isset($_POST['item_id'])) $item_id = (int)$_POST['item_id'];
+			$item = $model->get_by_id($item_id);
+			if ($item)
+			{
+				$item->delete();
+			}
+		}
+
+		if (!empty($_POST))
+			$this->refresh();
+
+		if (isset($this->search_fields) && is_array($this->search_fields))
+			$search_fields = $this->search_fields;
+
+		$joins = array();
+
+		$pagination = $this->table_helper->proccess_paging_parameters($this->table_helper->get_count($this->db_table_name, $search, $search_fields, $joins), 20);
+
+		$this->ta("pages", $pagination);
+	    $items = new collection($this->db_entity_name, $this->table_helper->get_items_query($this->db_table_name, $order, $pagination['cur_offset'], 20, $search, $search_fields, $joins));
+
+		$this->ta("order", $order);
+		$this->ta("search", $search);
+		$this->ta("items", $items);
+
 	}
 
 	public function select_menu($menu_item_id)
@@ -133,6 +224,11 @@
 				$this->ta('breadcrumb_href', $this->menu_items[$menu_item_id]['items'][0]['href']);				
 		}
 	    $this->ta("menu_items", $this->menu_items);
+	}
+
+	public function get_current_class_route()
+	{
+		return str_replace('controller_', '', get_class($this));
 	}
 
  }

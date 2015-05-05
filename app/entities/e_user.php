@@ -50,8 +50,12 @@
 
 		}
 
+		$is_admin = $this->fields['is_admin'];
 		unset($this->fields['is_admin']);
+		unset($this->_changed_fields['is_admin']);
+		
 		$success = parent::save();
+		$this->fields['is_admin'] = $is_admin;
 		if ($success)
 		{
 			//// update wallets accesses if there re any

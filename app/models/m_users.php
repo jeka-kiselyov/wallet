@@ -45,12 +45,15 @@
 
     function signin($login, $password)
     {
-      $user = new user( $this->db->getrow("SELECT * FROM users WHERE (login = ? OR email = ?) AND password = ? AND confirmation_code = '' ", array($login, $login, md5($password.$this->password_salt))) );
+      $query = "SELECT * FROM users WHERE (login = '".$this->db->escape($login)."' OR email = '".$this->db->escape($login)."') 
+                AND password = '".$this->db->escape(md5($password.$this->password_salt))."' AND confirmation_code = ''";
+      $user = new user( $this->db->getrow($query) );
 
       if (!$user || $user->is_banned)
       {
         return false;      
       }
+      
       $user->activity_date = time();
       $user->activity_ip = $_SERVER['REMOTE_ADDR'];
       $user->save();
