@@ -129,7 +129,7 @@
 		'title'       => array('type'=>"STRING"),
 		'body'        => array('type'=>"TEXT"),
 		'slug'        => array('type'=>"STRING", 'key'=>true),
-		'language_id' => array('type'=>"INTEGER", 'key'=>true, 'defaultValue'=>"0")
+		'i18n_language_id' => array('type'=>"INTEGER", 'key'=>true, 'defaultValue'=>"0")
 	);
 
 	$schema['users'] = array();

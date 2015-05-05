@@ -121,7 +121,7 @@
 			elseif (isset($_POST[$input_name]))
 				return $_POST[$input_name];
 			else
-				return false;
+				return null;
 		}
 
 		function check_security_token($input_name = 'security_token', $error_message = 'Invalid or expired security token. Try to submit form again.')
@@ -273,11 +273,14 @@
 		} 
 		public static function UNIQUE_IN_DB()
 		{
-			if (func_num_args() != 2)
+			if (func_num_args() < 2)
 				throw new Exception("Invalid parameters count. UNIQUE_IN_DB(table, column).");
 			$obj = new self("UNIQUE_IN_DB");
 			$obj->add_parameter(func_get_arg(0));
 			$obj->add_parameter(func_get_arg(1));
+
+			if (func_num_args() > 2)
+				$obj->add_parameter(func_get_arg(2));
 
 			return $obj;
 		} 
@@ -320,7 +323,11 @@
 			elseif ($this->name == 'UNIQUE_IN_DB')
 			{
 				$db = db::getInstance();
-				$found = $db->getone("SELECT `".$this->get_parameter(1)."` FROM `".$this->get_parameter(0)."` WHERE `".$this->get_parameter(1)."` = ".$db->qstr($value)." ");
+
+				if (!$this->get_parameter(2))
+					$found = $db->getone("SELECT `".$this->get_parameter(1)."` FROM `".$this->get_parameter(0)."` WHERE `".$this->get_parameter(1)."` = ".$db->qstr($value)." ");
+				else
+					$found = $db->getone("SELECT `".$this->get_parameter(1)."` FROM `".$this->get_parameter(0)."` WHERE id <> '".$this->get_parameter(2)."' AND `".$this->get_parameter(1)."` = ".$db->qstr($value)." ");
 
 				return !$found;
 			}

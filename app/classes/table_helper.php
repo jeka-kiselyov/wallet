@@ -91,6 +91,11 @@
 
     function get_items($table_name, $order, $limit, $count, $search = "", $search_fields = array(), $joins = array() )
     {
+      return $this->db->getall($this->get_items_query($table_name, $order, $limit, $count, $search, $search_fields, $joins));
+    }
+
+    function get_items_query($table_name, $order, $limit, $count, $search = "", $search_fields = array(), $joins = array())
+    {
       $table_name = $this->regexpes->filter_non_adup($table_name);
       $q = "SELECT ";
 
@@ -106,7 +111,7 @@
       $q.=" ORDER BY ".$this->regexpes->filter_non_adup($order['by'])." ".$this->regexpes->filter_non_adup($order['dir']);
       $q.=" LIMIT ".(int)$limit.", ".(int)$count;
       
-      return $this->db->getall($q);
+      return $q;
     }
 
     function get_searches_as_string($table_name, $search, $search_fields, $joins)

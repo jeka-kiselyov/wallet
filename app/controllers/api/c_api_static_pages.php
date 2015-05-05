@@ -26,6 +26,7 @@ class controller_api_static_pages extends api_controller
   public function by_slug()
   {
     $slug = $this->gp(0,'');
+    $slug = str_replace('.html', '', $slug);
     $item = $this->static_pages->get_by_slug($slug);
 
     if ($item)

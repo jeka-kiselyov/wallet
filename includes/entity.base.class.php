@@ -60,18 +60,18 @@ abstract class entity_base implements ArrayAccess
 	    if (is_callable(array($this, 'after_construct')))
 	    	$this->after_construct();
 	} 
-
-	public function __toString()
-	{
-		if ($this->id > 0)
-			return true;
-		else
-			return false;
-	}
 	
 	public function to_array()
 	{
 		return array_merge(array('id'=>$this->id), $this->fields);
+	}
+
+	public function fill_from_form_checker($form_checker)
+	{
+		foreach ($this->fields as $key => $value) {
+			if ($form_checker->post($key) !== null)
+				$this->set($key, $form_checker->post($key));
+		}
 	}
 
 	public function fill($array)
@@ -220,10 +220,12 @@ abstract class entity_base implements ArrayAccess
 				return $this->joined_entities[$key];
 			}
 		}
+		
 		if ($this->id && strpos($key, $this->entity_name."_") === 0 && substr($key, strlen($key)-1, 1) == 's')
 		{
 			$model_name = substr($key, strlen($this->entity_name)+1); //$model_name = str_replace($this->entity_name."_", "", $key, 1); 
-			if ($this->$model_name)
+			$this->models_and_classes[$model_name] = autoloader_get_model_or_class($model_name);
+			if ($this->models_and_classes[$model_name])
 			{
 				$this->joined_entities[$key] = $this->models_and_classes[$model_name]->find_by_field($this->entity_name."_id", $this->id);
 				return $this->joined_entities[$key];
