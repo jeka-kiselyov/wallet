@@ -5,7 +5,7 @@ App.router = new (Backbone.Router.extend({
     this.navigate(path);
   },
   redirect: function(path) {
-    if (typeof(App.page) !== 'undefined' && typeof(App.page.isReady) !== 'undefined' && !App.page.isReady)
+    if (typeof(App.page) !== 'undefined' && App.page && typeof(App.page.isReady) !== 'undefined' && !App.page.isReady)
       App.loadingStatus(false);
     this.navigate(path, {trigger: true});
   },
