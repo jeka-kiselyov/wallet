@@ -38,7 +38,7 @@ chmod -R 777 cache/*
 grunt install
 ```
 9. Add your domain to apache settings(and /etc/hosts if you are going to test wallet locally). And set home URL in settings/settings.php
-10. Open it in browser.
+10. Open it in browser. You can also navigate to /admin/, username: admin, password: admin. Please don't forget to change it.
 11. Enjoy :)
 
 License
