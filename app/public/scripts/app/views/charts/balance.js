@@ -12,6 +12,43 @@ App.Views.Charts.Balance = Backbone.View.extend({
 	initialize: function() {
 		if (!this.model || !this.id)
 			console.error('views/charts/balance.js | model(wallet) and id of canvas should be provided for this view');
+
+		this.model.on('addTransaction', this.appendTransaction, this);
+		this.model.on('removeTransaction', this.removeTransaction, this);
+
+
+		this.on('dataReady', function(){
+			console.log('views/charts/balance.js | dataReady');
+
+			if (typeof(this._data.labels) === 'undefined' || !this._data.labels || this._data.labels.length == 0)
+				return; // @todo: show 'not enough data'
+
+			var that = this;
+
+			$('#'+that.id).fadeOut(20, function(){
+				that.chart = new Chartist.Line('#'+that.id, that._data, {
+					low: 0,
+					lineSmooth: false,
+					chartPadding: 0,
+					fullWidth: false,
+					showArea: true
+				});
+
+				$('#'+that.id).fadeIn(400);
+			});
+
+		});
+	},
+	appendTransaction: function(transaction) {
+		this.aTransactions.push(transaction);
+    	this.trigger('transactionsReady');
+	},
+	removeTransaction: function(transactionId) {
+		this.aTransactions = _.filter(this.aTransactions, function(t){ return t.id != transactionId; });
+    	this.trigger('transactionsReady');
+	},
+	getMissedTransactionsFromPage: function() {
+		var isUpdated = false;
 	},
 	fetchTransactions: function() {
 		if (this.aTransactions.length)
@@ -56,7 +93,8 @@ App.Views.Charts.Balance = Backbone.View.extend({
 		this.dataFetched = true;
 
 		var that = this;
-		this.once('transactionsReady',function(){
+		this.on('transactionsReady',function(){
+			console.log('views/charts/balance.js | transactionsReady');
 			//// first step. Filter expenses
 			var a = _.filter(this.aTransactions, function(t){ return t.get('amount') < 0; });
 			//// second step. For each day
@@ -247,18 +285,6 @@ App.Views.Charts.Balance = Backbone.View.extend({
 		if (!$('#'+this.id).length)
 			return;
 
-		this.once('dataReady', function(){
-			if (typeof(this._data.labels) === 'undefined' || !this._data.labels || this._data.labels.length == 0)
-				return; // @todo: show 'not enough data'
-
-			this.chart = new Chartist.Line('#'+this.id, this._data, {
-				low: 0,
-				lineSmooth: false,
-				chartPadding: 0,
-				fullWidth: false,
-				showArea: true
-			});
-		});
 		this.fetchData();
 	}
 });
