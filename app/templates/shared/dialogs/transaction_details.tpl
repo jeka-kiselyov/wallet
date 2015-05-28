@@ -9,7 +9,7 @@
         <table class="table table-hover table-striped">
           <tr>
             <td><strong>{t}Amount{/t}</strong></td>
-            <td><strong>${$item->amount|rational}.<sup>{$item->amount|decimal}</sup></strong></td>
+            <td><strong>{if $wallet->currency == 'USD'}${/if}{$item->amount|rational}.<sup>{$item->amount|decimal}</sup> {if $wallet->currency != 'USD'} {$wallet->currency}{/if}</strong></td>
           </tr>
           <tr>
             <td><strong>{t}Date{/t}</strong></td>

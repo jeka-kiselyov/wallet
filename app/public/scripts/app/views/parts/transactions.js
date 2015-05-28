@@ -34,7 +34,7 @@ App.Views.Parts.Transactions = Backbone.View.extend({
 		if (!item)
 			return true;
 
-		App.showDialog('TransactionDetails', {item: item});
+		App.showDialog('TransactionDetails', {item: item, wallet: this.model});
 
 		return false;
 	},

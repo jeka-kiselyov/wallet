@@ -15,17 +15,17 @@ App.Views.Dialogs.TransactionDetails = App.Views.Abstract.Dialog.extend({
 			this.item = params.item;
 		else
 			throw 'Can not initialize dialog without param.item';
+		if (typeof(params.wallet) != 'undefined')
+			this.wallet = params.wallet;
+		else
+			throw 'Can not initialize dialog without param.wallet';
 
-		this.show({item: this.item.toJSON()});
+		this.show({item: this.item.toJSON(), wallet: this.wallet.toJSON()});
 	},
 	onSubmit: function() {
 		var that = this;
 
 		this.$('.btn-primary').button('loading');
-		//var name = this.$('#input_name').val();
-		
-		//this.item.set('name', name);
-		//this.item.save();
 
 		this.hide();
 
