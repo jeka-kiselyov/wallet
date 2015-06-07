@@ -73,7 +73,7 @@
  if (ENVIRONMENT_SERVER == 'localhost')
  {
 	$settings['minify_css_merge'] = true; /// run `grunt watch` and connect livereload from browser.
-	$settings['minify_js_merge'] = true;
+	$settings['minify_js_merge'] = false;
  } else {
 	$settings['minify_css_merge'] = true;
 	$settings['minify_js_merge'] = true;
