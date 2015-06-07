@@ -19,6 +19,14 @@ function smarty_function_include_js_files($params, $template)
     $already_included = isset($template->smarty->tpl_vars['head_js_already_included']) ? (int)$template->smarty->tpl_vars['head_js_already_included'] : 0;
     $prepend = (isset($params['prepend']) && $params['prepend']) ? true : false;
 
+    if ($prepend)
+        $to_count = (int)$prepend_offset;
+    else
+        $to_count = count($template->smarty->tpl_vars['head_js']->value);
+
+    if ($to_count <= $already_included)
+        return '';
+
     if (isset($template->smarty->tpl_vars['settings'], $template->smarty->tpl_vars['settings']->value) && is_object($template->smarty->tpl_vars['settings']->value))
     {
         $settings = $template->smarty->tpl_vars['settings']->value;
@@ -34,12 +42,6 @@ function smarty_function_include_js_files($params, $template)
         if ($settings->version !== NULL)
             $current_verion = $settings->version;
     }
-
-    if ($prepend)
-        $to_count = (int)$prepend_offset;
-    else
-        $to_count = count($template->smarty->tpl_vars['head_js']->value);
-
     
     $ret = '';
     $displayed = false;
@@ -47,47 +49,55 @@ function smarty_function_include_js_files($params, $template)
     if ($js_merge)
     {
         $hash_items = '';
+        $has_local = false;
         for ($i = $already_included; $i < $to_count; $i++)
-        if (strpos('//', $template->smarty->tpl_vars['head_js']->value[$i]))
+        if (strpos('//', $template->smarty->tpl_vars['head_js']->value[$i]) === false)
         {
             $file = $template->smarty->tpl_vars['head_js']->value[$i];
 
             if (strpos($file, '//') === false && strpos($file, 'http://') === false && strpos($file, 'https://') === false)
+            {
                 $hash_items.= '||'.$file;
-        }
-        $hashed = md5($hash_items);
-        if (@is_file(SITE_PATH_APP.'public/scripts/dist/'.$hashed.".min.js"))
-        {
-            if ($version_suffix == 'get')
-                $ret.="<script src=\"".$site_path."/scripts/dist/".$hashed.".min.js?v=".$current_verion."\" type=\"text/javascript\"></script>\n";
-            elseif ($version_suffix == 'suffix')
-                $ret.="<script src=\"".$site_path."/scripts/dist/".$hashed.".min.v".$current_verion.".js\" type=\"text/javascript\"></script>\n";
-            else
-                $ret.="<script src=\"".$site_path."/scripts/dist/".$hashed.".min.js\" type=\"text/javascript\"></script>\n";
-
-            for ($i = $already_included; $i < $to_count; $i++)
-            {
-                if (!(strpos($file, '//') === false && strpos($file, 'http://') === false && strpos($file, 'https://') === false))
-                {
-                    ///// Remote
-                    $ret.="<script src=\"".$file['file']."\" type=\"text/javascript\"></script>\n";
-                }
+                $has_local = true;
             }
+        }
 
-            $already_included = $i;
-            $displayed = true;
-        } else {
-            $data = explode('||', $hash_items);
-            $data = array_filter($data); /// remove empty elements
-
-            if (!is_file(SITE_PATH_CACHE.'/minification/js-'.$hashed.'.json'))
+        if ($has_local)
+        {
+            $hashed = md5($hash_items);
+            if (@is_file(SITE_PATH_APP.'public/scripts/dist/'.$hashed.".min.js"))
             {
-                $json['elements'] = $data;
-                $json['hash'] = $hashed;
+                if ($version_suffix == 'get')
+                    $ret.="<script src=\"".$site_path."/scripts/dist/".$hashed.".min.js?v=".$current_verion."\" type=\"text/javascript\"></script>\n";
+                elseif ($version_suffix == 'suffix')
+                    $ret.="<script src=\"".$site_path."/scripts/dist/".$hashed.".min.v".$current_verion.".js\" type=\"text/javascript\"></script>\n";
+                else
+                    $ret.="<script src=\"".$site_path."/scripts/dist/".$hashed.".min.js\" type=\"text/javascript\"></script>\n";
 
-                $json = json_encode($json);
-                file_put_contents(SITE_PATH_CACHE.'/minification/js-'.$hashed.'.json', $json);
-            }    
+                for ($i = $already_included; $i < $to_count; $i++)
+                {
+                    if (!(strpos($file, '//') === false && strpos($file, 'http://') === false && strpos($file, 'https://') === false))
+                    {
+                        ///// Remote
+                        $ret.="<script src=\"".$file['file']."\" type=\"text/javascript\"></script>\n";
+                    }
+                }
+
+                $already_included = $i;
+                $displayed = true;
+            } else {
+                $data = explode('||', $hash_items);
+                $data = array_filter($data); /// remove empty elements
+
+                if (!is_file(SITE_PATH_CACHE.'/minification/js-'.$hashed.'.json'))
+                {
+                    $json['elements'] = $data;
+                    $json['hash'] = $hashed;
+
+                    $json = json_encode($json);
+                    file_put_contents(SITE_PATH_CACHE.'/minification/js-'.$hashed.'.json', $json);
+                }    
+            }
         }
     }
 
