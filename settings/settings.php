@@ -73,7 +73,7 @@
  if (ENVIRONMENT_SERVER == 'localhost')
  {
 	$settings['minify_css_merge'] = true;
-	$settings['minify_js_merge'] = false;
+	$settings['minify_js_merge'] = true;
  } else {
 	$settings['minify_css_merge'] = true;
 	$settings['minify_js_merge'] = true;
