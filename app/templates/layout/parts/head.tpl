@@ -11,8 +11,7 @@
 			});
 		</script>
 	<![endif]-->
-	<meta name="detectify-verification"
-    content="77671959b106d29e9175d552421d4800" /> 
+	<meta name="detectify-verification" content="77671959b106d29e9175d552421d4800" /> 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>{if isset($title) && $title}{$title|escape:"html"} | {/if}{$settings->site_title}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -25,7 +24,9 @@
 
 	{add_js file="vendors/jquery/jquery.min" prepend=true}
 	{* Prepend - this scripts will be included first, even if you've added something in controller *}
-	{add_js file="vendors/bootstrap/dist/js/bootstrap.min" prepend=true}
+
+	{add_js file="vendors/bootstrap/js/modal" prepend=true}
+
 	{add_js file="vendors/underscore/underscore-min" prepend=true}
 	{add_js file="vendors/backbone/backbone" prepend=true}
 	{add_js file="vendors/backbone.paginator/lib/backbone.paginator.min" prepend=true}
@@ -55,9 +56,6 @@
 	{add_js file="scripts/app/views/header"}
 	{add_js file="scripts/app/router"}
 	{add_js file="scripts/setup"}
-	{add_css file="vendors/bootstrap/dist/css/bootstrap.min" prepend=true}
-	{add_css file="css/main" prepend=true}
-	{include_css_files}
 
 	{include_js_files}
 	<script>
@@ -65,5 +63,16 @@
 	window.App.setUser({$user->to_array()|@json_encode});
 	{/if}
 	</script>
+	
+	{add_css file="vendors/bootstrap/less/bootstrap.less" prepend=true}
+	{add_css file="vendors/bootstrap/less/theme.less" prepend=true}
+
+	{include_css_files}
+
+	{add_css file="css/main.less" prepend=true}
+
+	{include_css_files}
+	
+	{include_js_files} {* In case there's .less files and //cdnjs.cloudflare.com/ajax/libs/less.js/2.5.0/less.min.js script was included by last include_css_files *}
 
 </head>

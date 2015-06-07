@@ -2,3 +2,4 @@ composer.lock
 node_modules
 app/public/vendors/*
 settings/version.php
+cache/minification/*

@@ -5,10 +5,10 @@
 
 	logstr('Running css files compressor');
 
-	if (!is_dir(SITE_PATH_CACHE.'/minification'))
-		mkdir(SITE_PATH_CACHE.'/minification');
+	if (!is_dir(SITE_PATH_CACHE.'minification'))
+		mkdir(SITE_PATH_CACHE.'minification');
 
-	$files = scandir(SITE_PATH_CACHE.'/minification');
+	$files = scandir(SITE_PATH_CACHE.'minification');
 	foreach ($files as $file)
 		if (strpos($file, 'css-') === 0 && strpos($file, '.json') === strlen($file)-5)
 			$tasks[] = $file;
@@ -17,14 +17,14 @@
 		logstr('Count of tasks: '.count($tasks));
 	else
 	{
-		logstr('No css-*.json tasks found in '.SITE_PATH_CACHE.'/minification. Done');
+		logstr('No css-*.json tasks found in '.SITE_PATH_CACHE.'minification. Done', 'system');
 		exit;
 	}
 
 	$i = 1;
 	foreach ($tasks as $task) {
 		logstr('Task #'.$i.': '.$task);
-		$data = @json_decode(file_get_contents(SITE_PATH_CACHE.'/minification/'.$task), true);
+		$data = @json_decode(file_get_contents(SITE_PATH_CACHE.'minification/'.$task), true);
 
 		if (!$data || !isset($data['elements']) || !isset($data['hash'])) 
 		{
@@ -42,7 +42,7 @@
 		/// normalize
 		$normalized_elements = array();
 		foreach ($elements as &$element) {
-			if (substr($element, -3) !== '.css')
+			if (substr($element, -4) !== '.css' && substr($element, -5) !== '.less')
 				$element .= '.css';
 			if (strpos($element, SITE_PATH_APP) !== 0)
 				$element = SITE_PATH_APP.'public/'.$element;
@@ -55,7 +55,10 @@
 				continue;
 			}
 
-			$normalized_elements[] = escapeshellarg($element);
+			if (is_file($element))
+				$normalized_elements[] = $element;
+			else
+				logstr('WARN. Can not find file: '.$element);
 		}
 		$elements = $normalized_elements;
 
@@ -87,14 +90,34 @@
 			}
 		}
 
+		logstr('Executing less if needed...');
+		$to_clean_css = array();
+		$to_cleanup_after = array();
+		foreach ($elements as $src)
+		{
+			if (substr($src, -5) == '.less')
+			{
+				$cmd = 'lessc '.escapeshellarg($src).' > '.escapeshellarg($src.'.lessed.css');
+				exec($cmd, $output);
+				$to_clean_css[] = $src.".lessed.css";
+				$to_cleanup_after[] = $src.".lessed.css";
+			} else {
+				$to_clean_css[] = $src;
+			}
+		}
+		
 		logstr('Executing cleancss...');
 
-		$cmd = 'cleancss ';
-		$cmd.=' -o '.$target.' --skip-advanced ';
-		foreach ($elements as $src)
-			$cmd.=$src.' ';
+        $cmd = 'cleancss ';
+        $cmd.=' -o '.$target.' --skip-advanced ';
+        foreach ($to_clean_css as $src)
+            $cmd.=escapeshellarg($src).' ';
+  
+        exec($cmd, $output);
 
-		exec($cmd, $output);
+		logstr('Cleaning up...');
+        foreach ($to_cleanup_after as $src)
+        	unlink($src);
 
 		$output_filesize = 0;
 		if (is_file($target))
@@ -106,15 +129,16 @@
 			if ($output_filesize > $initial_files_size)
 				logstr("yes, it's more than original ".human_filesize($initial_files_size)." probably because of @import's. But you can check.");
 		}
-		else
-			logstr('WARN: Something is wrong, target is empty');
+		else {
+			logstr('\033[1;31mERROR\033[0m Something is wrong, target is empty', 'system');
+		}
 
 		# code...
 
 		$i++;
 	}
 
-	logstr('Done.');
+	logstr('Done.', 'system');
 
 
 ?>

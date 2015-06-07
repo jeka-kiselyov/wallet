@@ -1,6 +1,6 @@
 {
   "name": "Wallet",
-  "version": "0.0.15",
+  "version": "0.0.32",
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-bower-task": "~0.4.0",

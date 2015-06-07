@@ -13,16 +13,18 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: ['app/public/scripts/**/*.js','app/public/scripts/*.js'],
-        tasks: ['bump', 'version', 'exec'],
+        tasks: ['bump', 'version', 'exec:minifyjs'],
         options: {
           spawn: false,
+          livereload: true,
         }
       },
       styles: {
-        files: ['app/public/css/*.css','app/public/css/**/*.css'],
-        tasks: ['bump', 'version', 'exec'],
+        files: ['app/public/css/*.css','app/public/css/**/*.css','app/public/css/**/*.less','app/public/vendors/**/*.less'],
+        tasks: ['bump', 'version', 'exec:minifycss'],
         options: {
           spawn: false,
+          livereload: true,
         }
       }, 
     },

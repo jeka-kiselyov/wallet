@@ -5,10 +5,10 @@
 
 	logstr('Running js files compressor');
 
-	if (!is_dir(SITE_PATH_CACHE.'/minification'))
-		mkdir(SITE_PATH_CACHE.'/minification');
+	if (!is_dir(SITE_PATH_CACHE.'minification'))
+		mkdir(SITE_PATH_CACHE.'minification');
 	
-	$files = scandir(SITE_PATH_CACHE.'/minification');
+	$files = scandir(SITE_PATH_CACHE.'minification');
 	foreach ($files as $file)
 		if (strpos($file, 'js-') === 0 && strpos($file, '.json') === strlen($file)-5)
 			$tasks[] = $file;
@@ -17,14 +17,14 @@
 		logstr('Count of tasks: '.count($tasks));
 	else
 	{
-		logstr('No js-*.json tasks found in '.SITE_PATH_CACHE.'/minification. Done');
+		logstr('No js-*.json tasks found in '.SITE_PATH_CACHE.'minification. Done', 'system');
 		exit;
 	}
 
 	$i = 1;
 	foreach ($tasks as $task) {
 		logstr('Task #'.$i.': '.$task);
-		$data = @json_decode(file_get_contents(SITE_PATH_CACHE.'/minification/'.$task), true);
+		$data = @json_decode(file_get_contents(SITE_PATH_CACHE.'minification/'.$task), true);
 
 		if (!$data || !isset($data['elements']) || !isset($data['hash'])) 
 		{
@@ -103,14 +103,14 @@
 		if ($output_filesize)
 			logstr('Target is ready. Filesize: '.human_filesize($output_filesize));
 		else
-			logstr('WARN: Something is wrong, target is empty');
+			logstr('\033[1;31mERROR\033[0m Something is wrong, target is empty', 'system');
 
 		# code...
 
 		$i++;
 	}
 
-	logstr('Done.');
+	logstr('Done.', 'system');
 
 
 ?>

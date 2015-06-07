@@ -12,20 +12,34 @@ function smarty_function_add_css($params, $template)
     }
 
     $file = $params['file'];
+    $extension = 'css';
+
     $prepend = false;
     if (isset($params['prepend']) && $params['prepend'])
         $prepend = true;
 
+    if (substr($file, -4) == '.css')
+    {
+        //// $extension = 'css';
+        $file = substr($file, 0, -4);
+    } elseif (substr($file, -5) == '.less')
+    {
+        $extension = 'less';
+        $file = substr($file, 0, -5);
+    }
+
+    $to_insert = array('file'=>$file, 'extension'=>$extension);
+
     if (!$prepend)
     {
-        $template->smarty->tpl_vars['head_css']->value[] = $file;
+        $template->smarty->tpl_vars['head_css']->value[] = $to_insert;
         return;
     } else {
         $prepend_offset = 0;
         if (isset($template->smarty->tpl_vars['head_css_prepend_offset']))
             $prepend_offset = (int)$template->smarty->tpl_vars['head_css_prepend_offset'];
 
-        array_splice($template->smarty->tpl_vars['head_css']->value, $prepend_offset, 0, $file);
+        array_splice($template->smarty->tpl_vars['head_css']->value, $prepend_offset, 0, array($to_insert));
         $template->smarty->tpl_vars['head_css_prepend_offset'] = $prepend_offset + 1;
         return;
     }
