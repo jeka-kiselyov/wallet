@@ -86,5 +86,11 @@ module.exports = function(grunt) {
                                   'exec:minifycss', 
                                   'exec:minifyjs'
                                 ]);
+  grunt.registerTask('build', [ 
+                                  'bump', 
+                                  'version', 
+                                  'exec:minifycss', 
+                                  'exec:minifyjs'
+                                ]);
 
 };
