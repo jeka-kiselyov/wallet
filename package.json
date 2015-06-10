@@ -1,6 +1,6 @@
 {
   "name": "Wallet",
-  "version": "0.0.41",
+  "version": "0.0.45",
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-bower-task": "~0.4.0",
@@ -11,6 +11,7 @@
     "grunt-contrib-watch": "~0.6.1",
     "uglify-js": "~2.4.16",
     "clean-css": "~3.0.10",
-    "grunt-available-tasks": "~0.5.7"
+    "grunt-available-tasks": "~0.5.7",
+    "less": "^2.5.1"
   }
 }

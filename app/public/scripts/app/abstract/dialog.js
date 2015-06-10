@@ -45,7 +45,7 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 	},
 	renderLoading: function() {
 	 	console.log('Dialog '+this.dialogName+' rendered loading');
-		this.$el.html('<div id="dialog_'+this.dialogName+'" class="modal fade dialog_'+this.dialogName+'" role="dialog" aria-labelledby="dialog_label">'+
+		this.$el.html('<div id="dialog_'+this.dialogName+'" class="modal dialog_'+this.dialogName+'" role="dialog" aria-labelledby="dialog_label">'+
 				'<div class="modal-dialog"><div class="modal-content modal-loading">Loading</div></div></div>');		
 	},
 	renderHTML: function(data) {
