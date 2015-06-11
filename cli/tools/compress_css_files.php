@@ -97,7 +97,7 @@
 		{
 			if (substr($src, -5) == '.less')
 			{
-				$cmd = 'lessc '.escapeshellarg($src).' > '.escapeshellarg($src.'.lessed.css');
+				$cmd = SITE_PATH.'/node_modules/less/bin/lessc '.escapeshellarg($src).' > '.escapeshellarg($src.'.lessed.css');
 				exec($cmd, $output);
 				$to_clean_css[] = $src.".lessed.css";
 				$to_cleanup_after[] = $src.".lessed.css";
@@ -108,7 +108,7 @@
 		
 		logstr('Executing cleancss...');
 
-        $cmd = 'cleancss ';
+        $cmd = SITE_PATH.'/node_modules/clean-css/bin/cleancss ';
         $cmd.=' -o '.$target.' --skip-advanced ';
         foreach ($to_clean_css as $src)
             $cmd.=escapeshellarg($src).' ';

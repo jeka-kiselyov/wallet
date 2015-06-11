@@ -89,7 +89,7 @@
 
 		logstr('Executing uglifyjs...');
 
-		$cmd = 'uglifyjs ';
+		$cmd = SITE_PATH.'/node_modules/uglify-js/bin/uglifyjs ';
 		foreach ($elements as $src)
 			$cmd.=$src.' ';
 		$cmd.='-c -o '.$target.' 2>&1';
