@@ -76,7 +76,12 @@
 			foreach ($accesses as $access) {
 				$access->to_user_id = 0;
 				$access->save();
-			}	
+			}
+
+		$wallets = $this->wallets->find_by_user_id($this->id);
+		foreach ($wallets as $wallet) {
+			$wallet->delete();
+		}
 
 		return parent::delete();
 	}
