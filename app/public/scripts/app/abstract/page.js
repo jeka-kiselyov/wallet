@@ -51,8 +51,11 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		{
 			App.router.setUrl(url);
 			App.log.setURL(url);
-			App.log.pageView();
+		} else {
+			App.log.setURL('');
 		}
+
+		App.log.pageView();
 	},
 	setTitle: function(title) {
 		if (typeof(title) === 'undefined')
