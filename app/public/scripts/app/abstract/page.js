@@ -50,7 +50,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		if (url)
 		{
 			App.router.setUrl(url);
-			App.log.setUrl(url);
+			App.log.setURL(url);
 			App.log.pageView();
 		}
 	},
