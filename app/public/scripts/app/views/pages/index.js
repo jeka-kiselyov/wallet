@@ -4,7 +4,8 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 	templateName: 'pages/index/index',
     category: 'home',
 	events: {
-		"click #demo_signup": "demoSignUp"
+		"click #demo_signup": "demoSignUp",
+		"click #demo_without_mouse_signup": "demoSignUp"
 	},
 	demoSignUp: function() {
 		console.log('Sign up for the demo');
@@ -51,7 +52,17 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 				var margin = $('#footer').offset().top - ($('#screenshots_header').offset().top + 180);
 				margin = Math.round(margin);
 				$('#screenshots_header').css('margin-top', margin+'px');
-			}	
+			}
+
+			if ('ontouchstart' in window || 'onmsgesturechange' in window)
+			{
+				//// touch device
+				$('.register_without_mouse').fadeIn('slow');
+			} else {
+				//// pc
+				$('.register_with_mouse').fadeIn('slow');
+			}
+
 		});
 
 		this.render();

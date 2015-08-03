@@ -1,8 +1,11 @@
 <h1>DimeShift &ndash; the simpliest way to manage your finances</h1>
 
 <p>To demonstrate how simple it is &ndash; we don't even ask you to register.</p>
-<p>Just move your mouse pointer over 
+<p class="register_with_mouse" style="display: none;">Just move your mouse pointer over 
           <input type="submit" class="btn btn-default" id="demo_signup" value="here"> and start using wallet right now!</p>
+<p class="register_without_mouse" style="display: none;">Just click
+          <input type="submit" class="btn btn-default" id="demo_without_mouse_signup" value="here"> and start using wallet right now!</p>
+
 
 <h4 id="screenshots_header">Screenshots</h4>
 <div class="row">
