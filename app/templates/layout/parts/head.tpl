@@ -55,6 +55,7 @@
 	{add_js_folder path="scripts/app/views/pages/"}
 	{add_js_folder path="scripts/app/views/charts/"}
 	{add_js file="scripts/app/views/header"}
+	{add_js file="scripts/app/log"}
 	{add_js file="scripts/app/router"}
 	{add_js file="scripts/setup"}
 

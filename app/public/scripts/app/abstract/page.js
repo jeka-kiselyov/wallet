@@ -50,11 +50,8 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		if (url)
 		{
 			App.router.setUrl(url);
-			if (typeof(ga) === 'function')
-			{
-				ga('set', 'page', '/'+url);
-				ga('send', 'pageview');
-			}
+			App.log.setUrl(url);
+			App.log.pageView();
 		}
 	},
 	setTitle: function(title) {
@@ -74,10 +71,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		{
 			console.log("Document title changed to '"+title+"'");
 			$(document).attr('title', title);
-			if (typeof(ga) === 'function')
-			{
-				ga('set', 'title', title);
-			}			
+			App.log.setTitle(title);
 		}
 	},
 	wakeUp: function() {
