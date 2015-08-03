@@ -41,7 +41,8 @@ window.App = {
 			}, this);
 			App.dialog.hide();
 		} else {
-			App.dialog = new App.Views.Dialogs[dialogName](params);			
+			App.dialog = new App.Views.Dialogs[dialogName](params);		
+			App.log.event('dialog', 'Show Dialog '+dialogName);	
 		}
 
 		return true;
