@@ -27,7 +27,7 @@ App.log = {
 	{
 		var time = Date.now();
 
-		if (this.currentVisitTime == null || (time - this.currentVisitTime) < 100) /// 100 microseconds
+		if (this.currentVisitTime == null || (time - this.currentVisitTime) > 100) /// 100 microseconds
 		{
 			if (typeof(ga) === 'function')
 			{
