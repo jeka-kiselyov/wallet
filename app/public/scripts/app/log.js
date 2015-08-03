@@ -44,6 +44,15 @@ App.log = {
 		}
 
 		this.currentVisitTime = time;
+	},
+	event: function(category, action, label, count)
+	{
+		if (typeof(ga) === 'function')
+		{
+			if (typeof(count) !== 'undefined')
+				ga('send', 'event', category, action, label, count);
+			else
+				ga('send', 'event', category, action, label);				
+		}
 	}
-
 }

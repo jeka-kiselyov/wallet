@@ -8,7 +8,7 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 		"click #demo_without_mouse_signup": "demoSignUp"
 	},
 	demoSignUp: function() {
-		console.log('Sign up for the demo');
+		App.log.event('registration', 'Demo Sign Up', 'From Homepage');
 		this.renderLoading();
 		this.listenTo(App.currentUser, 'signedInStatusChanged', function(){
 			App.router.redirect('/wallets/');
