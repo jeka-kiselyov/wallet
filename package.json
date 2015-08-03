@@ -1,6 +1,6 @@
 {
   "name": "Wallet",
-  "version": "0.0.46",
+  "version": "0.0.48",
   "devDependencies": {
     "clean-css": "~3.0.10",
     "grunt": "~0.4.5",
