@@ -48,7 +48,14 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		}
 
 		if (url)
+		{
 			App.router.setUrl(url);
+			if (typeof(ga) === 'function')
+			{
+				ga('set', 'page', '/'+url);
+				ga('send', 'pageview');
+			}
+		}
 	},
 	setTitle: function(title) {
 		if (typeof(title) === 'undefined')
@@ -63,8 +70,15 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		if (typeof(App.settings.title) == 'function')
 			title = App.settings.title(title);
 
-		console.log("Document title changed to '"+title+"'");
-		$(document).attr('title', title);
+		if (title)
+		{
+			console.log("Document title changed to '"+title+"'");
+			$(document).attr('title', title);
+			if (typeof(ga) === 'function')
+			{
+				ga('set', 'title', title);
+			}			
+		}
 	},
 	wakeUp: function() {
 		App.setProgress(false);
