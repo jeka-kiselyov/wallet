@@ -47,6 +47,9 @@ App.log = {
 	},
 	event: function(category, action, label, count)
 	{
+		if (typeof(label) === 'undefined')
+			label = '';
+		
 		if (typeof(ga) === 'function')
 		{
 			if (typeof(count) !== 'undefined')

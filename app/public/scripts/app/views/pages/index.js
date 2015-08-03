@@ -40,6 +40,11 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 			$('.image-link').magnificPopup({
 				type: 'image',
 				gallery: { enabled: true },
+				callbacks: {
+					open: function() {
+						App.log.event('homepage', 'Zoom Screenshot');
+					}
+				},
 				image: {
 					titleSrc: function(item) {
 						return $('#'+item.el.attr('id')+'-title').text() + '<small>'+$('#'+item.el.attr('id')+'-description').text()+'</small>';
