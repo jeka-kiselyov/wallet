@@ -66,12 +66,11 @@
 	{/if}
 	</script>
 	
-	{add_css file="vendors/bootstrap/less/bootstrap.less" prepend=true}
-	{add_css file="vendors/bootstrap/less/theme.less" prepend=true}
+	{add_css file="vendors/bootstrap/dist/css/bootstrap.min" prepend=true}
 
 	{include_css_files}
 
-	{add_css file="css/main.less" prepend=true}
+	{add_css file="css/main.css" prepend=true}
 
 	{include_css_files}
 	
