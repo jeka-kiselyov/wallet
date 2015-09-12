@@ -19,11 +19,11 @@ App.Views.Dialogs.SetTotalTo = App.Views.Abstract.Dialog.extend({
 		this.$('.btn-primary').button('loading');
 
 		var total = this.$('#input_total').val();
-		total = +total;
 		//var description = this.$('#input_description').val();
 		
-		if (total)
+		if (Number(total) === parseFloat(total, 10))
 		{
+			total = +total;
 			this.wallet.setTotalTo(total);			
 		}
 
