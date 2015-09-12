@@ -27,6 +27,7 @@
 
 	{add_js file="vendors/bootstrap/js/modal" prepend=true}
 	{add_js file="vendors/bootstrap/js/button" prepend=true}
+	{add_js file="vendors/bootstrap/js/collapse" prepend=true}
 
 	{add_js file="vendors/underscore/underscore-min" prepend=true}
 	{add_js file="vendors/backbone/backbone" prepend=true}
