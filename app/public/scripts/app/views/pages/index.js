@@ -10,9 +10,6 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 	demoSignUp: function() {
 		App.log.event('registration', 'Demo Sign Up', 'From Homepage');
 		this.renderLoading();
-		this.listenTo(App.currentUser, 'signedInStatusChanged', function(){
-			App.router.redirect('/wallets/');
-		});
 		App.currentUser.demoRegister();
 	},
 	title: function() {
@@ -35,6 +32,10 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 		this.renderLoading();
 		/// initialize models, collections etc. Request fetching from storage
 
+		this.listenTo(App.currentUser, 'signedInStatusChanged', function(){
+			App.router.redirect('/wallets/');
+		});
+		
 		this.on('render', function(){
 			$('#demo_signup').clickonmouseover();
 			$('.image-link').magnificPopup({
