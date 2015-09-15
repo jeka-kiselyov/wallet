@@ -39,3 +39,7 @@
 .btn-danger, .btn-default, .btn-info, .btn-primary, .btn-success, .btn-warning {
 	text-shadow: none;
 }
+
+.modal-footer {
+	border-top: 0;
+}
