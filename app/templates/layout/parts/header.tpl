@@ -25,10 +25,10 @@
 						<a href="{$settings->site_path}/user/logout" class="signout_caller" data-i18n="Log Out">{t}Log Out{/t}</a>
 					</li>
 					<li class="header_is_not_signed_in" {if $user && $user.id}style="display: none;"{/if}>
-						<a class="btn" href="{$settings->site_path}/user/signin" class="signin_caller" data-i18n="Sign In">{t}Sign In{/t}</a>
+						<a href="{$settings->site_path}/user/signin" class="signin_caller" data-i18n="Sign In">{t}Sign In{/t}</a>
 					</li>
 					<li class="header_is_signed_in" {if !$user || !$user.id}style="display: none;"{/if}>
-						<a class="btn" href="{$settings->site_path}/profile" data-i18n="Settings">{t}Settings{/t}</a>
+						<a href="{$settings->site_path}/profile" data-i18n="Settings">{t}Settings{/t}</a>
 					</li>
 				</ul>
 			</div><!--/.nav-collapse -->

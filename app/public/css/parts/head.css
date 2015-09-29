@@ -2,8 +2,7 @@
 	border-radius: 0;
 	background: white;
 	border-bottom: 1px solid #DDDDDD;
-	min-height: 35px;
-	height: 44px;
+	min-height: 45px;
 	overflow: hidden;
 	padding-top: 0px;
 	margin-bottom: 0;
@@ -21,19 +20,26 @@
 	.navbar-inverse {
 		background: rgba(255,255,255,.9);
 	}
+	.navbar-toggle {
+		margin-top: 7px;
+		border-color: #31B0D5;
+		margin-bottom: 0;
+	}
 }
 
 .navbar-inverse .navbar-toggle .icon-bar {
-	background-color: black;
+	background-color: #31B0D5;
 }
 
 .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
-	background-color: #CCCCCC;
+	background-color: #EEEEEE;
 }
 
 .navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-nav > .open ul > a {
 	color: rgba(0, 0, 0, .7);
 	padding-bottom: 0;
+	padding-top: 0;
+	line-height: 45px;
 }
 
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
