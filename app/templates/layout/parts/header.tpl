@@ -7,7 +7,7 @@
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
 				
 
-				<a href="{$settings->site_path}/" class="btn btn-info btn-lg">$ dimeshift</a>
+				<a href="{$settings->site_path}/" class="btn btn-info btn-lg btn-logo">$ dimeshift</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">

@@ -2,9 +2,15 @@
 	border-radius: 0;
 	background: white;
 	border-bottom: 1px solid #DDDDDD;
-	min-height: 100px;
-	padding-top: 25px;
+	min-height: 35px;
+	height: 44px;
+	overflow: hidden;
+	padding-top: 0px;
 	margin-bottom: 0;
+}
+
+.btn-logo {
+	border-radius: 0;
 }
 
 .navbar-inverse *:focus {
@@ -27,11 +33,13 @@
 
 .navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-nav > .open ul > a {
 	color: rgba(0, 0, 0, .7);
+	padding-bottom: 0;
 }
 
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
 	color: rgba(0, 0, 0, 1);
 	background: none;
+	padding-bottom: 0;
 }
 
 .navbar-inverse .navbar-nav > .open > a {
@@ -115,7 +123,7 @@
 }
 
 .slideUp {
-	top: -100px;
+	top: -45px;
 }
 
 .headroom {
@@ -126,5 +134,5 @@
 }
 
 #container {
-	padding-top: 120px;
+	padding-top: 55px;
 }
