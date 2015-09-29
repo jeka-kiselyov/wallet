@@ -69,6 +69,7 @@
 	
 	{add_css file="vendors/bootstrap/dist/css/bootstrap.min" prepend=true}
 
+	
 	{include_css_files}
 
 	{add_css file="css/main.css" prepend=true}

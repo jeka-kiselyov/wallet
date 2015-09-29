@@ -5,7 +5,9 @@
 			<div class="navbar-header">
 				<!-- Button for smallest screens -->
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-				<a class="navbar-brand" href="{$settings->site_path}/"><img src="{$settings->site_path}/images/logo.jpg" alt="DimeShift - easiest way to manage your finances. Online."></a>
+				
+
+				<a href="{$settings->site_path}/" class="btn btn-info btn-lg">$ dimeshift</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
