@@ -18,7 +18,7 @@
 	<link rel='icon' href='{$settings->site_path}/images/favicon.ico' type='image/x-icon' />
 
 	<script type="text/javascript">
-		var site_path = '{$settings->site_path}';
+		var site_path = 'http://localhost:8080';//{$settings->site_path}';
 		var app_version = '{$settings->version}';
 	</script>
 

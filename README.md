@@ -3,6 +3,9 @@
 * Apache(mode_rewrite should be enabled), PHP(has to be >= 5.3), MySQL, Smarty as template engine. 
 * jQuery, Bootstrap, Backbone.js with JSmart template engine (same syntax for PHP and JS templates - same templates for PHP and JS).
 
+Important:exclamation::exclamation::exclamation: New: Dimeshift
+----
+I started working on node.js version, [on github](https://github.com/jeka-kiselyov/dimeshift), [demo](http://www.dimeshift.com). Php version will continue to be maintained for fixing show-stopper bugs, but no new features should be expected.
 
 Demo:
 ----
